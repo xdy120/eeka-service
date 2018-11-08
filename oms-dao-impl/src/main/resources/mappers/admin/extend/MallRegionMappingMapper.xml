@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.MallRegionMappingMapper">
+  <sql id="advanceWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="mallRegionAlias!=null and mallRegionAlias!=''">
+        <bind name="mallRegionAlias_like" value="_parameter.mallRegionAlias+'%'"/>
+        AND mall_region_alias LIKE #{mallRegionAlias_like}
+      </if>
+      <if test="mallRegionMappingId!=null">AND mall_region_mapping_id=#{mallRegionMappingId}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+    </trim>
+  </sql>
+
+  <select id="customListPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_region_mapping
+    <include refid="advanceWhere"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

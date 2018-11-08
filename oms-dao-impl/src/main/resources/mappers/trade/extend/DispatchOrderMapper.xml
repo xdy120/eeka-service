@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.DispatchOrderMapper">
+  <sql id="advanceWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="address!=null and address!=''">AND address=#{address}</if>
+      <if test="buyerMemo!=null and buyerMemo!=''">AND buyer_memo=#{buyerMemo}</if>
+      <if test="cainiaoOrderId!=null and cainiaoOrderId!=''">AND
+        cainiao_order_id=#{cainiaoOrderId}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="codAmount!=null">AND cod_amount=#{codAmount}</if>
+      <if test="contact!=null and contact!=''">AND contact=#{contact}</if>
+      <if test="contacts!=null and contacts.size>0">
+        AND contact IN
+        <foreach item="item" index="index" collection="contacts" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">AND creator=#{creator}</if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="dispatchOrderCode!=null and dispatchOrderCode!=''">AND
+        dispatch_order_code=#{dispatchOrderCode}
+      </if>
+      <if test="dispatchOrderCodes!=null and dispatchOrderCodes.size>0">
+        AND dispatch_order_code IN
+        <foreach item="item" index="index" collection="dispatchOrderCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="dispatchOrderId!=null">AND dispatch_order_id=#{dispatchOrderId}</if>
+      <if test="distributionAmount!=null">AND distribution_amount=#{distributionAmount}</if>
+      <if test="distributionTradeIds!=null and distributionTradeIds.size>0">
+        AND distribution_trade_id IN
+        <foreach item="item" index="index" collection="distributionTradeIds" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="cod!=null">AND is_cod=#{cod}</if>
+      <if test="merge!=null">AND is_merge=#{merge}</if>
+      <if test="hasExchange!=null">AND is_has_exchange=#{hasExchange}</if>
+      <if test="urgent!=null">AND is_urgent=#{urgent}</if>
+      <if test="wmsCancel!=null">AND is_wms_cancel=#{wmsCancel}</if>
+      <if test="lastDeliveryTimeBegin!=null">
+        <![CDATA[AND last_delivery_time>=#{lastDeliveryTimeBegin}]]>
+      </if>
+      <if test="lastDeliveryTimeEnd!=null">
+        <![CDATA[AND last_delivery_time<#{lastDeliveryTimeEnd}]]>
+      </if>
+      <if test="massCode!=null and massCode!=''">AND mass_code=#{massCode}</if>
+      <if test="massName!=null and massName!=''">AND mass_name=#{massName}</if>
+      <if test="massShortName!=null and massShortName!=''">AND mass_short_name=#{massShortName}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">AND member_name=#{memberName}</if>
+      <if test="mobile!=null and mobile!=''">AND mobile=#{mobile}</if>
+      <if test="mobiles!=null and mobiles.size>0">
+        AND mobile IN
+        <foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outStatus!=null">AND out_status=#{outStatus}</if>
+      <if test="packageNo!=null and packageNo!=''">AND package_no=#{packageNo}</if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="remark!=null and remark!=''">AND remark=#{remark}</if>
+      <if test="sellerMemo!=null and sellerMemo!=''">AND seller_memo=#{sellerMemo}</if>
+      <if test="sellingAmount!=null">AND selling_amount=#{sellingAmount}</if>
+      <if test="settlementAmount!=null">AND settlement_amount=#{settlementAmount}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">AND store_name=#{storeName}</if>
+      <if test="suggestExpressId!=null">AND suggest_express_id=#{suggestExpressId}</if>
+      <if test="suggestExpressName!=null and suggestExpressName!=''">AND
+        suggest_express_name=#{suggestExpressName}
+      </if>
+      <if test="suggestExpressNo!=null and suggestExpressNo!=''">AND
+        suggest_express_no=#{suggestExpressNo}
+      </if>
+      <if test="telephone!=null and telephone!=''">AND telephone=#{telephone}</if>
+      <if test="telephones!=null and telephones.size>0">
+        AND telephone IN
+        <foreach item="item" index="index" collection="telephones" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">AND warehouse_name=#{warehouseName}</if>
+      <if test="weight!=null">AND weight=#{weight}</if>
+      <if test="zipcode!=null and zipcode!=''">AND zipcode=#{zipcode}</if>
+      <if test="tradeIds!=null and tradeIds.size>0">
+        AND dispatch_order_id IN (SELECT dispatch_order_id FROM oms_dispatch_order_detail WHERE
+        trade_id IN
+        <foreach item="item" index="index" collection="tradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+        )
+      </if>
+      <if test="salesOrderCodes!=null and salesOrderCodes.size>0">
+        AND dispatch_order_id IN (SELECT dispatch_order_id FROM oms_dispatch_order_detail WHERE
+        sales_order_code IN
+        <foreach item="item" index="index" collection="salesOrderCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+        )
+      </if>
+      <if test="deliveryExpressId!=null">
+        AND dispatch_order_id IN (SELECT dispatch_order_id FROM oms_dispatch_order_delivery WHERE
+        express_id=#{deliveryExpressId})
+      </if>
+      <if test="deliveryExpressNo!=null">
+        AND dispatch_order_id IN (SELECT dispatch_order_id FROM oms_dispatch_order_delivery WHERE
+        express_no=#{deliveryExpressNo})
+      </if>
+    </trim>
+  </sql>
+  <select id="listBySalesOrderId" parameterType="map" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order
+    WHERE dispatch_order_id IN (SELECT dispatch_order_id
+    FROM oms_dispatch_order_detail
+    WHERE sales_order_id = #{_parameter})
+    ORDER BY dispatch_order_id DESC
+  </select>
+  <select id="listBySalesOrderDetailId" parameterType="map" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order
+    WHERE status != 5 AND dispatch_order_id IN (SELECT dispatch_order_id
+    FROM oms_dispatch_order_detail
+    WHERE sales_order_id = #{salesOrderId}
+    <if test="salesOrderDetailIds!=null and salesOrderDetailIds.size>0">
+      AND sales_order_detail_id IN
+      <foreach item="item" index="index" collection="salesOrderDetailIds" open="(" separator=","
+        close=")">#{item}
+      </foreach>
+    </if>
+    )
+    ORDER BY dispatch_order_id DESC
+  </select>
+  <select id="getSimpleInfo" resultMap="resultMap">
+        SELECT cainiao_order_id,dispatch_order_code,dispatch_order_id,is_cod,is_merge,is_has_exchange,is_urgent,is_wms_cancel,last_delivery_time,member_id,member_name,out_status,status,store_id,store_name,version,warehouse_id,warehouse_name,is_offline_delivery
+        FROM oms_dispatch_order
+        WHERE dispatch_order_id = #{_parameter}
+    </select>
+  <select id="listPageByConditions" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order
+    <include refid="advanceWhere"/>
+    ORDER BY dispatch_order_id DESC
+  </select>
+</mapper>

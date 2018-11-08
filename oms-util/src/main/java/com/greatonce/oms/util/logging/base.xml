@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+  <include resource="com/greatonce/core/logging/monitor.xml"/>
+  <property name="es_url_default" value="http://114.55.15.205:30002/_bulk"/>
+  <property name="log_pattern_default"
+    value="%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n%ex"/>
+  <property name="log_file_default" value="log/oms.log"/>
+  <property name="log_file_pattern_default" value="log/oms.%d{yyyy-MM-dd}.%i.log"/>
+  <property name="log_file_max_history_default" value="30"/>
+  <property name="log_file_max_size_default" value="100MB"/>
+  <property name="log_file_max_total_size_default" value="50GB"/>
+  <appender name="oms_sys" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>logs-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>code</value>
+      </property>
+      <property>
+        <name>logger</name>
+        <value>%logger</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>thread</name>
+        <value>%thread</value>
+      </property>
+      <property>
+        <name>marker</name>
+        <value>%marker</value>
+      </property>
+      <property>
+        <name>stacks</name>
+        <value>%ex</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_biz" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>biz-logs-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz</value>
+      </property>
+      <property>
+        <name>logger</name>
+        <value>%logger</value>
+      </property>
+      <property>
+        <name>thread</name>
+        <value>%thread</value>
+      </property>
+      <property>
+        <name>bizid</name>
+        <value>%X{bizid}</value>
+      </property>
+      <property>
+        <name>bizdtl</name>
+        <value>%X{bizdtl}</value>
+      </property>
+      <property>
+        <name>act</name>
+        <value>%X{act}</value>
+      </property>
+      <property>
+        <name>oper</name>
+        <value>%X{oper}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_product_mall_mapping"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>product-mall-mapping-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.product.mall.mapping</value>
+      </property>
+      <property>
+        <name>oper</name>
+        <value>%X{oper}</value>
+      </property>
+      <property>
+        <name>storeId</name>
+        <value>%X{storeId}</value>
+      </property>
+      <property>
+        <name>storeName</name>
+        <value>%X{storeName}</value>
+      </property>
+      <property>
+        <name>mallProductId</name>
+        <value>%X{mallProductId}</value>
+      </property>
+      <property>
+        <name>mallSkuId</name>
+        <value>%X{mallSkuId}</value>
+      </property>
+      <property>
+        <name>mallProductOutCode</name>
+        <value>%X{mallProductOutCode}</value>
+      </property>
+      <property>
+        <name>mallSkuOutCode</name>
+        <value>%X{mallSkuOutCode}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_stock_mall_upload"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>stock-upload-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.stock.mall.upload</value>
+      </property>
+      <property>
+        <name>batchId</name>
+        <value>%X{batchId}</value>
+      </property>
+      <property>
+        <name>oper</name>
+        <value>%X{oper}</value>
+      </property>
+      <property>
+        <name>storeId</name>
+        <value>%X{storeId}</value>
+      </property>
+      <property>
+        <name>storeName</name>
+        <value>%X{storeName}</value>
+      </property>
+      <property>
+        <name>productCode</name>
+        <value>%X{productCode}</value>
+      </property>
+      <property>
+        <name>skuCode</name>
+        <value>%X{skuCode}</value>
+      </property>
+      <property>
+        <name>status</name>
+        <value>%X{status}</value>
+      </property>
+      <property>
+        <name>quantity</name>
+        <value>%X{quantity}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_stock_track"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>stock-track-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.stock.track</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>orderCode</name>
+        <value>%X{orderCode}</value>
+      </property>
+      <property>
+        <name>orderType</name>
+        <value>%X{orderType}</value>
+      </property>
+      <property>
+        <name>virtualWarehouseId</name>
+        <value>%X{virtualWarehouseId}</value>
+      </property>
+      <property>
+        <name>virtualWarehouseName</name>
+        <value>%X{virtualWarehouseName}</value>
+      </property>
+      <property>
+        <name>skuCode</name>
+        <value>%X{skuCode}</value>
+      </property>
+      <property>
+        <name>quantity</name>
+        <value>%X{quantity}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_stock_sync"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>stock-sync-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.stock.sync</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>batchId</name>
+        <value>%X{batchId}</value>
+      </property>
+      <property>
+        <name>warehouseId</name>
+        <value>%X{warehouseId}</value>
+      </property>
+      <property>
+        <name>warehouseCode</name>
+        <value>%X{warehouseCode}</value>
+      </property>
+      <property>
+        <name>warehouseName</name>
+        <value>%X{warehouseName}</value>
+      </property>
+      <property>
+        <name>skuCode</name>
+        <value>%X{skuCode}</value>
+      </property>
+      <property>
+        <name>quantity</name>
+        <value>%X{quantity}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_translate_order"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>translate-order-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.translate.order</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>tradeId</name>
+        <value>%X{tradeId}</value>
+      </property>
+      <property>
+        <name>storeId</name>
+        <value>%X{storeId}</value>
+      </property>
+      <property>
+        <name>storeName</name>
+        <value>%X{storeName}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_translate_refund"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>translate-refund-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.translate.refund</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>tradeId</name>
+        <value>%X{tradeId}</value>
+      </property>
+      <property>
+        <name>refundId</name>
+        <value>%X{refundId}</value>
+      </property>
+      <property>
+        <name>storeId</name>
+        <value>%X{storeId}</value>
+      </property>
+      <property>
+        <name>storeName</name>
+        <value>%X{storeName}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_translate_exchange"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>translate-exchange-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.translate.exchange</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>tradeId</name>
+        <value>%X{tradeId}</value>
+      </property>
+      <property>
+        <name>exchangeId</name>
+        <value>%X{exchangeId}</value>
+      </property>
+      <property>
+        <name>storeId</name>
+        <value>%X{storeId}</value>
+      </property>
+      <property>
+        <name>storeName</name>
+        <value>%X{storeName}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_dispatch"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>dispatch-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>biz.dispatch</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>tradeId</name>
+        <value>%X{tradeId}</value>
+      </property>
+      <property>
+        <name>salesOrderCode</name>
+        <value>%X{salesOrderCode}</value>
+      </property>
+      <property>
+        <name>storeId</name>
+        <value>%X{storeId}</value>
+      </property>
+      <property>
+        <name>storeName</name>
+        <value>%X{storeName}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_wms" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>wms-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>wms</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>warehouseCode</name>
+        <value>%X{warehouseCode}</value>
+      </property>
+      <property>
+        <name>warehouseName</name>
+        <value>%X{warehouseName}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="oms_mall" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>${es_url:-${es_url_default}}</url>
+    <index>mall-%date{yyyy-MM-dd}</index>
+    <type>oms3</type>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+      </property>
+      <property>
+        <name>type</name>
+        <value>mall</value>
+      </property>
+      <property>
+        <name>level</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>storeId</name>
+        <value>%X{storeId}</value>
+      </property>
+      <property>
+        <name>storeName</name>
+        <value>%X{storeName}</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+  <appender name="file_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${log_file:-${log_file_default}}</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${log_file_pattern:-${log_file_pattern_default}}</fileNamePattern>
+      <maxFileSize>${log_file_max_size:-${log_file_max_size_default}}</maxFileSize>
+      <maxHistory>${log_file_max_history:-${log_file_max_history_default}}</maxHistory>
+      <totalSizeCap>${log_file_max_total_size:-${log_file_max_total_size_default}}</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+      <pattern>${log_pattern:-${log_pattern_default}}</pattern>
+    </encoder>
+  </appender>
+  <appender name="sql_file_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>log/sql.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>log/sql.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <maxFileSize>${log_file_max_size:-${log_file_max_size_default}}</maxFileSize>
+      <maxHistory>${log_file_max_history:-${log_file_max_history_default}}</maxHistory>
+      <totalSizeCap>${log_file_max_total_size:-${log_file_max_total_size_default}}</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+      <pattern>${log_pattern:-${log_pattern_default}}</pattern>
+    </encoder>
+  </appender>
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${log_pattern:-${log_pattern_default}}</pattern>
+    </encoder>
+  </appender>
+  <logger name="com.greatonce.oms" level="info" additivity="false">
+    <appender-ref ref="oms_sys"/>
+    <appender-ref ref="file_out"/>
+  </logger>
+  <logger name="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.mappers" level="info"
+    additivity="false">
+    <appender-ref ref="sql_file_out"/>
+  </logger>
+  <logger name="com.greatonce.oms.dao" level="info" additivity="false">
+    <appender-ref ref="sql_file_out"/>
+  </logger>
+  <logger name="oms.biz.logging" level="info" additivity="false">
+    <appender-ref ref="oms_biz"/>
+  </logger>
+  <logger name="oms.service.logging.stock.mall.upload" level="info" additivity="false">
+    <appender-ref ref="oms_stock_mall_upload"/>
+  </logger>
+  <logger name="oms.service.logging.stock.track" level="info" additivity="false">
+    <appender-ref ref="oms_stock_track"/>
+  </logger>
+  <logger name="oms.service.logging.stock.sync" level="info" additivity="false">
+    <appender-ref ref="oms_stock_sync"/>
+  </logger>
+  <logger name="oms.service.logging.product.mall.mapping" level="info" additivity="false">
+    <appender-ref ref="oms_product_mall_mapping"/>
+  </logger>
+  <logger name="oms.service.logging.translate.order" level="info" additivity="false">
+    <appender-ref ref="oms_translate_order"/>
+  </logger>
+  <logger name="oms.service.logging.translate.refund" level="info" additivity="false">
+    <appender-ref ref="oms_translate_refund"/>
+  </logger>
+  <logger name="oms.service.logging.translate.exchange" level="info" additivity="false">
+    <appender-ref ref="oms_translate_exchange"/>
+  </logger>
+  <logger name="oms.service.logging.dispatch" level="info" additivity="false">
+    <appender-ref ref="oms_dispatch"/>
+  </logger>
+  <logger name="oms.service.logging.wms" level="info" additivity="false">
+    <appender-ref ref="oms_wms"/>
+  </logger>
+  <logger name="oms.service.logging.mall" level="info" additivity="false">
+    <appender-ref ref="oms_mall"/>
+  </logger>
+  <root level="info">
+    <appender-ref ref="stdout"/>
+    <appender-ref ref="file_out"/>
+  </root>
+</included>

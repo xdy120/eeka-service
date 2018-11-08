@@ -1,0 +1,18 @@
+oms:
+  monitor: true
+  consumer:
+    translate:
+      order:
+        enabled: false
+      refund:
+        enabled: false
+      exchange:
+        enabled: false
+    stock-upload:
+      enabled: false
+    dispatch:
+      enabled: true
+    notice:
+      enabled: false
+    order-report:
+      enabled: false

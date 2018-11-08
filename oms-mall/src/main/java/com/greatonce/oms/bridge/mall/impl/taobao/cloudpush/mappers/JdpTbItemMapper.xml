@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.mappers.JdpTbItemMapper">
+  <resultMap id="resultMap"
+    type="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpTbItem">
+    <id column="num_iid" property="numIid"/>
+    <result column="nick" property="nick"/>
+    <result column="approve_status" property="approveStatus"/>
+    <result column="has_showcase" property="hasShowcase"/>
+    <result column="created" property="created"/>
+    <result column="modified" property="modified"/>
+    <result column="cid" property="cid"/>
+    <result column="has_discount" property="hasDiscount"/>
+    <result column="jdp_hashcode" property="jdpHashcode"/>
+    <result column="jdp_response" property="jdpResponse"/>
+    <result column="jdp_delete" property="jdpDelete"/>
+    <result column="jdp_created" property="jdpCreated"/>
+    <result column="jdp_modified" property="jdpModified"/>
+  </resultMap>
+  <sql
+    id="columns">nick,approve_status,has_showcase,created,modified,cid,has_discount,jdp_hashcode,jdp_response,jdp_delete,jdp_created,jdp_modified</sql>
+  <sql id="pkWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND num_iid=#{numIid}
+    </trim>
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="numIid!=null">AND num_iid=#{numIid}</if>
+      <if test="nick!=null">AND nick=#{nick}</if>
+      <if test="approveStatus!=null">AND approve_status=#{approveStatus}</if>
+      <if test="hasShowcase!=null">AND has_showcase=#{hasShowcase}</if>
+      <if test="created!=null">AND created=#{created}</if>
+      <if test="modified!=null">AND modified=#{modified}</if>
+      <if test="cid!=null">AND cid=#{cid}</if>
+      <if test="hasDiscount!=null">AND has_discount=#{hasDiscount}</if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpDelete!=null">AND jdp_delete=#{jdpDelete}</if>
+      <if test="jdpCreated!=null">AND jdp_created=#{jdpCreated}</if>
+      <if test="jdpModified!=null">AND jdp_modified=#{jdpModified}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="numIid!=null">AND num_iid=#{numIid}</if>
+      <if test="nick!=null">AND nick=#{nick}</if>
+      <if test="approveStatus!=null">AND approve_status=#{approveStatus}</if>
+      <if test="hasShowcase!=null">AND has_showcase=#{hasShowcase}</if>
+      <if test="createdBegin!=null"><![CDATA[AND created>=#{createdBegin}]]></if>
+      <if test="createdEnd!=null"><![CDATA[AND created<#{createdEnd}]]></if>
+      <if test="modifiedBegin!=null"><![CDATA[AND modified>=#{modifiedBegin}]]></if>
+      <if test="modifiedEnd!=null"><![CDATA[AND modified<#{modifiedEnd}]]></if>
+      <if test="cid!=null">AND cid=#{cid}</if>
+      <if test="hasDiscount!=null">AND has_discount=#{hasDiscount}</if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpDelete!=null">AND jdp_delete=#{jdpDelete}</if>
+      <if test="jdpCreatedBegin!=null"><![CDATA[AND jdp_created>=#{jdpCreatedBegin}]]></if>
+      <if test="jdpCreatedEnd!=null"><![CDATA[AND jdp_created<#{jdpCreatedEnd}]]></if>
+      <if test="jdpModifiedBegin!=null"><![CDATA[AND jdp_modified>=#{jdpModifiedBegin}]]></if>
+      <if test="jdpModifiedEnd!=null"><![CDATA[AND jdp_modified<#{jdpModifiedEnd}]]></if>
+    </trim>
+  </sql>
+  <insert id="insert"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpTbItem">
+    INSERT INTO jdp_tb_item(nick,approve_status,has_showcase,created,modified,cid,has_discount,jdp_hashcode,jdp_response,jdp_delete,jdp_created,jdp_modified)
+    VALUES(#{num_iid},#{nick},#{approve_status},#{has_showcase},#{created},#{modified},#{cid},#{has_discount},#{jdp_hashcode},#{jdp_response},#{jdp_delete},#{jdp_created},#{jdp_modified})
+  </insert>
+  <update id="update"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpTbItem">
+    UPDATE jdp_tb_item
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="nick!=null">nick=#{nick},</if>
+      <if test="approveStatus!=null">approve_status=#{approveStatus},</if>
+      <if test="hasShowcase!=null">has_showcase=#{hasShowcase},</if>
+      <if test="created!=null">created=#{created},</if>
+      <if test="modified!=null">modified=#{modified},</if>
+      <if test="cid!=null">cid=#{cid},</if>
+      <if test="hasDiscount!=null">has_discount=#{hasDiscount},</if>
+      <if test="jdpHashcode!=null">jdp_hashcode=#{jdpHashcode},</if>
+      <if test="jdpResponse!=null">jdp_response=#{jdpResponse},</if>
+      <if test="jdpDelete!=null">jdp_delete=#{jdpDelete},</if>
+      <if test="jdpCreated!=null">jdp_created=#{jdpCreated},</if>
+      <if test="jdpModified!=null">jdp_modified=#{jdpModified}</if>
+    </trim>
+    <include refid="pkWhere"/>
+  </update>
+  <delete id="delete">
+    DELETE FROM jdp_tb_item
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteExample">
+    DELETE FROM jdp_tb_item
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_tb_item
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_tb_item
+    <include refid="where"/>
+    ORDER BY num_iid
+  </select>
+  <select id="listExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_tb_item
+    <include refid="equalWhere"/>
+    ORDER BY num_iid
+  </select>
+  <select id="listField" parameterType="map" resultMap="resultMap">
+    SELECT ${PARAM_LIST_FIELD_KEY} FROM jdp_tb_item
+    <include refid="where"/>
+    ORDER BY num_iid
+  </select>
+  <select id="listByIds" parameterType="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM
+    jdp_tb_item
+    WHERE
+    num_iid
+    in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+  <select id="listByConditions" parameterType="map" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM
+    jdp_tb_item
+    <include refid="where"/>
+    ORDER BY
+    jdp_created
+    DESC
+  </select>
+
+  <select id="countTotal" parameterType="map" resultType="Integer">
+    SELECT
+    count(1)
+    FROM
+    jdp_tb_item
+    <include refid="where"/>
+  </select>
+</mapper>

@@ -1,0 +1,89 @@
+spring:
+  datasource:
+    oms:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://114.55.15.205:30001/gusgu_test?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    report:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://114.55.15.205:30001/jeoms3?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    admin:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://114.55.15.205:30001/admin_test?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    rds:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://114.55.15.205:30001/sys_info?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+  rabbitmq:
+    host: 114.55.15.205
+    port: 30006
+    username: guest
+    password: guest
+    virtual-host: gusgu_test
+  redis:
+    host: 114.55.15.205
+    port: 30005
+server:
+  port: 8184
+logging:
+  config: classpath:config/logback-consumer-dev.xml
+oms:
+  monitor: true
+  service:
+    name: consumer
+    custom: gusgu
+  consumer:
+    translate:
+      order:
+        enabled: true
+      refund:
+        enabled: false
+      exchange:
+        enabled: false
+    stock-upload:
+      ignore: false
+      enabled: false
+    dispatch:
+      enabled: true
+    notice:
+      enabled: false
+    order-report:
+      ignore: false
+      enabled: false
+    custom:
+      kingdee:
+        enabled: false
+        url: "http://gushanggu.gnway.cc:8090/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Save.common.kdsvc"
+        login-url: "http://gushanggu.gnway.cc:8090/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc"
+        acct-id: "5b56945f7176da"
+        username: "administrator"
+        password: "888888"
+        lcid: 2052
+      store-mapping:
+        qikemoke: 13867869465838592
+        deerma: 13867864414946304
+        lingchenchepin: 13867867024081920
+      stock-out-customer-id: 100
+      bill-customer-id: 10086

@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.ExchangeApplyOrderMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.ExchangeApplyOrder">
+    <id column="exchange_apply_order_id" property="exchangeApplyOrderId"/>
+    <result column="address" property="address"/>
+    <result column="city_id" property="cityId"/>
+    <result column="city_name" property="cityName"/>
+    <result column="contact" property="contact"/>
+    <result column="country_id" property="countryId"/>
+    <result column="country_name" property="countryName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="district_id" property="districtId"/>
+    <result column="district_name" property="districtName"/>
+    <result column="exchange_apply_order_code" property="exchangeApplyOrderCode"/>
+    <result column="in_express_name" property="inExpressName"/>
+    <result column="in_express_no" property="inExpressNo"/>
+    <result column="in_product_code" property="inProductCode"/>
+    <result column="in_product_id" property="inProductId"/>
+    <result column="in_product_name" property="inProductName"/>
+    <result column="in_sku_code" property="inSkuCode"/>
+    <result column="in_sku_id" property="inSkuId"/>
+    <result column="in_sku_name" property="inSkuName"/>
+    <result column="mall_detail_id" property="mallDetailId"/>
+    <result column="mall_exchange_id" property="mallExchangeId"/>
+    <result column="mall_exchange_status" property="mallExchangeStatus"/>
+    <result column="mall_exchange_version" property="mallExchangeVersion"/>
+    <result column="mall_type" property="mallType"/>
+    <result column="member_id" property="memberId"/>
+    <result column="member_name" property="memberName"/>
+    <result column="mobile" property="mobile"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="out_express_name" property="outExpressName"/>
+    <result column="out_express_no" property="outExpressNo"/>
+    <result column="out_mall_sku_id" property="outMallSkuId"/>
+    <result column="out_product_code" property="outProductCode"/>
+    <result column="out_product_id" property="outProductId"/>
+    <result column="out_product_name" property="outProductName"/>
+    <result column="out_sku_code" property="outSkuCode"/>
+    <result column="out_sku_id" property="outSkuId"/>
+    <result column="out_sku_name" property="outSkuName"/>
+    <result column="province_id" property="provinceId"/>
+    <result column="province_name" property="provinceName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="reason" property="reason"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+    <result column="status" property="status"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="telephone" property="telephone"/>
+    <result column="trade_id" property="tradeId"/>
+  </resultMap>
+  <sql id="columns">address,city_id,city_name,contact,country_id,country_name,created_time,district_id,district_name,exchange_apply_order_code,exchange_apply_order_id,in_express_name,in_express_no,in_product_code,in_product_id,in_product_name,in_sku_code,in_sku_id,in_sku_name,mall_detail_id,mall_exchange_id,mall_exchange_status,mall_exchange_version,mall_type,member_id,member_name,mobile,modified_time,out_express_name,out_express_no,out_mall_sku_id,out_product_code,out_product_id,out_product_name,out_sku_code,out_sku_id,out_sku_name,province_id,province_name,quantity,reason,sales_order_id,status,store_id,store_name,telephone,trade_id</sql>
+  <sql id="pkWhere">
+    WHERE exchange_apply_order_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="exchangeApplyOrderCode!=null and exchangeApplyOrderCode!=''">
+        AND exchange_apply_order_code=#{exchangeApplyOrderCode}
+      </if>
+      <if test="exchangeApplyOrderId!=null">AND exchange_apply_order_id=#{exchangeApplyOrderId}</if>
+      <if test="inExpressName!=null and inExpressName!=''">
+        AND in_express_name=#{inExpressName}
+      </if>
+      <if test="inExpressNo!=null and inExpressNo!=''">
+        AND in_express_no=#{inExpressNo}
+      </if>
+      <if test="inProductCode!=null and inProductCode!=''">
+        AND in_product_code=#{inProductCode}
+      </if>
+      <if test="inProductId!=null">AND in_product_id=#{inProductId}</if>
+      <if test="inProductName!=null and inProductName!=''">
+        AND in_product_name=#{inProductName}
+      </if>
+      <if test="inSkuCode!=null and inSkuCode!=''">
+        AND in_sku_code=#{inSkuCode}
+      </if>
+      <if test="inSkuId!=null">AND in_sku_id=#{inSkuId}</if>
+      <if test="inSkuName!=null and inSkuName!=''">
+        AND in_sku_name=#{inSkuName}
+      </if>
+      <if test="mallDetailId!=null and mallDetailId!=''">
+        AND mall_detail_id=#{mallDetailId}
+      </if>
+      <if test="mallExchangeId!=null and mallExchangeId!=''">
+        AND mall_exchange_id=#{mallExchangeId}
+      </if>
+      <if test="mallExchangeStatus!=null">AND mall_exchange_status=#{mallExchangeStatus}</if>
+      <if test="mallExchangeVersion!=null and mallExchangeVersion!=''">
+        AND mall_exchange_version=#{mallExchangeVersion}
+      </if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        AND member_name=#{memberName}
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outExpressName!=null and outExpressName!=''">
+        AND out_express_name=#{outExpressName}
+      </if>
+      <if test="outExpressNo!=null and outExpressNo!=''">
+        AND out_express_no=#{outExpressNo}
+      </if>
+      <if test="outMallSkuId!=null and outMallSkuId!=''">
+        AND out_mall_sku_id=#{outMallSkuId}
+      </if>
+      <if test="outProductCode!=null and outProductCode!=''">
+        AND out_product_code=#{outProductCode}
+      </if>
+      <if test="outProductId!=null">AND out_product_id=#{outProductId}</if>
+      <if test="outProductName!=null and outProductName!=''">
+        AND out_product_name=#{outProductName}
+      </if>
+      <if test="outSkuCode!=null and outSkuCode!=''">
+        AND out_sku_code=#{outSkuCode}
+      </if>
+      <if test="outSkuId!=null">AND out_sku_id=#{outSkuId}</if>
+      <if test="outSkuName!=null and outSkuName!=''">
+        AND out_sku_name=#{outSkuName}
+      </if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="reason!=null and reason!=''">
+        AND reason=#{reason}
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="exchangeApplyOrderCode!=null and exchangeApplyOrderCode!=''">
+        AND exchange_apply_order_code=#{exchangeApplyOrderCode}
+      </if>
+      <if test="exchangeApplyOrderId!=null">AND exchange_apply_order_id=#{exchangeApplyOrderId}</if>
+      <if test="inExpressName!=null and inExpressName!=''">
+        AND in_express_name=#{inExpressName}
+      </if>
+      <if test="inExpressNo!=null and inExpressNo!=''">
+        AND in_express_no=#{inExpressNo}
+      </if>
+      <if test="inExpressNos!=null and inExpressNos.size>0">
+        AND in_express_no IN
+        <foreach item="item" index="index" collection="inExpressNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inProductCode!=null and inProductCode!=''">
+        AND in_product_code=#{inProductCode}
+      </if>
+      <if test="inProductCodes!=null and inProductCodes.size>0">
+        AND in_product_code IN
+        <foreach item="item" index="index" collection="inProductCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inProductId!=null">AND in_product_id=#{inProductId}</if>
+      <if test="inProductName!=null and inProductName!=''">
+        AND in_product_name=#{inProductName}
+      </if>
+      <if test="inSkuCode!=null and inSkuCode!=''">
+        AND in_sku_code=#{inSkuCode}
+      </if>
+      <if test="inSkuCodes!=null and inSkuCodes.size>0">
+        AND in_sku_code IN
+        <foreach item="item" index="index" collection="inSkuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inSkuId!=null">AND in_sku_id=#{inSkuId}</if>
+      <if test="inSkuName!=null and inSkuName!=''">
+        AND in_sku_name=#{inSkuName}
+      </if>
+      <if test="mallDetailId!=null and mallDetailId!=''">
+        AND mall_detail_id=#{mallDetailId}
+      </if>
+      <if test="mallExchangeId!=null and mallExchangeId!=''">
+        AND mall_exchange_id=#{mallExchangeId}
+      </if>
+      <if test="mallExchangeStatus!=null">AND mall_exchange_status=#{mallExchangeStatus}</if>
+      <if test="mallExchangeVersion!=null and mallExchangeVersion!=''">
+        AND mall_exchange_version=#{mallExchangeVersion}
+      </if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        AND member_name=#{memberName}
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outExpressName!=null and outExpressName!=''">
+        AND out_express_name=#{outExpressName}
+      </if>
+      <if test="outExpressNo!=null and outExpressNo!=''">
+        AND out_express_no=#{outExpressNo}
+      </if>
+      <if test="outExpressNos!=null and outExpressNos.size>0">
+        AND out_express_no IN
+        <foreach item="item" index="index" collection="outExpressNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outMallSkuId!=null and outMallSkuId!=''">
+        AND out_mall_sku_id=#{outMallSkuId}
+      </if>
+      <if test="outProductCode!=null and outProductCode!=''">
+        AND out_product_code=#{outProductCode}
+      </if>
+      <if test="outProductCodes!=null and outProductCodes.size>0">
+        AND out_product_code IN
+        <foreach item="item" index="index" collection="outProductCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outProductId!=null">AND out_product_id=#{outProductId}</if>
+      <if test="outProductName!=null and outProductName!=''">
+        AND out_product_name=#{outProductName}
+      </if>
+      <if test="outSkuCode!=null and outSkuCode!=''">
+        AND out_sku_code=#{outSkuCode}
+      </if>
+      <if test="outSkuCodes!=null and outSkuCodes.size>0">
+        AND out_sku_code IN
+        <foreach item="item" index="index" collection="outSkuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outSkuId!=null">AND out_sku_id=#{outSkuId}</if>
+      <if test="outSkuName!=null and outSkuName!=''">
+        AND out_sku_name=#{outSkuName}
+      </if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="reason!=null and reason!=''">
+        AND reason=#{reason}
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="tradeIds!=null and tradeIds.size>0">
+        AND trade_id IN
+        <foreach item="item" index="index" collection="tradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY exchange_apply_order_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.ExchangeApplyOrder">
+    INSERT INTO oms_exchange_apply_order(address,city_id,city_name,contact,country_id,country_name,created_time,district_id,district_name,exchange_apply_order_code,exchange_apply_order_id,in_express_name,in_express_no,in_product_code,in_product_id,in_product_name,in_sku_code,in_sku_id,in_sku_name,mall_detail_id,mall_exchange_id,mall_exchange_status,mall_exchange_version,mall_type,member_id,member_name,mobile,modified_time,out_express_name,out_express_no,out_mall_sku_id,out_product_code,out_product_id,out_product_name,out_sku_code,out_sku_id,out_sku_name,province_id,province_name,quantity,reason,sales_order_id,status,store_id,store_name,telephone,trade_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{address},
+      #{cityId},
+      #{cityName},
+      #{contact},
+      #{countryId},
+      #{countryName},
+      now(),
+      #{districtId},
+      #{districtName},
+      #{exchangeApplyOrderCode},
+      #{exchangeApplyOrderId},
+      #{inExpressName},
+      #{inExpressNo},
+      #{inProductCode},
+      #{inProductId},
+      #{inProductName},
+      #{inSkuCode},
+      #{inSkuId},
+      #{inSkuName},
+      #{mallDetailId},
+      #{mallExchangeId},
+      #{mallExchangeStatus},
+      #{mallExchangeVersion},
+      #{mallType},
+      #{memberId},
+      #{memberName},
+      #{mobile},
+      now(),
+      #{outExpressName},
+      #{outExpressNo},
+      #{outMallSkuId},
+      #{outProductCode},
+      #{outProductId},
+      #{outProductName},
+      #{outSkuCode},
+      #{outSkuId},
+      #{outSkuName},
+      #{provinceId},
+      #{provinceName},
+      #{quantity},
+      #{reason},
+      #{salesOrderId},
+      #{status},
+      #{storeId},
+      #{storeName},
+      #{telephone},
+      #{tradeId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.ExchangeApplyOrder">
+    UPDATE oms_exchange_apply_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="address!=null">address=#{address},</if>
+      <if test="cityId!=null">city_id=#{cityId},</if>
+      <if test="cityName!=null">city_name=#{cityName},</if>
+      <if test="contact!=null">contact=#{contact},</if>
+      <if test="countryId!=null">country_id=#{countryId},</if>
+      <if test="countryName!=null">country_name=#{countryName},</if>
+      <if test="districtId!=null">district_id=#{districtId},</if>
+      <if test="districtName!=null">district_name=#{districtName},</if>
+      <if test="exchangeApplyOrderCode!=null">exchange_apply_order_code=#{exchangeApplyOrderCode},</if>
+      <if test="inExpressName!=null">in_express_name=#{inExpressName},</if>
+      <if test="inExpressNo!=null">in_express_no=#{inExpressNo},</if>
+      <if test="inProductCode!=null">in_product_code=#{inProductCode},</if>
+      <if test="inProductId!=null">in_product_id=#{inProductId},</if>
+      <if test="inProductName!=null">in_product_name=#{inProductName},</if>
+      <if test="inSkuCode!=null">in_sku_code=#{inSkuCode},</if>
+      <if test="inSkuId!=null">in_sku_id=#{inSkuId},</if>
+      <if test="inSkuName!=null">in_sku_name=#{inSkuName},</if>
+      <if test="mallDetailId!=null">mall_detail_id=#{mallDetailId},</if>
+      <if test="mallExchangeId!=null">mall_exchange_id=#{mallExchangeId},</if>
+      <if test="mallExchangeStatus!=null">mall_exchange_status=#{mallExchangeStatus},</if>
+      <if test="mallExchangeVersion!=null">mall_exchange_version=#{mallExchangeVersion},</if>
+      <if test="mallType!=null">mall_type=#{mallType},</if>
+      <if test="memberId!=null">member_id=#{memberId},</if>
+      <if test="memberName!=null">member_name=#{memberName},</if>
+      <if test="mobile!=null">mobile=#{mobile},</if>
+      modified_time=now(),
+      <if test="outExpressName!=null">out_express_name=#{outExpressName},</if>
+      <if test="outExpressNo!=null">out_express_no=#{outExpressNo},</if>
+      <if test="outMallSkuId!=null">out_mall_sku_id=#{outMallSkuId},</if>
+      <if test="outProductCode!=null">out_product_code=#{outProductCode},</if>
+      <if test="outProductId!=null">out_product_id=#{outProductId},</if>
+      <if test="outProductName!=null">out_product_name=#{outProductName},</if>
+      <if test="outSkuCode!=null">out_sku_code=#{outSkuCode},</if>
+      <if test="outSkuId!=null">out_sku_id=#{outSkuId},</if>
+      <if test="outSkuName!=null">out_sku_name=#{outSkuName},</if>
+      <if test="provinceId!=null">province_id=#{provinceId},</if>
+      <if test="provinceName!=null">province_name=#{provinceName},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="reason!=null">reason=#{reason},</if>
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="telephone!=null">telephone=#{telephone},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND exchange_apply_order_id=#{exchangeApplyOrderId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.ExchangeApplyOrder">
+    UPDATE oms_exchange_apply_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.address!=null">
+        address=#{record.address},
+      </if>
+      <if test="record.cityId!=null">
+        city_id=#{record.cityId},
+      </if>
+      <if test="record.cityName!=null">
+        city_name=#{record.cityName},
+      </if>
+      <if test="record.contact!=null">
+        contact=#{record.contact},
+      </if>
+      <if test="record.countryId!=null">
+        country_id=#{record.countryId},
+      </if>
+      <if test="record.countryName!=null">
+        country_name=#{record.countryName},
+      </if>
+      <if test="record.districtId!=null">
+        district_id=#{record.districtId},
+      </if>
+      <if test="record.districtName!=null">
+        district_name=#{record.districtName},
+      </if>
+      <if test="record.exchangeApplyOrderCode!=null">
+        exchange_apply_order_code=#{record.exchangeApplyOrderCode},
+      </if>
+      <if test="record.inExpressName!=null">
+        in_express_name=#{record.inExpressName},
+      </if>
+      <if test="record.inExpressNo!=null">
+        in_express_no=#{record.inExpressNo},
+      </if>
+      <if test="record.inProductCode!=null">
+        in_product_code=#{record.inProductCode},
+      </if>
+      <if test="record.inProductId!=null">
+        in_product_id=#{record.inProductId},
+      </if>
+      <if test="record.inProductName!=null">
+        in_product_name=#{record.inProductName},
+      </if>
+      <if test="record.inSkuCode!=null">
+        in_sku_code=#{record.inSkuCode},
+      </if>
+      <if test="record.inSkuId!=null">
+        in_sku_id=#{record.inSkuId},
+      </if>
+      <if test="record.inSkuName!=null">
+        in_sku_name=#{record.inSkuName},
+      </if>
+      <if test="record.mallDetailId!=null">
+        mall_detail_id=#{record.mallDetailId},
+      </if>
+      <if test="record.mallExchangeId!=null">
+        mall_exchange_id=#{record.mallExchangeId},
+      </if>
+      <if test="record.mallExchangeStatus!=null">
+        mall_exchange_status=#{record.mallExchangeStatus},
+      </if>
+      <if test="record.mallExchangeVersion!=null">
+        mall_exchange_version=#{record.mallExchangeVersion},
+      </if>
+      <if test="record.mallType!=null">
+        mall_type=#{record.mallType},
+      </if>
+      <if test="record.memberId!=null">
+        member_id=#{record.memberId},
+      </if>
+      <if test="record.memberName!=null">
+        member_name=#{record.memberName},
+      </if>
+      <if test="record.mobile!=null">
+        mobile=#{record.mobile},
+      </if>
+      modified_time=now(),
+      <if test="record.outExpressName!=null">
+        out_express_name=#{record.outExpressName},
+      </if>
+      <if test="record.outExpressNo!=null">
+        out_express_no=#{record.outExpressNo},
+      </if>
+      <if test="record.outMallSkuId!=null">
+        out_mall_sku_id=#{record.outMallSkuId},
+      </if>
+      <if test="record.outProductCode!=null">
+        out_product_code=#{record.outProductCode},
+      </if>
+      <if test="record.outProductId!=null">
+        out_product_id=#{record.outProductId},
+      </if>
+      <if test="record.outProductName!=null">
+        out_product_name=#{record.outProductName},
+      </if>
+      <if test="record.outSkuCode!=null">
+        out_sku_code=#{record.outSkuCode},
+      </if>
+      <if test="record.outSkuId!=null">
+        out_sku_id=#{record.outSkuId},
+      </if>
+      <if test="record.outSkuName!=null">
+        out_sku_name=#{record.outSkuName},
+      </if>
+      <if test="record.provinceId!=null">
+        province_id=#{record.provinceId},
+      </if>
+      <if test="record.provinceName!=null">
+        province_name=#{record.provinceName},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.reason!=null">
+        reason=#{record.reason},
+      </if>
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.telephone!=null">
+        telephone=#{record.telephone},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.address!=null">
+      AND address=#{example.address}
+      </if>
+      <if test="example.cityId!=null">
+      AND city_id=#{example.cityId}
+      </if>
+      <if test="example.cityName!=null">
+      AND city_name=#{example.cityName}
+      </if>
+      <if test="example.contact!=null">
+      AND contact=#{example.contact}
+      </if>
+      <if test="example.countryId!=null">
+      AND country_id=#{example.countryId}
+      </if>
+      <if test="example.countryName!=null">
+      AND country_name=#{example.countryName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.districtId!=null">
+      AND district_id=#{example.districtId}
+      </if>
+      <if test="example.districtName!=null">
+      AND district_name=#{example.districtName}
+      </if>
+      <if test="example.exchangeApplyOrderCode!=null">
+      AND exchange_apply_order_code=#{example.exchangeApplyOrderCode}
+      </if>
+      <if test="example.exchangeApplyOrderId!=null">
+      AND exchange_apply_order_id=#{example.exchangeApplyOrderId}
+      </if>
+      <if test="example.inExpressName!=null">
+      AND in_express_name=#{example.inExpressName}
+      </if>
+      <if test="example.inExpressNo!=null">
+      AND in_express_no=#{example.inExpressNo}
+      </if>
+      <if test="example.inExpressNos!=null">
+      AND in_express_no=#{example.inExpressNos}
+      </if>
+      <if test="example.inProductCode!=null">
+      AND in_product_code=#{example.inProductCode}
+      </if>
+      <if test="example.inProductCodes!=null">
+      AND in_product_code=#{example.inProductCodes}
+      </if>
+      <if test="example.inProductId!=null">
+      AND in_product_id=#{example.inProductId}
+      </if>
+      <if test="example.inProductName!=null">
+      AND in_product_name=#{example.inProductName}
+      </if>
+      <if test="example.inSkuCode!=null">
+      AND in_sku_code=#{example.inSkuCode}
+      </if>
+      <if test="example.inSkuCodes!=null">
+      AND in_sku_code=#{example.inSkuCodes}
+      </if>
+      <if test="example.inSkuId!=null">
+      AND in_sku_id=#{example.inSkuId}
+      </if>
+      <if test="example.inSkuName!=null">
+      AND in_sku_name=#{example.inSkuName}
+      </if>
+      <if test="example.mallDetailId!=null">
+      AND mall_detail_id=#{example.mallDetailId}
+      </if>
+      <if test="example.mallExchangeId!=null">
+      AND mall_exchange_id=#{example.mallExchangeId}
+      </if>
+      <if test="example.mallExchangeStatus!=null">
+      AND mall_exchange_status=#{example.mallExchangeStatus}
+      </if>
+      <if test="example.mallExchangeVersion!=null">
+      AND mall_exchange_version=#{example.mallExchangeVersion}
+      </if>
+      <if test="example.mallType!=null">
+      AND mall_type=#{example.mallType}
+      </if>
+      <if test="example.memberId!=null">
+      AND member_id=#{example.memberId}
+      </if>
+      <if test="example.memberName!=null">
+      AND member_name=#{example.memberName}
+      </if>
+      <if test="example.mobile!=null">
+      AND mobile=#{example.mobile}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outExpressName!=null">
+      AND out_express_name=#{example.outExpressName}
+      </if>
+      <if test="example.outExpressNo!=null">
+      AND out_express_no=#{example.outExpressNo}
+      </if>
+      <if test="example.outExpressNos!=null">
+      AND out_express_no=#{example.outExpressNos}
+      </if>
+      <if test="example.outMallSkuId!=null">
+      AND out_mall_sku_id=#{example.outMallSkuId}
+      </if>
+      <if test="example.outProductCode!=null">
+      AND out_product_code=#{example.outProductCode}
+      </if>
+      <if test="example.outProductCodes!=null">
+      AND out_product_code=#{example.outProductCodes}
+      </if>
+      <if test="example.outProductId!=null">
+      AND out_product_id=#{example.outProductId}
+      </if>
+      <if test="example.outProductName!=null">
+      AND out_product_name=#{example.outProductName}
+      </if>
+      <if test="example.outSkuCode!=null">
+      AND out_sku_code=#{example.outSkuCode}
+      </if>
+      <if test="example.outSkuCodes!=null">
+      AND out_sku_code=#{example.outSkuCodes}
+      </if>
+      <if test="example.outSkuId!=null">
+      AND out_sku_id=#{example.outSkuId}
+      </if>
+      <if test="example.outSkuName!=null">
+      AND out_sku_name=#{example.outSkuName}
+      </if>
+      <if test="example.provinceId!=null">
+      AND province_id=#{example.provinceId}
+      </if>
+      <if test="example.provinceName!=null">
+      AND province_name=#{example.provinceName}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.reason!=null">
+      AND reason=#{example.reason}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeIds!=null">
+      AND store_id=#{example.storeIds}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.telephone!=null">
+      AND telephone=#{example.telephone}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+      <if test="example.tradeIds!=null">
+      AND trade_id=#{example.tradeIds}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_exchange_apply_order
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_exchange_apply_order
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_exchange_apply_order
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_exchange_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_exchange_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_exchange_apply_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_exchange_apply_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_exchange_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_exchange_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockOccupancyMapper">
+    <sql id="updateWhere">
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="mainId!=null">AND main_id=#{mainId}</if>
+            <if test="detailId!=null">AND detail_id=#{detailId}</if>
+            <if test="stockOccupancyType!=null">AND stock_occupancy_type=#{stockOccupancyType}</if>
+        </trim>
+    </sql>
+    <update id="updateQuantity" parameterType="com.greatonce.oms.domain.stock.StockOccupancy">
+        UPDATE oms_stock_occupancy
+        <trim prefix="SET" suffixOverrides=",">
+            quantity=#{quantity},
+            <if test="skuId!=null">sku_id=#{skuId},</if>
+            <if test="skuCode!=null">sku_code=#{skuCode},</if>
+        </trim>
+        <include refid="updateWhere"></include>
+    </update>
+    <update id="adjustQuantity" parameterType="com.greatonce.oms.domain.stock.StockOccupancy">
+        UPDATE oms_stock_occupancy SET quantity=quantity+#{quantity}
+        <include refid="updateWhere"></include>
+    </update>
+    <update id="updateOccupancy" parameterType="com.greatonce.oms.domain.stock.StockOccupancy">
+        UPDATE oms_stock_occupancy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="virtualWarehouseId!=null">virtual_warehouse_id=#{virtualWarehouseId},</if>
+            <if test="warehouseId!=null">warehouse_id=#{warehouseId},</if>
+            <if test="status!=null">status=#{status},</if>
+        </trim>
+        <include refid="updateWhere"></include>
+    </update>
+</mapper>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipScheduleMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.vip.VipSchedule">
+    <id column="vip_schedule_id" property="vipScheduleId"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="begin_time" property="beginTime"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="end_time" property="endTime"/>
+    <result column="goods_value" property="goodsValue"/>
+    <result column="is_upload" property="upload"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="remark" property="remark"/>
+    <result column="status" property="status"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="version" property="version"/>
+    <result column="vip_schedule_code" property="vipScheduleCode"/>
+    <result column="vip_schedule_name" property="vipScheduleName"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+  </resultMap>
+  <sql id="columns">audited_time,auditor,begin_time,created_time,creator,end_time,goods_value,is_upload,modified_time,remark,status,store_id,store_name,version,vip_schedule_code,vip_schedule_id,vip_schedule_name,virtual_warehouse_id,virtual_warehouse_name</sql>
+  <sql id="pkWhere">
+    WHERE vip_schedule_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTime!=null">AND audited_time=#{auditedTime}</if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="beginTime!=null">AND begin_time=#{beginTime}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="endTime!=null">AND end_time=#{endTime}</if>
+      <if test="goodsValue!=null">AND goods_value=#{goodsValue}</if>
+      <if test="upload!=null">AND is_upload=#{upload}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="vipScheduleCode!=null and vipScheduleCode!=''">
+        AND vip_schedule_code=#{vipScheduleCode}
+      </if>
+      <if test="vipScheduleId!=null">AND vip_schedule_id=#{vipScheduleId}</if>
+      <if test="vipScheduleName!=null and vipScheduleName!=''">
+        AND vip_schedule_name=#{vipScheduleName}
+      </if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="beginTimeBegin!=null">
+        <![CDATA[AND begin_time>=#{beginTimeBegin}]]>
+      </if>
+      <if test="beginTimeEnd!=null">
+        <![CDATA[AND begin_time<#{beginTimeEnd}]]>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="endTimeBegin!=null">
+        <![CDATA[AND end_time>=#{endTimeBegin}]]>
+      </if>
+      <if test="endTimeEnd!=null">
+        <![CDATA[AND end_time<#{endTimeEnd}]]>
+      </if>
+      <if test="goodsValue!=null">AND goods_value=#{goodsValue}</if>
+      <if test="upload!=null">AND is_upload=#{upload}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="vipScheduleCode!=null and vipScheduleCode!=''">
+        AND vip_schedule_code=#{vipScheduleCode}
+      </if>
+      <if test="vipScheduleCodes!=null and vipScheduleCodes.size>0">
+        AND vip_schedule_code IN
+        <foreach item="item" index="index" collection="vipScheduleCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="vipScheduleId!=null">AND vip_schedule_id=#{vipScheduleId}</if>
+      <if test="vipScheduleName!=null and vipScheduleName!=''">
+        AND vip_schedule_name=#{vipScheduleName}
+      </if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY vip_schedule_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.vip.VipSchedule">
+    INSERT INTO oms_vip_schedule(audited_time,auditor,begin_time,created_time,creator,end_time,goods_value,is_upload,modified_time,remark,status,store_id,store_name,version,vip_schedule_code,vip_schedule_id,vip_schedule_name,virtual_warehouse_id,virtual_warehouse_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{auditedTime},
+      #{auditor},
+      #{beginTime},
+      now(),
+      #{creator},
+      #{endTime},
+      #{goodsValue},
+      #{upload},
+      now(),
+      #{remark},
+      #{status},
+      #{storeId},
+      #{storeName},
+      1,
+      #{vipScheduleCode},
+      #{vipScheduleId},
+      #{vipScheduleName},
+      #{virtualWarehouseId},
+      #{virtualWarehouseName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.vip.VipSchedule">
+    UPDATE oms_vip_schedule
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="beginTime!=null">begin_time=#{beginTime},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="endTime!=null">end_time=#{endTime},</if>
+      <if test="goodsValue!=null">goods_value=#{goodsValue},</if>
+      <if test="upload!=null">is_upload=#{upload},</if>
+      modified_time=now(),
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+      <if test="vipScheduleCode!=null">vip_schedule_code=#{vipScheduleCode},</if>
+      <if test="vipScheduleName!=null">vip_schedule_name=#{vipScheduleName},</if>
+      <if test="virtualWarehouseId!=null">virtual_warehouse_id=#{virtualWarehouseId},</if>
+      <if test="virtualWarehouseName!=null">virtual_warehouse_name=#{virtualWarehouseName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND vip_schedule_id=#{vipScheduleId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.vip.VipSchedule">
+    UPDATE oms_vip_schedule
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.auditedTime!=null">
+        audited_time=#{record.auditedTime},
+      </if>
+      <if test="record.auditor!=null">
+        auditor=#{record.auditor},
+      </if>
+      <if test="record.beginTime!=null">
+        begin_time=#{record.beginTime},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.endTime!=null">
+        end_time=#{record.endTime},
+      </if>
+      <if test="record.goodsValue!=null">
+        goods_value=#{record.goodsValue},
+      </if>
+      <if test="record.upload!=null">
+        is_upload=#{record.upload},
+      </if>
+      modified_time=now(),
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+      <if test="record.vipScheduleCode!=null">
+        vip_schedule_code=#{record.vipScheduleCode},
+      </if>
+      <if test="record.vipScheduleName!=null">
+        vip_schedule_name=#{record.vipScheduleName},
+      </if>
+      <if test="record.virtualWarehouseId!=null">
+        virtual_warehouse_id=#{record.virtualWarehouseId},
+      </if>
+      <if test="record.virtualWarehouseName!=null">
+        virtual_warehouse_name=#{record.virtualWarehouseName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.auditedTime!=null">
+      AND audited_time=#{example.auditedTime}
+      </if>
+      <if test="example.auditor!=null">
+      AND auditor=#{example.auditor}
+      </if>
+      <if test="example.beginTime!=null">
+      AND begin_time=#{example.beginTime}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.endTime!=null">
+      AND end_time=#{example.endTime}
+      </if>
+      <if test="example.goodsValue!=null">
+      AND goods_value=#{example.goodsValue}
+      </if>
+      <if test="example.upload!=null">
+      AND is_upload=#{example.upload}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeIds!=null">
+      AND store_id=#{example.storeIds}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      AND version=#{example.version}
+      <if test="example.vipScheduleCode!=null">
+      AND vip_schedule_code=#{example.vipScheduleCode}
+      </if>
+      <if test="example.vipScheduleCodes!=null">
+      AND vip_schedule_code=#{example.vipScheduleCodes}
+      </if>
+      <if test="example.vipScheduleId!=null">
+      AND vip_schedule_id=#{example.vipScheduleId}
+      </if>
+      <if test="example.vipScheduleName!=null">
+      AND vip_schedule_name=#{example.vipScheduleName}
+      </if>
+      <if test="example.virtualWarehouseId!=null">
+      AND virtual_warehouse_id=#{example.virtualWarehouseId}
+      </if>
+      <if test="example.virtualWarehouseName!=null">
+      AND virtual_warehouse_name=#{example.virtualWarehouseName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_vip_schedule
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_vip_schedule
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_schedule
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_schedule
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_schedule
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

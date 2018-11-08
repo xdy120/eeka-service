@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.DispatchOrderDetailMapper">
+    <sql id="simpleColumns">dispatch_order_detail_id, dispatch_order_id, is_has_invoice, notice_quantity, out_quantity, product_code, product_id, product_name, sales_order_code,
+    sales_order_detail_id, sales_order_id, sku_code, sku_id, sku_name, status, trade_id, virtual_warehouse_id, virtual_warehouse_name,settlement_amount</sql>
+    <select id="listSimple" resultMap="resultMap">
+        SELECT
+        <include refid="simpleColumns"/>
+        FROM oms_dispatch_order_detail
+        where dispatch_order_id=#{_parameter}
+    </select>
+</mapper>

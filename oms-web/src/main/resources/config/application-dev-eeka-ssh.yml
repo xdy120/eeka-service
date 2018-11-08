@@ -1,0 +1,58 @@
+spring:
+  datasource:
+    oms:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/oms_biz?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: oms
+      password: oms123!@#
+    report:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/oms_biz?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: oms
+      password: oms123!@#
+    admin:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/oms_admin?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: oms
+      password: oms123!@#
+    rds:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/sys_info?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: oms
+      password: oms123!@#
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: oms
+    password: oms123
+    virtual-host: oms
+  redis:
+    host: localhost
+    port: 6379
+  jsch:
+    enabled: true
+    proxy-host: 114.55.133.44
+    proxy-port: 22
+    proxy-user: root
+    proxy-password: OMSeeka123!@#
+    port-forwardings:
+      - target-host: rm-vy1u3nlf3288vj623.mysql.rds.aliyuncs.com
+        target-port: 3306
+        local-port: 3306
+      - target-host: 10.47.88.159
+        target-port: 5672
+        local-port: 5673
+      - target-host: 10.47.88.159
+        target-port: 6379
+        local-port: 6379
+oms:
+  service:
+    name: web
+    custom: eeka
+  system:
+    default:
+      password: oms888888

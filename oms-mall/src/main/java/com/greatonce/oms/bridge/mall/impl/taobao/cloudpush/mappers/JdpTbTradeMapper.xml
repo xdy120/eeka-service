@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.mappers.JdpTbTradeMapper">
+  <resultMap id="resultMap"
+    type="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpTbTrade">
+    <id column="tid" property="tid"/>
+    <result column="status" property="status"/>
+    <result column="type" property="type"/>
+    <result column="seller_nick" property="sellerNick"/>
+    <result column="buyer_nick" property="buyerNick"/>
+    <result column="created" property="created"/>
+    <result column="modified" property="modified"/>
+    <result column="jdp_hashcode" property="jdpHashcode"/>
+    <result column="jdp_response" property="jdpResponse"/>
+    <result column="jdp_created" property="jdpCreated"/>
+    <result column="jdp_modified" property="jdpModified"/>
+  </resultMap>
+  <sql
+    id="columns">status,type,seller_nick,buyer_nick,created,modified,jdp_hashcode,jdp_response,jdp_created,jdp_modified</sql>
+  <sql id="pkWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND tid=#{tid}
+    </trim>
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="tid!=null">AND tid=#{tid}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="type!=null">AND type=#{type}</if>
+      <if test="sellerNick!=null">AND seller_nick=#{sellerNick}</if>
+      <if test="buyerNick!=null">AND buyer_nick=#{buyerNick}</if>
+      <if test="created!=null">AND created=#{created}</if>
+      <if test="modified!=null">AND modified=#{modified}</if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpCreated!=null">AND jdp_created=#{jdpCreated}</if>
+      <if test="jdpModified!=null">AND jdp_modified=#{jdpModified}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="tid!=null">AND tid=#{tid}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="type!=null">AND type=#{type}</if>
+      <if test="sellerNick!=null">AND seller_nick=#{sellerNick}</if>
+      <if test="buyerNick!=null">AND buyer_nick=#{buyerNick}</if>
+      <if test="createdBegin!=null"><![CDATA[AND created>=#{createdBegin}]]></if>
+      <if test="createdEnd!=null"><![CDATA[AND created<#{createdEnd}]]></if>
+      <if test="modifiedBegin!=null"><![CDATA[AND modified>=#{modifiedBegin}]]></if>
+      <if test="modifiedEnd!=null"><![CDATA[AND modified<#{modifiedEnd}]]></if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpCreatedBegin!=null"><![CDATA[AND jdp_created>=#{jdpCreatedBegin}]]></if>
+      <if test="jdpCreatedEnd!=null"><![CDATA[AND jdp_created<#{jdpCreatedEnd}]]></if>
+      <if test="jdpModifiedBegin!=null"><![CDATA[AND jdp_modified>=#{jdpModifiedBegin}]]></if>
+      <if test="jdpModifiedEnd!=null"><![CDATA[AND jdp_modified<#{jdpModifiedEnd}]]></if>
+    </trim>
+  </sql>
+  <insert id="insert"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpTbTrade">
+    INSERT INTO jdp_tb_trade(status,type,seller_nick,buyer_nick,created,modified,jdp_hashcode,jdp_response,jdp_created,jdp_modified)
+    VALUES(#{tid},#{status},#{type},#{seller_nick},#{buyer_nick},#{created},#{modified},#{jdp_hashcode},#{jdp_response},#{jdp_created},#{jdp_modified})
+  </insert>
+  <update id="update"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpTbTrade">
+    UPDATE jdp_tb_trade
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="status!=null">status=#{status},</if>
+      <if test="type!=null">type=#{type},</if>
+      <if test="sellerNick!=null">seller_nick=#{sellerNick},</if>
+      <if test="buyerNick!=null">buyer_nick=#{buyerNick},</if>
+      <if test="created!=null">created=#{created},</if>
+      <if test="modified!=null">modified=#{modified},</if>
+      <if test="jdpHashcode!=null">jdp_hashcode=#{jdpHashcode},</if>
+      <if test="jdpResponse!=null">jdp_response=#{jdpResponse},</if>
+      <if test="jdpCreated!=null">jdp_created=#{jdpCreated},</if>
+      <if test="jdpModified!=null">jdp_modified=#{jdpModified}</if>
+    </trim>
+    <include refid="pkWhere"/>
+  </update>
+  <delete id="delete">
+    DELETE FROM jdp_tb_trade
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteExample">
+    DELETE FROM jdp_tb_trade
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_tb_trade
+    <include refid="pkWhere"/>
+  </select>
+
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_tb_trade
+    <include refid="where"/>
+    ORDER BY tid
+  </select>
+
+  <select id="listExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_tb_trade
+    <include refid="equalWhere"/>
+    ORDER BY tid
+  </select>
+  <select id="listField" parameterType="map" resultMap="resultMap">
+    SELECT ${PARAM_LIST_FIELD_KEY} FROM jdp_tb_trade
+    <include refid="where"/>
+    ORDER BY tid
+  </select>
+</mapper>

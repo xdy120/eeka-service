@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.product.ProductAttributeMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.product.ProductAttribute">
+    <id column="attribute_id" property="attributeId"/>
+    <result column="attribute_name" property="attributeName"/>
+    <result column="attribute_type" property="attributeType"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="data_dict_id" property="dataDictId"/>
+    <result column="data_dict_name" property="dataDictName"/>
+    <result column="is_system" property="system"/>
+    <result column="is_use_code" property="useCode"/>
+    <result column="modified_time" property="modifiedTime"/>
+  </resultMap>
+  <sql id="columns">attribute_id,attribute_name,attribute_type,created_time,data_dict_id,data_dict_name,is_system,is_use_code,modified_time</sql>
+  <sql id="pkWhere">
+    WHERE attribute_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="attributeId!=null">AND attribute_id=#{attributeId}</if>
+      <if test="attributeName!=null and attributeName!=''">
+        AND attribute_name=#{attributeName}
+      </if>
+      <if test="attributeType!=null">AND attribute_type=#{attributeType}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="dataDictId!=null">AND data_dict_id=#{dataDictId}</if>
+      <if test="dataDictName!=null and dataDictName!=''">
+        AND data_dict_name=#{dataDictName}
+      </if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="useCode!=null">AND is_use_code=#{useCode}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="attributeId!=null">AND attribute_id=#{attributeId}</if>
+      <if test="attributeName!=null and attributeName!=''">
+        AND attribute_name=#{attributeName}
+      </if>
+      <if test="attributeType!=null">AND attribute_type=#{attributeType}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="dataDictId!=null">AND data_dict_id=#{dataDictId}</if>
+      <if test="dataDictName!=null and dataDictName!=''">
+        AND data_dict_name=#{dataDictName}
+      </if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="useCode!=null">AND is_use_code=#{useCode}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY attribute_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.product.ProductAttribute">
+    INSERT INTO oms_product_attribute(attribute_id,attribute_name,attribute_type,created_time,data_dict_id,data_dict_name,is_system,is_use_code,modified_time)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{attributeId},
+      #{attributeName},
+      #{attributeType},
+      now(),
+      #{dataDictId},
+      #{dataDictName},
+      #{system},
+      #{useCode},
+      now(),
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.product.ProductAttribute">
+    UPDATE oms_product_attribute
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="attributeName!=null">attribute_name=#{attributeName},</if>
+      <if test="attributeType!=null">attribute_type=#{attributeType},</if>
+      <if test="dataDictId!=null">data_dict_id=#{dataDictId},</if>
+      <if test="dataDictName!=null">data_dict_name=#{dataDictName},</if>
+      <if test="system!=null">is_system=#{system},</if>
+      <if test="useCode!=null">is_use_code=#{useCode},</if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND attribute_id=#{attributeId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.product.ProductAttribute">
+    UPDATE oms_product_attribute
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.attributeName!=null">
+        attribute_name=#{record.attributeName},
+      </if>
+      <if test="record.attributeType!=null">
+        attribute_type=#{record.attributeType},
+      </if>
+      <if test="record.dataDictId!=null">
+        data_dict_id=#{record.dataDictId},
+      </if>
+      <if test="record.dataDictName!=null">
+        data_dict_name=#{record.dataDictName},
+      </if>
+      <if test="record.system!=null">
+        is_system=#{record.system},
+      </if>
+      <if test="record.useCode!=null">
+        is_use_code=#{record.useCode},
+      </if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.attributeId!=null">
+      AND attribute_id=#{example.attributeId}
+      </if>
+      <if test="example.attributeName!=null">
+      AND attribute_name=#{example.attributeName}
+      </if>
+      <if test="example.attributeType!=null">
+      AND attribute_type=#{example.attributeType}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.dataDictId!=null">
+      AND data_dict_id=#{example.dataDictId}
+      </if>
+      <if test="example.dataDictName!=null">
+      AND data_dict_name=#{example.dataDictName}
+      </if>
+      <if test="example.system!=null">
+      AND is_system=#{example.system}
+      </if>
+      <if test="example.useCode!=null">
+      AND is_use_code=#{example.useCode}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_product_attribute
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_product_attribute
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_attribute
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_attribute
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_attribute
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_attribute
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_attribute
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_product_attribute
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_product_attribute
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

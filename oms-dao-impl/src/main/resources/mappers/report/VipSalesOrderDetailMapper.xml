@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.report.VipSalesOrderDetailMapper">
+
+  <resultMap id="querySalesMap" type="com.greatonce.oms.bo.report.VipSalesBO">
+    <result column="store_name" property="storeName"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="out_quantity" property="quantity"/>
+    <result column="vip_amount" property="sellingAmount"/>
+    <result column="last_out_time" property="lastOutTime"/>
+  </resultMap>
+
+  <select id="exportVipSalesList" resultMap="querySalesMap">
+    select d.store_name,
+    d.last_out_time,
+    e.product_code,
+    e.product_name,
+    e.sku_code,
+    e.sku_name,
+    case when sum(e.out_quantity) is null then 0 else sum(e.out_quantity) end as out_quantity,
+    case when sum(e.vip_amount) is null then 0 else sum(e.vip_amount) end as vip_amount
+    from oms_vip_dispatch d,oms_vip_dispatch_detail e
+    where d.vip_dispatch_id = e.vip_dispatch_id
+    <if test="storeIds!=null and storeIds.size>0">
+      AND d.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="deliveryTimeBegin!=null">
+      <![CDATA[AND d.last_out_time>=#{deliveryTimeBegin}]]>
+    </if>
+    <if test="deliveryTimeEnd!=null">
+      <![CDATA[AND d.last_out_time<#{deliveryTimeEnd}]]>
+    </if>
+    <if test="productCode!=null and productCode!=''">
+      <![CDATA[AND e.product_code=#{productCode}]]>
+    </if>
+    <if test="skuCode!=null and skuCode!=''">
+      <![CDATA[AND e.sku_code=#{skuCode}]]>
+    </if>
+    GROUP BY d.store_id,e.product_code,e.sku_code
+  </select>
+
+
+  <resultMap id="queryReturnMap" type="com.greatonce.oms.bo.report.VipReturnBO">
+    <result column="store_name" property="storeName"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="return_quantity" property="quantity"/>
+    <result column="last_in_time" property="lastInTime"/>
+  </resultMap>
+  <select id="exportVipReturnList" resultMap="queryReturnMap">
+    select r.store_name,
+    r.last_in_time,
+    d.product_code,
+    d.product_name,
+    d.sku_code,
+    d.sku_name,
+    case when sum(d.notice_quantity) is null then 0 else sum(d.notice_quantity) end as
+    return_quantity
+    from oms_vip_return_notice r,oms_vip_return_notice_detail d
+    where r.vip_return_notice_id = d.vip_return_notice_id
+    <if test="storeIds!=null and storeIds.size>0">
+      AND r.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="unpackedTimeBegin!=null">
+      <![CDATA[AND r.last_in_time>=#{unpackedTimeBegin}]]>
+    </if>
+    <if test="unpackedTimeEnd!=null">
+      <![CDATA[AND r.last_in_time<#{unpackedTimeEnd}]]>
+    </if>
+    <if test="productCode!=null and productCode!=''">
+      <![CDATA[AND d.product_code=#{productCode}]]>
+    </if>
+    <if test="skuCode!=null and skuCode!=''">
+      <![CDATA[AND d.sku_code=#{skuCode}]]>
+    </if>
+    GROUP BY r.store_id,d.sku_code,d.product_code
+  </select>
+
+
+  <resultMap id="queryDeliverMap" type="com.greatonce.oms.bo.report.VipDeliverBO">
+    <result column="store_name" property="storeName"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="out_quantity" property="quantity"/>
+  </resultMap>
+
+  <select id="exportVipDeliverList" resultMap="queryDeliverMap">
+    select d.store_name,
+    s.product_code,
+    s.product_name,
+    s.sku_code,
+    s.sku_name,
+    case when sum(s.out_quantity) is null then 0 else sum(s.out_quantity) end as out_quantity
+    from oms_vip_delivery v,oms_vip_dispatch d,oms_vip_dispatch_detail s
+    where v.vip_delivery_id = d.vip_delivery_id and d.vip_dispatch_id = s.vip_dispatch_id
+    <if test="storeIds!=null and storeIds.size>0">
+      AND d.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="deliveryDateBegin!=null">
+      <![CDATA[AND d.last_out_time>=#{deliveryDateBegin}]]>
+    </if>
+    <if test="deliveryDateEnd!=null">
+      <![CDATA[AND d.last_out_time<=#{deliveryDateEnd}]]>
+    </if>
+    <!--and d.`status` = 6 and d.out_status != 0 and s.is_abnormal = 0-->
+    GROUP BY d.store_id,s.product_code,s.sku_code
+  </select>
+
+
+  <resultMap id="vipSalesStatisticsList" type="com.greatonce.oms.bo.report.VipSalesStatisticsBO">
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="sales_quantity" property="salesQuantity"/>
+    <result column="sales_amount" property="salesAmount"/>
+    <result column="return_quantity" property="returnQuantity"/>
+    <result column="return_amount" property="returnAmount"/>
+    <result column="actual_quantity" property="actualQuantity"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="return_quantity_ratio" property="returnQuantityRatio"/>
+    <result column="return_amount_ratio" property="returnAmountRatio"/>
+  </resultMap>
+  <select id="vipSalesStatisticsList" resultMap="vipSalesStatisticsList">
+    SELECT
+    sales.store_id,
+    sales.store_name,
+    sales.sales_quantity,
+    sales.sales_amount,
+    IFNULL( notice.return_quantity, 0 ) return_quantity,
+    IFNULL( notice.return_amount, 0 ) return_amount,
+    ( sales.sales_quantity - IFNULL( notice.return_quantity, 0 ) ) AS actual_quantity,
+    ( sales.sales_amount - IFNULL( notice.return_amount, 0 ) ) AS actual_amount,
+    convert( IFNULL( ( notice.return_quantity / sales.sales_quantity ) * 100, 0 ), decimal(12,2) ) AS
+    return_quantity_ratio,
+    convert( IFNULL( ( notice.return_amount / sales_order.sales.sales_amount ) * 100, 0 ), decimal(12,2) ) AS
+    return_amount_ratio
+    FROM
+    (
+    SELECT
+    store_id,
+    store_name,
+    SUM( out_quantity ) sales_quantity,
+    SUM( vip_amount ) sales_amount
+    FROM
+    oms_vip_dispatch
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND last_out_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND last_out_time<#{timeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+    store_id
+    ) sales
+    LEFT JOIN (
+    SELECT store_id, store_name, SUM( notice_quantity ) return_quantity, SUM( vip_amount )
+    return_amount
+    FROM oms_vip_return_notice
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND last_in_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND last_in_time<#{timeEnd}]]>
+      </if>
+    </where>
+    GROUP BY store_id ) notice ON sales.store_id = notice.store_id
+  </select>
+
+  <select id="vipSalesStatisticsForMonth" resultType="java.util.HashMap">
+    SELECT
+    sales.store_name AS storeName,
+    sales.data_month AS salesDate,
+    ( sales.sales_amount - IFNULL( notice.return_amount, 0 ) ) AS amount
+    FROM
+    (
+    SELECT
+    store_id,
+    store_name,
+    DATE_FORMAT( last_out_time, '%Y-%c' ) data_month,
+    SUM( vip_amount ) sales_amount
+    FROM
+    oms_vip_dispatch
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND last_out_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND last_out_time<#{timeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+    data_month,
+    store_id
+    ) sales
+    LEFT JOIN (
+    SELECT
+    store_id,
+    store_name,
+    DATE_FORMAT( last_in_time, '%Y-%c' ) data_month,
+    SUM( vip_amount ) return_amount
+    FROM
+    oms_vip_return_notice
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND last_in_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND last_in_time<#{timeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+    data_month,
+    store_id
+    ) notice ON sales.store_id = notice.store_id
+  </select>
+
+  <select id="vipSalesStatisticsForYear" resultType="java.util.HashMap">
+    SELECT
+    sales.store_name AS storeName,
+    sales.data_month AS salesDate,
+    ( sales.sales_amount - IFNULL( notice.return_amount, 0 ) ) AS amount
+    FROM
+    (
+    SELECT
+    store_id,
+    store_name,
+    DATE_FORMAT( last_out_time, '%Y' ) data_month,
+    SUM( vip_amount ) sales_amount
+    FROM
+    oms_vip_dispatch
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND last_out_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND last_out_time<#{timeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+    data_month,
+    store_id
+    ) sales
+    LEFT JOIN (
+    SELECT
+    store_id,
+    store_name,
+    DATE_FORMAT( last_in_time, '%Y' ) data_month,
+    SUM( vip_amount ) return_amount
+    FROM
+    oms_vip_return_notice
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND last_in_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND last_in_time<#{timeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+    data_month,
+    store_id
+    ) notice ON sales.store_id = notice.store_id
+  </select>
+
+
+  <resultMap id="vipReturnDetailQueryListPageMap"
+    type="com.greatonce.oms.bo.report.VipReturnBO">
+    <result column="store_name" property="storeName"/>
+    <result column="vip_return_notice_code" property="vipReturnNoticeCode"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="in_quantity" property="inQuantity"/>
+    <result column="vip_amount" property="refundableAmount"/>
+    <result column="last_in_time" property="lastInTime"/>
+  </resultMap>
+  <select id="vipReturnDetailQueryListPage" resultMap="vipReturnDetailQueryListPageMap">
+    select
+    r.vip_return_notice_code,
+    r.store_name,
+    d.sku_code,
+    d.notice_quantity,
+    d.in_quantity,
+    d.vip_amount,
+    r.last_in_time
+    from oms_vip_return_notice r,oms_vip_return_notice_detail d
+    where r.vip_return_notice_id = d.vip_return_notice_id
+    and r.`status` = 2 and r.in_status in (2,3) and d.in_quantity > 0
+    <if test="storeIds!=null and storeIds.size>0">
+      AND r.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="lastInTimeBegin!=null">
+      <![CDATA[AND r.last_in_time>=#{lastInTimeBegin}]]>
+    </if>
+    <if test="lastInTimeEnd!=null">
+      <![CDATA[AND r.last_in_time<#{lastInTimeEnd}]]>
+    </if>
+  </select>
+
+
+
+  <resultMap id="vipSalesDeliveryDetailQueryListPageMap"
+    type="com.greatonce.oms.bo.report.VipDeliverBO">
+    <result column="store_name" property="storeName"/>
+    <result column="vip_dispatch_code" property="vipDispatchCode"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="out_quantity" property="outQuantity"/>
+    <result column="vip_amount" property="settlementAmount"/>
+    <result column="last_out_time" property="lastOutTime"/>
+  </resultMap>
+  <select id="vipSalesDeliveryDetailQueryListPage" resultMap="vipSalesDeliveryDetailQueryListPageMap">
+    select
+    d.vip_dispatch_code,
+    d.store_name,
+    e.sku_code,
+    e.notice_quantity,
+    e.out_quantity,
+    e.vip_amount,
+    d.last_out_time
+    from oms_vip_dispatch d,oms_vip_dispatch_detail e,oms_vip_delivery v
+    where d.vip_dispatch_id = e.vip_dispatch_id and v.vip_delivery_id = d.vip_delivery_id
+    and d.`status` in( 4 ,7)and d.out_status in (2,3) and e.out_quantity > 0
+    <if test="storeIds!=null and storeIds.size>0">
+      AND d.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="lastOutTimeBegin!=null">
+      <![CDATA[AND d.last_out_time>=#{lastOutTimeBegin}]]>
+    </if>
+    <if test="lastOutTimeEnd!=null">
+      <![CDATA[AND d.last_out_time<#{lastOutTimeEnd}]]>
+    </if>
+  </select>
+
+
+  <select id="B2BSellStatisticsQueryListPage" resultMap="vipSalesStatisticsList">
+    SELECT
+    sales.store_id,
+    sales.store_name,
+    sales.sales_quantity,
+    sales.sales_amount,
+    IFNULL( notice.return_quantity, 0 ) return_quantity,
+    IFNULL( notice.return_amount, 0 ) return_amount,
+    ( sales.sales_quantity - IFNULL( notice.return_quantity, 0 ) ) AS actual_quantity,
+    ( sales.sales_amount - IFNULL( notice.return_amount, 0 ) ) AS actual_amount,
+    convert( IFNULL( ( notice.return_quantity / sales.sales_quantity ) * 100, 0 ), decimal(12,2) ) AS
+    return_quantity_ratio,
+    convert( IFNULL( ( notice.return_amount / sales_order.sales.sales_amount ) * 100, 0 ), decimal(12,2) ) AS
+    return_amount_ratio
+    FROM
+    (
+    SELECT
+    d.store_id,
+    d.store_name,
+    SUM( e.out_quantity ) sales_quantity,
+    SUM( e.vip_amount ) sales_amount
+    from oms_vip_dispatch d,oms_vip_dispatch_detail e,oms_vip_delivery v
+    where d.vip_dispatch_id = e.vip_dispatch_id and v.vip_delivery_id = d.vip_delivery_id
+    and d.`status` in( 4 ,7)and d.out_status in (2,3) and e.out_quantity > 0
+      <if test="storeIds!=null and storeIds.size>0">
+        AND d.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND d.last_out_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND d.last_out_time<#{timeEnd}]]>
+      </if>
+    GROUP BY
+    d.store_id
+    ) sales
+    LEFT JOIN (
+    SELECT r.store_id, r.store_name, SUM( d.in_quantity ) return_quantity, SUM( d.vip_amount )
+    return_amount
+    from oms_vip_return_notice r,oms_vip_return_notice_detail d
+    where r.vip_return_notice_id = d.vip_return_notice_id
+    and r.`status` = 2 and r.in_status in (2,3) and d.in_quantity > 0
+      <if test="storeIds!=null and storeIds.size>0">
+        AND r.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="timeBegin!=null">
+        <![CDATA[AND r.last_in_time>=#{timeBegin}]]>
+      </if>
+      <if test="timeEnd!=null">
+        <![CDATA[AND r.last_in_time<#{timeEnd}]]>
+      </if>
+    GROUP BY r.store_id ) notice ON sales.store_id = notice.store_id
+  </select>
+</mapper>

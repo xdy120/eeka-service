@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.StoreDownloadConfigMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.StoreDownloadConfig">
+    <id column="store_download_config_id" property="storeDownloadConfigId"/>
+    <result column="begin_time" property="beginTime"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="delay_minutes" property="delayMinutes"/>
+    <result column="download_type" property="downloadType"/>
+    <result column="interval_seconds" property="intervalSeconds"/>
+    <result column="is_enable" property="enable"/>
+    <result column="is_supplement" property="supplement"/>
+    <result column="job_class" property="jobClass"/>
+    <result column="job_cron" property="jobCron"/>
+    <result column="job_interval" property="jobInterval"/>
+    <result column="job_trigger_type" property="jobTriggerType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="version" property="version"/>
+  </resultMap>
+  <sql id="columns">begin_time,created_time,delay_minutes,download_type,interval_seconds,is_enable,is_supplement,job_class,job_cron,job_interval,job_trigger_type,modified_time,store_download_config_id,store_id,store_name,version</sql>
+  <sql id="pkWhere">
+    WHERE store_download_config_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="beginTime!=null">AND begin_time=#{beginTime}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="delayMinutes!=null">AND delay_minutes=#{delayMinutes}</if>
+      <if test="downloadType!=null">AND download_type=#{downloadType}</if>
+      <if test="intervalSeconds!=null">AND interval_seconds=#{intervalSeconds}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="supplement!=null">AND is_supplement=#{supplement}</if>
+      <if test="jobClass!=null and jobClass!=''">
+        AND job_class=#{jobClass}
+      </if>
+      <if test="jobCron!=null and jobCron!=''">
+        AND job_cron=#{jobCron}
+      </if>
+      <if test="jobInterval!=null">AND job_interval=#{jobInterval}</if>
+      <if test="jobTriggerType!=null">AND job_trigger_type=#{jobTriggerType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="storeDownloadConfigId!=null">AND store_download_config_id=#{storeDownloadConfigId}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="beginTimeBegin!=null">
+        <![CDATA[AND begin_time>=#{beginTimeBegin}]]>
+      </if>
+      <if test="beginTimeEnd!=null">
+        <![CDATA[AND begin_time<#{beginTimeEnd}]]>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="delayMinutes!=null">AND delay_minutes=#{delayMinutes}</if>
+      <if test="downloadType!=null">AND download_type=#{downloadType}</if>
+      <if test="intervalSeconds!=null">AND interval_seconds=#{intervalSeconds}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="supplement!=null">AND is_supplement=#{supplement}</if>
+      <if test="jobClass!=null and jobClass!=''">
+        AND job_class=#{jobClass}
+      </if>
+      <if test="jobCron!=null and jobCron!=''">
+        AND job_cron=#{jobCron}
+      </if>
+      <if test="jobInterval!=null">AND job_interval=#{jobInterval}</if>
+      <if test="jobTriggerType!=null">AND job_trigger_type=#{jobTriggerType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="storeDownloadConfigId!=null">AND store_download_config_id=#{storeDownloadConfigId}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY store_download_config_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.StoreDownloadConfig">
+    INSERT INTO oms_store_download_config(begin_time,created_time,delay_minutes,download_type,interval_seconds,is_enable,is_supplement,job_class,job_cron,job_interval,job_trigger_type,modified_time,store_download_config_id,store_id,store_name,version)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{beginTime},
+      now(),
+      #{delayMinutes},
+      #{downloadType},
+      #{intervalSeconds},
+      #{enable},
+      #{supplement},
+      #{jobClass},
+      #{jobCron},
+      #{jobInterval},
+      #{jobTriggerType},
+      now(),
+      #{storeDownloadConfigId},
+      #{storeId},
+      #{storeName},
+      1,
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.StoreDownloadConfig">
+    UPDATE oms_store_download_config
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="beginTime!=null">begin_time=#{beginTime},</if>
+      <if test="delayMinutes!=null">delay_minutes=#{delayMinutes},</if>
+      <if test="downloadType!=null">download_type=#{downloadType},</if>
+      <if test="intervalSeconds!=null">interval_seconds=#{intervalSeconds},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="supplement!=null">is_supplement=#{supplement},</if>
+      <if test="jobClass!=null">job_class=#{jobClass},</if>
+      <if test="jobCron!=null">job_cron=#{jobCron},</if>
+      <if test="jobInterval!=null">job_interval=#{jobInterval},</if>
+      <if test="jobTriggerType!=null">job_trigger_type=#{jobTriggerType},</if>
+      modified_time=now(),
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND store_download_config_id=#{storeDownloadConfigId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.StoreDownloadConfig">
+    UPDATE oms_store_download_config
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.beginTime!=null">
+        begin_time=#{record.beginTime},
+      </if>
+      <if test="record.delayMinutes!=null">
+        delay_minutes=#{record.delayMinutes},
+      </if>
+      <if test="record.downloadType!=null">
+        download_type=#{record.downloadType},
+      </if>
+      <if test="record.intervalSeconds!=null">
+        interval_seconds=#{record.intervalSeconds},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.supplement!=null">
+        is_supplement=#{record.supplement},
+      </if>
+      <if test="record.jobClass!=null">
+        job_class=#{record.jobClass},
+      </if>
+      <if test="record.jobCron!=null">
+        job_cron=#{record.jobCron},
+      </if>
+      <if test="record.jobInterval!=null">
+        job_interval=#{record.jobInterval},
+      </if>
+      <if test="record.jobTriggerType!=null">
+        job_trigger_type=#{record.jobTriggerType},
+      </if>
+      modified_time=now(),
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.beginTime!=null">
+      AND begin_time=#{example.beginTime}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.delayMinutes!=null">
+      AND delay_minutes=#{example.delayMinutes}
+      </if>
+      <if test="example.downloadType!=null">
+      AND download_type=#{example.downloadType}
+      </if>
+      <if test="example.intervalSeconds!=null">
+      AND interval_seconds=#{example.intervalSeconds}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.supplement!=null">
+      AND is_supplement=#{example.supplement}
+      </if>
+      <if test="example.jobClass!=null">
+      AND job_class=#{example.jobClass}
+      </if>
+      <if test="example.jobCron!=null">
+      AND job_cron=#{example.jobCron}
+      </if>
+      <if test="example.jobInterval!=null">
+      AND job_interval=#{example.jobInterval}
+      </if>
+      <if test="example.jobTriggerType!=null">
+      AND job_trigger_type=#{example.jobTriggerType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.storeDownloadConfigId!=null">
+      AND store_download_config_id=#{example.storeDownloadConfigId}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      AND version=#{example.version}
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_store_download_config
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_store_download_config
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store_download_config
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store_download_config
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store_download_config
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store_download_config
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store_download_config
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_store_download_config
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_store_download_config
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

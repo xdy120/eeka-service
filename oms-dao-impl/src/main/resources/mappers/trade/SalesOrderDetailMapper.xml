@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderDetailMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.SalesOrderDetail">
+    <id column="sales_order_detail_id" property="salesOrderDetailId"/>
+    <result column="activity_id" property="activityId"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="actual_selling_price" property="actualSellingPrice"/>
+    <result column="cost_price" property="costPrice"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="discount_amount" property="discountAmount"/>
+    <result column="distribution_amount" property="distributionAmount"/>
+    <result column="distribution_price" property="distributionPrice"/>
+    <result column="exchange_id" property="exchangeId"/>
+    <result column="express_name" property="expressName"/>
+    <result column="express_no" property="expressNo"/>
+    <result column="gift_strategy_id" property="giftStrategyId"/>
+    <result column="gift_strategy_name" property="giftStrategyName"/>
+    <result column="is_combination_detail" property="combinationDetail"/>
+    <result column="is_combination" property="combination"/>
+    <result column="is_deleted" property="deleted"/>
+    <result column="is_drop_shipping" property="dropShipping"/>
+    <result column="is_gift" property="gift"/>
+    <result column="is_lock_stock" property="lockStock"/>
+    <result column="is_manual_add" property="manualAdd"/>
+    <result column="is_need_return_goods" property="needReturnGoods"/>
+    <result column="is_oos" property="oos"/>
+    <result column="is_prepackage" property="prepackage"/>
+    <result column="is_presell_priority" property="presellPriority"/>
+    <result column="is_product_abnormal" property="productAbnormal"/>
+    <result column="is_separate" property="separate"/>
+    <result column="mall_detail_id" property="mallDetailId"/>
+    <result column="mall_presell_delivery_requiring" property="mallPresellDeliveryRequiring"/>
+    <result column="mall_product_id" property="mallProductId"/>
+    <result column="mall_product_name" property="mallProductName"/>
+    <result column="mall_product_out_code" property="mallProductOutCode"/>
+    <result column="mall_sales_order_detail_status" property="mallSalesOrderDetailStatus"/>
+    <result column="mall_sku_id" property="mallSkuId"/>
+    <result column="mall_sku_name" property="mallSkuName"/>
+    <result column="mall_sku_out_code" property="mallSkuOutCode"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="original_detailid" property="originalDetailid"/>
+    <result column="presell_delivery_date" property="presellDeliveryDate"/>
+    <result column="presell_id" property="presellId"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="product_type" property="productType"/>
+    <result column="quantity" property="quantity"/>
+    <result column="sales_order_detail_refund_status" property="salesOrderDetailRefundStatus"/>
+    <result column="sales_order_detail_type" property="salesOrderDetailType"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+    <result column="selling_amount" property="sellingAmount"/>
+    <result column="selling_price" property="sellingPrice"/>
+    <result column="settlement_amount" property="settlementAmount"/>
+    <result column="settlement_price" property="settlementPrice"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="status" property="status"/>
+    <result column="suggest_virtual_warehouse_id" property="suggestVirtualWarehouseId"/>
+    <result column="suggest_virtual_warehouse_name" property="suggestVirtualWarehouseName"/>
+    <result column="suggest_warehouse_id" property="suggestWarehouseId"/>
+    <result column="suggest_warehouse_name" property="suggestWarehouseName"/>
+    <result column="weight" property="weight"/>
+  </resultMap>
+  <sql id="columns">activity_id,actual_amount,actual_selling_price,cost_price,created_time,discount_amount,distribution_amount,distribution_price,exchange_id,express_name,express_no,gift_strategy_id,gift_strategy_name,is_combination_detail,is_combination,is_deleted,is_drop_shipping,is_gift,is_lock_stock,is_manual_add,is_need_return_goods,is_oos,is_prepackage,is_presell_priority,is_product_abnormal,is_separate,mall_detail_id,mall_presell_delivery_requiring,mall_product_id,mall_product_name,mall_product_out_code,mall_sales_order_detail_status,mall_sku_id,mall_sku_name,mall_sku_out_code,modified_time,original_detailid,presell_delivery_date,presell_id,product_code,product_id,product_name,product_type,quantity,sales_order_detail_id,sales_order_detail_refund_status,sales_order_detail_type,sales_order_id,selling_amount,selling_price,settlement_amount,settlement_price,sku_code,sku_id,sku_name,status,suggest_virtual_warehouse_id,suggest_virtual_warehouse_name,suggest_warehouse_id,suggest_warehouse_name,weight</sql>
+  <sql id="pkWhere">
+    WHERE sales_order_detail_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="activityId!=null">AND activity_id=#{activityId}</if>
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="actualSellingPrice!=null">AND actual_selling_price=#{actualSellingPrice}</if>
+      <if test="costPrice!=null">AND cost_price=#{costPrice}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="distributionAmount!=null">AND distribution_amount=#{distributionAmount}</if>
+      <if test="distributionPrice!=null">AND distribution_price=#{distributionPrice}</if>
+      <if test="exchangeId!=null and exchangeId!=''">
+        AND exchange_id=#{exchangeId}
+      </if>
+      <if test="expressName!=null and expressName!=''">
+        AND express_name=#{expressName}
+      </if>
+      <if test="expressNo!=null and expressNo!=''">
+        AND express_no=#{expressNo}
+      </if>
+      <if test="giftStrategyId!=null">AND gift_strategy_id=#{giftStrategyId}</if>
+      <if test="giftStrategyName!=null and giftStrategyName!=''">
+        AND gift_strategy_name=#{giftStrategyName}
+      </if>
+      <if test="combinationDetail!=null">AND is_combination_detail=#{combinationDetail}</if>
+      <if test="combination!=null">AND is_combination=#{combination}</if>
+      <if test="deleted!=null">AND is_deleted=#{deleted}</if>
+      <if test="dropShipping!=null">AND is_drop_shipping=#{dropShipping}</if>
+      <if test="gift!=null">AND is_gift=#{gift}</if>
+      <if test="lockStock!=null">AND is_lock_stock=#{lockStock}</if>
+      <if test="manualAdd!=null">AND is_manual_add=#{manualAdd}</if>
+      <if test="needReturnGoods!=null">AND is_need_return_goods=#{needReturnGoods}</if>
+      <if test="oos!=null">AND is_oos=#{oos}</if>
+      <if test="prepackage!=null">AND is_prepackage=#{prepackage}</if>
+      <if test="presellPriority!=null">AND is_presell_priority=#{presellPriority}</if>
+      <if test="productAbnormal!=null">AND is_product_abnormal=#{productAbnormal}</if>
+      <if test="separate!=null">AND is_separate=#{separate}</if>
+      <if test="mallDetailId!=null and mallDetailId!=''">
+        AND mall_detail_id=#{mallDetailId}
+      </if>
+      <if test="mallPresellDeliveryRequiring!=null and mallPresellDeliveryRequiring!=''">
+        AND mall_presell_delivery_requiring=#{mallPresellDeliveryRequiring}
+      </if>
+      <if test="mallProductId!=null and mallProductId!=''">
+        AND mall_product_id=#{mallProductId}
+      </if>
+      <if test="mallProductName!=null and mallProductName!=''">
+        AND mall_product_name=#{mallProductName}
+      </if>
+      <if test="mallProductOutCode!=null and mallProductOutCode!=''">
+        AND mall_product_out_code=#{mallProductOutCode}
+      </if>
+      <if test="mallSalesOrderDetailStatus!=null">AND mall_sales_order_detail_status=#{mallSalesOrderDetailStatus}</if>
+      <if test="mallSkuId!=null and mallSkuId!=''">
+        AND mall_sku_id=#{mallSkuId}
+      </if>
+      <if test="mallSkuName!=null and mallSkuName!=''">
+        AND mall_sku_name=#{mallSkuName}
+      </if>
+      <if test="mallSkuOutCode!=null and mallSkuOutCode!=''">
+        AND mall_sku_out_code=#{mallSkuOutCode}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="originalDetailid!=null">AND original_detailid=#{originalDetailid}</if>
+      <if test="presellDeliveryDate!=null">AND presell_delivery_date=#{presellDeliveryDate}</if>
+      <if test="presellId!=null">AND presell_id=#{presellId}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="productType!=null">AND product_type=#{productType}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="salesOrderDetailId!=null">AND sales_order_detail_id=#{salesOrderDetailId}</if>
+      <if test="salesOrderDetailRefundStatus!=null">AND sales_order_detail_refund_status=#{salesOrderDetailRefundStatus}</if>
+      <if test="salesOrderDetailType!=null">AND sales_order_detail_type=#{salesOrderDetailType}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="sellingAmount!=null">AND selling_amount=#{sellingAmount}</if>
+      <if test="sellingPrice!=null">AND selling_price=#{sellingPrice}</if>
+      <if test="settlementAmount!=null">AND settlement_amount=#{settlementAmount}</if>
+      <if test="settlementPrice!=null">AND settlement_price=#{settlementPrice}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="suggestVirtualWarehouseId!=null">AND suggest_virtual_warehouse_id=#{suggestVirtualWarehouseId}</if>
+      <if test="suggestVirtualWarehouseName!=null and suggestVirtualWarehouseName!=''">
+        AND suggest_virtual_warehouse_name=#{suggestVirtualWarehouseName}
+      </if>
+      <if test="suggestWarehouseId!=null">AND suggest_warehouse_id=#{suggestWarehouseId}</if>
+      <if test="suggestWarehouseName!=null and suggestWarehouseName!=''">
+        AND suggest_warehouse_name=#{suggestWarehouseName}
+      </if>
+      <if test="weight!=null">AND weight=#{weight}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="activityId!=null">AND activity_id=#{activityId}</if>
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="actualSellingPrice!=null">AND actual_selling_price=#{actualSellingPrice}</if>
+      <if test="costPrice!=null">AND cost_price=#{costPrice}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="distributionAmount!=null">AND distribution_amount=#{distributionAmount}</if>
+      <if test="distributionPrice!=null">AND distribution_price=#{distributionPrice}</if>
+      <if test="exchangeId!=null and exchangeId!=''">
+        AND exchange_id=#{exchangeId}
+      </if>
+      <if test="expressName!=null and expressName!=''">
+        AND express_name=#{expressName}
+      </if>
+      <if test="expressNo!=null and expressNo!=''">
+        AND express_no=#{expressNo}
+      </if>
+      <if test="giftStrategyId!=null">AND gift_strategy_id=#{giftStrategyId}</if>
+      <if test="giftStrategyName!=null and giftStrategyName!=''">
+        AND gift_strategy_name=#{giftStrategyName}
+      </if>
+      <if test="combinationDetail!=null">AND is_combination_detail=#{combinationDetail}</if>
+      <if test="combination!=null">AND is_combination=#{combination}</if>
+      <if test="deleted!=null">AND is_deleted=#{deleted}</if>
+      <if test="dropShipping!=null">AND is_drop_shipping=#{dropShipping}</if>
+      <if test="gift!=null">AND is_gift=#{gift}</if>
+      <if test="lockStock!=null">AND is_lock_stock=#{lockStock}</if>
+      <if test="manualAdd!=null">AND is_manual_add=#{manualAdd}</if>
+      <if test="needReturnGoods!=null">AND is_need_return_goods=#{needReturnGoods}</if>
+      <if test="oos!=null">AND is_oos=#{oos}</if>
+      <if test="prepackage!=null">AND is_prepackage=#{prepackage}</if>
+      <if test="presellPriority!=null">AND is_presell_priority=#{presellPriority}</if>
+      <if test="productAbnormal!=null">AND is_product_abnormal=#{productAbnormal}</if>
+      <if test="separate!=null">AND is_separate=#{separate}</if>
+      <if test="mallDetailId!=null and mallDetailId!=''">
+        AND mall_detail_id=#{mallDetailId}
+      </if>
+      <if test="mallPresellDeliveryRequiring!=null and mallPresellDeliveryRequiring!=''">
+        AND mall_presell_delivery_requiring=#{mallPresellDeliveryRequiring}
+      </if>
+      <if test="mallProductId!=null and mallProductId!=''">
+        AND mall_product_id=#{mallProductId}
+      </if>
+      <if test="mallProductName!=null and mallProductName!=''">
+        AND mall_product_name=#{mallProductName}
+      </if>
+      <if test="mallProductOutCode!=null and mallProductOutCode!=''">
+        AND mall_product_out_code=#{mallProductOutCode}
+      </if>
+      <if test="mallSalesOrderDetailStatus!=null">AND mall_sales_order_detail_status=#{mallSalesOrderDetailStatus}</if>
+      <if test="mallSkuId!=null and mallSkuId!=''">
+        AND mall_sku_id=#{mallSkuId}
+      </if>
+      <if test="mallSkuName!=null and mallSkuName!=''">
+        AND mall_sku_name=#{mallSkuName}
+      </if>
+      <if test="mallSkuOutCode!=null and mallSkuOutCode!=''">
+        AND mall_sku_out_code=#{mallSkuOutCode}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="originalDetailid!=null">AND original_detailid=#{originalDetailid}</if>
+      <if test="presellDeliveryDateBegin!=null">
+        <![CDATA[AND presell_delivery_date>=#{presellDeliveryDateBegin}]]>
+      </if>
+      <if test="presellDeliveryDateEnd!=null">
+        <![CDATA[AND presell_delivery_date<#{presellDeliveryDateEnd}]]>
+      </if>
+      <if test="presellId!=null">AND presell_id=#{presellId}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="productType!=null">AND product_type=#{productType}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="salesOrderDetailId!=null">AND sales_order_detail_id=#{salesOrderDetailId}</if>
+      <if test="salesOrderDetailRefundStatus!=null">AND sales_order_detail_refund_status=#{salesOrderDetailRefundStatus}</if>
+      <if test="salesOrderDetailType!=null">AND sales_order_detail_type=#{salesOrderDetailType}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="sellingAmount!=null">AND selling_amount=#{sellingAmount}</if>
+      <if test="sellingPrice!=null">AND selling_price=#{sellingPrice}</if>
+      <if test="settlementAmount!=null">AND settlement_amount=#{settlementAmount}</if>
+      <if test="settlementPrice!=null">AND settlement_price=#{settlementPrice}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="suggestVirtualWarehouseId!=null">AND suggest_virtual_warehouse_id=#{suggestVirtualWarehouseId}</if>
+      <if test="suggestVirtualWarehouseName!=null and suggestVirtualWarehouseName!=''">
+        AND suggest_virtual_warehouse_name=#{suggestVirtualWarehouseName}
+      </if>
+      <if test="suggestWarehouseId!=null">AND suggest_warehouse_id=#{suggestWarehouseId}</if>
+      <if test="suggestWarehouseName!=null and suggestWarehouseName!=''">
+        AND suggest_warehouse_name=#{suggestWarehouseName}
+      </if>
+      <if test="weight!=null">AND weight=#{weight}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sales_order_detail_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.SalesOrderDetail">
+    INSERT INTO oms_sales_order_detail(activity_id,actual_amount,actual_selling_price,cost_price,created_time,discount_amount,distribution_amount,distribution_price,exchange_id,express_name,express_no,gift_strategy_id,gift_strategy_name,is_combination_detail,is_combination,is_deleted,is_drop_shipping,is_gift,is_lock_stock,is_manual_add,is_need_return_goods,is_oos,is_prepackage,is_presell_priority,is_product_abnormal,is_separate,mall_detail_id,mall_presell_delivery_requiring,mall_product_id,mall_product_name,mall_product_out_code,mall_sales_order_detail_status,mall_sku_id,mall_sku_name,mall_sku_out_code,modified_time,original_detailid,presell_delivery_date,presell_id,product_code,product_id,product_name,product_type,quantity,sales_order_detail_id,sales_order_detail_refund_status,sales_order_detail_type,sales_order_id,selling_amount,selling_price,settlement_amount,settlement_price,sku_code,sku_id,sku_name,status,suggest_virtual_warehouse_id,suggest_virtual_warehouse_name,suggest_warehouse_id,suggest_warehouse_name,weight)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{activityId},
+      #{actualAmount},
+      #{actualSellingPrice},
+      #{costPrice},
+      now(),
+      #{discountAmount},
+      #{distributionAmount},
+      #{distributionPrice},
+      #{exchangeId},
+      #{expressName},
+      #{expressNo},
+      #{giftStrategyId},
+      #{giftStrategyName},
+      #{combinationDetail},
+      #{combination},
+      #{deleted},
+      #{dropShipping},
+      #{gift},
+      #{lockStock},
+      #{manualAdd},
+      #{needReturnGoods},
+      #{oos},
+      #{prepackage},
+      #{presellPriority},
+      #{productAbnormal},
+      #{separate},
+      #{mallDetailId},
+      #{mallPresellDeliveryRequiring},
+      #{mallProductId},
+      #{mallProductName},
+      #{mallProductOutCode},
+      #{mallSalesOrderDetailStatus},
+      #{mallSkuId},
+      #{mallSkuName},
+      #{mallSkuOutCode},
+      now(),
+      #{originalDetailid},
+      #{presellDeliveryDate},
+      #{presellId},
+      #{productCode},
+      #{productId},
+      #{productName},
+      #{productType},
+      #{quantity},
+      #{salesOrderDetailId},
+      #{salesOrderDetailRefundStatus},
+      #{salesOrderDetailType},
+      #{salesOrderId},
+      #{sellingAmount},
+      #{sellingPrice},
+      #{settlementAmount},
+      #{settlementPrice},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+      #{status},
+      #{suggestVirtualWarehouseId},
+      #{suggestVirtualWarehouseName},
+      #{suggestWarehouseId},
+      #{suggestWarehouseName},
+      #{weight},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.SalesOrderDetail">
+    UPDATE oms_sales_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="activityId!=null">activity_id=#{activityId},</if>
+      <if test="actualAmount!=null">actual_amount=#{actualAmount},</if>
+      <if test="actualSellingPrice!=null">actual_selling_price=#{actualSellingPrice},</if>
+      <if test="costPrice!=null">cost_price=#{costPrice},</if>
+      <if test="discountAmount!=null">discount_amount=#{discountAmount},</if>
+      <if test="distributionAmount!=null">distribution_amount=#{distributionAmount},</if>
+      <if test="distributionPrice!=null">distribution_price=#{distributionPrice},</if>
+      <if test="exchangeId!=null">exchange_id=#{exchangeId},</if>
+      <if test="expressName!=null">express_name=#{expressName},</if>
+      <if test="expressNo!=null">express_no=#{expressNo},</if>
+      <if test="giftStrategyId!=null">gift_strategy_id=#{giftStrategyId},</if>
+      <if test="giftStrategyName!=null">gift_strategy_name=#{giftStrategyName},</if>
+      <if test="combinationDetail!=null">is_combination_detail=#{combinationDetail},</if>
+      <if test="combination!=null">is_combination=#{combination},</if>
+      <if test="deleted!=null">is_deleted=#{deleted},</if>
+      <if test="dropShipping!=null">is_drop_shipping=#{dropShipping},</if>
+      <if test="gift!=null">is_gift=#{gift},</if>
+      <if test="lockStock!=null">is_lock_stock=#{lockStock},</if>
+      <if test="manualAdd!=null">is_manual_add=#{manualAdd},</if>
+      <if test="needReturnGoods!=null">is_need_return_goods=#{needReturnGoods},</if>
+      <if test="oos!=null">is_oos=#{oos},</if>
+      <if test="prepackage!=null">is_prepackage=#{prepackage},</if>
+      <if test="presellPriority!=null">is_presell_priority=#{presellPriority},</if>
+      <if test="productAbnormal!=null">is_product_abnormal=#{productAbnormal},</if>
+      <if test="separate!=null">is_separate=#{separate},</if>
+      <if test="mallDetailId!=null">mall_detail_id=#{mallDetailId},</if>
+      <if test="mallPresellDeliveryRequiring!=null">mall_presell_delivery_requiring=#{mallPresellDeliveryRequiring},</if>
+      <if test="mallProductId!=null">mall_product_id=#{mallProductId},</if>
+      <if test="mallProductName!=null">mall_product_name=#{mallProductName},</if>
+      <if test="mallProductOutCode!=null">mall_product_out_code=#{mallProductOutCode},</if>
+      <if test="mallSalesOrderDetailStatus!=null">mall_sales_order_detail_status=#{mallSalesOrderDetailStatus},</if>
+      <if test="mallSkuId!=null">mall_sku_id=#{mallSkuId},</if>
+      <if test="mallSkuName!=null">mall_sku_name=#{mallSkuName},</if>
+      <if test="mallSkuOutCode!=null">mall_sku_out_code=#{mallSkuOutCode},</if>
+      modified_time=now(),
+      <if test="originalDetailid!=null">original_detailid=#{originalDetailid},</if>
+      <if test="presellDeliveryDate!=null">presell_delivery_date=#{presellDeliveryDate},</if>
+      <if test="presellId!=null">presell_id=#{presellId},</if>
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="productType!=null">product_type=#{productType},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="salesOrderDetailRefundStatus!=null">sales_order_detail_refund_status=#{salesOrderDetailRefundStatus},</if>
+      <if test="salesOrderDetailType!=null">sales_order_detail_type=#{salesOrderDetailType},</if>
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+      <if test="sellingAmount!=null">selling_amount=#{sellingAmount},</if>
+      <if test="sellingPrice!=null">selling_price=#{sellingPrice},</if>
+      <if test="settlementAmount!=null">settlement_amount=#{settlementAmount},</if>
+      <if test="settlementPrice!=null">settlement_price=#{settlementPrice},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="suggestVirtualWarehouseId!=null">suggest_virtual_warehouse_id=#{suggestVirtualWarehouseId},</if>
+      <if test="suggestVirtualWarehouseName!=null">suggest_virtual_warehouse_name=#{suggestVirtualWarehouseName},</if>
+      <if test="suggestWarehouseId!=null">suggest_warehouse_id=#{suggestWarehouseId},</if>
+      <if test="suggestWarehouseName!=null">suggest_warehouse_name=#{suggestWarehouseName},</if>
+      <if test="weight!=null">weight=#{weight},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sales_order_detail_id=#{salesOrderDetailId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.SalesOrderDetail">
+    UPDATE oms_sales_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.activityId!=null">
+        activity_id=#{record.activityId},
+      </if>
+      <if test="record.actualAmount!=null">
+        actual_amount=#{record.actualAmount},
+      </if>
+      <if test="record.actualSellingPrice!=null">
+        actual_selling_price=#{record.actualSellingPrice},
+      </if>
+      <if test="record.costPrice!=null">
+        cost_price=#{record.costPrice},
+      </if>
+      <if test="record.discountAmount!=null">
+        discount_amount=#{record.discountAmount},
+      </if>
+      <if test="record.distributionAmount!=null">
+        distribution_amount=#{record.distributionAmount},
+      </if>
+      <if test="record.distributionPrice!=null">
+        distribution_price=#{record.distributionPrice},
+      </if>
+      <if test="record.exchangeId!=null">
+        exchange_id=#{record.exchangeId},
+      </if>
+      <if test="record.expressName!=null">
+        express_name=#{record.expressName},
+      </if>
+      <if test="record.expressNo!=null">
+        express_no=#{record.expressNo},
+      </if>
+      <if test="record.giftStrategyId!=null">
+        gift_strategy_id=#{record.giftStrategyId},
+      </if>
+      <if test="record.giftStrategyName!=null">
+        gift_strategy_name=#{record.giftStrategyName},
+      </if>
+      <if test="record.combinationDetail!=null">
+        is_combination_detail=#{record.combinationDetail},
+      </if>
+      <if test="record.combination!=null">
+        is_combination=#{record.combination},
+      </if>
+      <if test="record.deleted!=null">
+        is_deleted=#{record.deleted},
+      </if>
+      <if test="record.dropShipping!=null">
+        is_drop_shipping=#{record.dropShipping},
+      </if>
+      <if test="record.gift!=null">
+        is_gift=#{record.gift},
+      </if>
+      <if test="record.lockStock!=null">
+        is_lock_stock=#{record.lockStock},
+      </if>
+      <if test="record.manualAdd!=null">
+        is_manual_add=#{record.manualAdd},
+      </if>
+      <if test="record.needReturnGoods!=null">
+        is_need_return_goods=#{record.needReturnGoods},
+      </if>
+      <if test="record.oos!=null">
+        is_oos=#{record.oos},
+      </if>
+      <if test="record.prepackage!=null">
+        is_prepackage=#{record.prepackage},
+      </if>
+      <if test="record.presellPriority!=null">
+        is_presell_priority=#{record.presellPriority},
+      </if>
+      <if test="record.productAbnormal!=null">
+        is_product_abnormal=#{record.productAbnormal},
+      </if>
+      <if test="record.separate!=null">
+        is_separate=#{record.separate},
+      </if>
+      <if test="record.mallDetailId!=null">
+        mall_detail_id=#{record.mallDetailId},
+      </if>
+      <if test="record.mallPresellDeliveryRequiring!=null">
+        mall_presell_delivery_requiring=#{record.mallPresellDeliveryRequiring},
+      </if>
+      <if test="record.mallProductId!=null">
+        mall_product_id=#{record.mallProductId},
+      </if>
+      <if test="record.mallProductName!=null">
+        mall_product_name=#{record.mallProductName},
+      </if>
+      <if test="record.mallProductOutCode!=null">
+        mall_product_out_code=#{record.mallProductOutCode},
+      </if>
+      <if test="record.mallSalesOrderDetailStatus!=null">
+        mall_sales_order_detail_status=#{record.mallSalesOrderDetailStatus},
+      </if>
+      <if test="record.mallSkuId!=null">
+        mall_sku_id=#{record.mallSkuId},
+      </if>
+      <if test="record.mallSkuName!=null">
+        mall_sku_name=#{record.mallSkuName},
+      </if>
+      <if test="record.mallSkuOutCode!=null">
+        mall_sku_out_code=#{record.mallSkuOutCode},
+      </if>
+      modified_time=now(),
+      <if test="record.originalDetailid!=null">
+        original_detailid=#{record.originalDetailid},
+      </if>
+      <if test="record.presellDeliveryDate!=null">
+        presell_delivery_date=#{record.presellDeliveryDate},
+      </if>
+      <if test="record.presellId!=null">
+        presell_id=#{record.presellId},
+      </if>
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.productType!=null">
+        product_type=#{record.productType},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.salesOrderDetailRefundStatus!=null">
+        sales_order_detail_refund_status=#{record.salesOrderDetailRefundStatus},
+      </if>
+      <if test="record.salesOrderDetailType!=null">
+        sales_order_detail_type=#{record.salesOrderDetailType},
+      </if>
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+      <if test="record.sellingAmount!=null">
+        selling_amount=#{record.sellingAmount},
+      </if>
+      <if test="record.sellingPrice!=null">
+        selling_price=#{record.sellingPrice},
+      </if>
+      <if test="record.settlementAmount!=null">
+        settlement_amount=#{record.settlementAmount},
+      </if>
+      <if test="record.settlementPrice!=null">
+        settlement_price=#{record.settlementPrice},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.suggestVirtualWarehouseId!=null">
+        suggest_virtual_warehouse_id=#{record.suggestVirtualWarehouseId},
+      </if>
+      <if test="record.suggestVirtualWarehouseName!=null">
+        suggest_virtual_warehouse_name=#{record.suggestVirtualWarehouseName},
+      </if>
+      <if test="record.suggestWarehouseId!=null">
+        suggest_warehouse_id=#{record.suggestWarehouseId},
+      </if>
+      <if test="record.suggestWarehouseName!=null">
+        suggest_warehouse_name=#{record.suggestWarehouseName},
+      </if>
+      <if test="record.weight!=null">
+        weight=#{record.weight},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.activityId!=null">
+      AND activity_id=#{example.activityId}
+      </if>
+      <if test="example.actualAmount!=null">
+      AND actual_amount=#{example.actualAmount}
+      </if>
+      <if test="example.actualSellingPrice!=null">
+      AND actual_selling_price=#{example.actualSellingPrice}
+      </if>
+      <if test="example.costPrice!=null">
+      AND cost_price=#{example.costPrice}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.discountAmount!=null">
+      AND discount_amount=#{example.discountAmount}
+      </if>
+      <if test="example.distributionAmount!=null">
+      AND distribution_amount=#{example.distributionAmount}
+      </if>
+      <if test="example.distributionPrice!=null">
+      AND distribution_price=#{example.distributionPrice}
+      </if>
+      <if test="example.exchangeId!=null">
+      AND exchange_id=#{example.exchangeId}
+      </if>
+      <if test="example.expressName!=null">
+      AND express_name=#{example.expressName}
+      </if>
+      <if test="example.expressNo!=null">
+      AND express_no=#{example.expressNo}
+      </if>
+      <if test="example.giftStrategyId!=null">
+      AND gift_strategy_id=#{example.giftStrategyId}
+      </if>
+      <if test="example.giftStrategyName!=null">
+      AND gift_strategy_name=#{example.giftStrategyName}
+      </if>
+      <if test="example.combinationDetail!=null">
+      AND is_combination_detail=#{example.combinationDetail}
+      </if>
+      <if test="example.combination!=null">
+      AND is_combination=#{example.combination}
+      </if>
+      <if test="example.deleted!=null">
+      AND is_deleted=#{example.deleted}
+      </if>
+      <if test="example.dropShipping!=null">
+      AND is_drop_shipping=#{example.dropShipping}
+      </if>
+      <if test="example.gift!=null">
+      AND is_gift=#{example.gift}
+      </if>
+      <if test="example.lockStock!=null">
+      AND is_lock_stock=#{example.lockStock}
+      </if>
+      <if test="example.manualAdd!=null">
+      AND is_manual_add=#{example.manualAdd}
+      </if>
+      <if test="example.needReturnGoods!=null">
+      AND is_need_return_goods=#{example.needReturnGoods}
+      </if>
+      <if test="example.oos!=null">
+      AND is_oos=#{example.oos}
+      </if>
+      <if test="example.prepackage!=null">
+      AND is_prepackage=#{example.prepackage}
+      </if>
+      <if test="example.presellPriority!=null">
+      AND is_presell_priority=#{example.presellPriority}
+      </if>
+      <if test="example.productAbnormal!=null">
+      AND is_product_abnormal=#{example.productAbnormal}
+      </if>
+      <if test="example.separate!=null">
+      AND is_separate=#{example.separate}
+      </if>
+      <if test="example.mallDetailId!=null">
+      AND mall_detail_id=#{example.mallDetailId}
+      </if>
+      <if test="example.mallPresellDeliveryRequiring!=null">
+      AND mall_presell_delivery_requiring=#{example.mallPresellDeliveryRequiring}
+      </if>
+      <if test="example.mallProductId!=null">
+      AND mall_product_id=#{example.mallProductId}
+      </if>
+      <if test="example.mallProductName!=null">
+      AND mall_product_name=#{example.mallProductName}
+      </if>
+      <if test="example.mallProductOutCode!=null">
+      AND mall_product_out_code=#{example.mallProductOutCode}
+      </if>
+      <if test="example.mallSalesOrderDetailStatus!=null">
+      AND mall_sales_order_detail_status=#{example.mallSalesOrderDetailStatus}
+      </if>
+      <if test="example.mallSkuId!=null">
+      AND mall_sku_id=#{example.mallSkuId}
+      </if>
+      <if test="example.mallSkuName!=null">
+      AND mall_sku_name=#{example.mallSkuName}
+      </if>
+      <if test="example.mallSkuOutCode!=null">
+      AND mall_sku_out_code=#{example.mallSkuOutCode}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.originalDetailid!=null">
+      AND original_detailid=#{example.originalDetailid}
+      </if>
+      <if test="example.presellDeliveryDate!=null">
+      AND presell_delivery_date=#{example.presellDeliveryDate}
+      </if>
+      <if test="example.presellId!=null">
+      AND presell_id=#{example.presellId}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.productType!=null">
+      AND product_type=#{example.productType}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.salesOrderDetailId!=null">
+      AND sales_order_detail_id=#{example.salesOrderDetailId}
+      </if>
+      <if test="example.salesOrderDetailRefundStatus!=null">
+      AND sales_order_detail_refund_status=#{example.salesOrderDetailRefundStatus}
+      </if>
+      <if test="example.salesOrderDetailType!=null">
+      AND sales_order_detail_type=#{example.salesOrderDetailType}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.sellingAmount!=null">
+      AND selling_amount=#{example.sellingAmount}
+      </if>
+      <if test="example.sellingPrice!=null">
+      AND selling_price=#{example.sellingPrice}
+      </if>
+      <if test="example.settlementAmount!=null">
+      AND settlement_amount=#{example.settlementAmount}
+      </if>
+      <if test="example.settlementPrice!=null">
+      AND settlement_price=#{example.settlementPrice}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.suggestVirtualWarehouseId!=null">
+      AND suggest_virtual_warehouse_id=#{example.suggestVirtualWarehouseId}
+      </if>
+      <if test="example.suggestVirtualWarehouseName!=null">
+      AND suggest_virtual_warehouse_name=#{example.suggestVirtualWarehouseName}
+      </if>
+      <if test="example.suggestWarehouseId!=null">
+      AND suggest_warehouse_id=#{example.suggestWarehouseId}
+      </if>
+      <if test="example.suggestWarehouseName!=null">
+      AND suggest_warehouse_name=#{example.suggestWarehouseName}
+      </if>
+      <if test="example.weight!=null">
+      AND weight=#{example.weight}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_sales_order_detail
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_sales_order_detail
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

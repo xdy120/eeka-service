@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.MenuOperationMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.admin.MenuOperation">
+    <id column="item_id" property="itemId"/>
+    <result column="cid" property="cid"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="icon" property="icon"/>
+    <result column="is_system" property="system"/>
+    <result column="item_name" property="itemName"/>
+    <result column="item_type" property="itemType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="order_id" property="orderId"/>
+    <result column="parent_id" property="parentId"/>
+    <result column="router" property="router"/>
+  </resultMap>
+  <sql id="columns">cid,created_time,icon,is_system,item_id,item_name,item_type,modified_time,order_id,parent_id,router</sql>
+  <sql id="pkWhere">
+    WHERE item_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="cid!=null and cid!=''">
+        AND cid=#{cid}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="icon!=null and icon!=''">
+        AND icon=#{icon}
+      </if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="itemId!=null">AND item_id=#{itemId}</if>
+      <if test="itemName!=null and itemName!=''">
+        AND item_name=#{itemName}
+      </if>
+      <if test="itemType!=null">AND item_type=#{itemType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="orderId!=null">AND order_id=#{orderId}</if>
+      <if test="parentId!=null">AND parent_id=#{parentId}</if>
+      <if test="router!=null and router!=''">
+        AND router=#{router}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="cid!=null and cid!=''">
+        AND cid=#{cid}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="icon!=null and icon!=''">
+        AND icon=#{icon}
+      </if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="itemId!=null">AND item_id=#{itemId}</if>
+      <if test="itemName!=null and itemName!=''">
+        AND item_name=#{itemName}
+      </if>
+      <if test="itemType!=null">AND item_type=#{itemType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="orderId!=null">AND order_id=#{orderId}</if>
+      <if test="parentId!=null">AND parent_id=#{parentId}</if>
+      <if test="router!=null and router!=''">
+        AND router=#{router}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY order_id ASC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.admin.MenuOperation">
+    INSERT INTO admin_menu_operation(cid,created_time,icon,is_system,item_id,item_name,item_type,modified_time,order_id,parent_id,router)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{cid},
+      now(),
+      #{icon},
+      #{system},
+      #{itemId},
+      #{itemName},
+      #{itemType},
+      now(),
+      #{orderId},
+      #{parentId},
+      #{router},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.admin.MenuOperation">
+    UPDATE admin_menu_operation
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="cid!=null">cid=#{cid},</if>
+      <if test="icon!=null">icon=#{icon},</if>
+      <if test="system!=null">is_system=#{system},</if>
+      <if test="itemName!=null">item_name=#{itemName},</if>
+      <if test="itemType!=null">item_type=#{itemType},</if>
+      modified_time=now(),
+      <if test="orderId!=null">order_id=#{orderId},</if>
+      <if test="parentId!=null">parent_id=#{parentId},</if>
+      <if test="router!=null">router=#{router},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND item_id=#{itemId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.admin.MenuOperation">
+    UPDATE admin_menu_operation
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.cid!=null">
+        cid=#{record.cid},
+      </if>
+      <if test="record.icon!=null">
+        icon=#{record.icon},
+      </if>
+      <if test="record.system!=null">
+        is_system=#{record.system},
+      </if>
+      <if test="record.itemName!=null">
+        item_name=#{record.itemName},
+      </if>
+      <if test="record.itemType!=null">
+        item_type=#{record.itemType},
+      </if>
+      modified_time=now(),
+      <if test="record.orderId!=null">
+        order_id=#{record.orderId},
+      </if>
+      <if test="record.parentId!=null">
+        parent_id=#{record.parentId},
+      </if>
+      <if test="record.router!=null">
+        router=#{record.router},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.cid!=null">
+      AND cid=#{example.cid}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.icon!=null">
+      AND icon=#{example.icon}
+      </if>
+      <if test="example.system!=null">
+      AND is_system=#{example.system}
+      </if>
+      <if test="example.itemId!=null">
+      AND item_id=#{example.itemId}
+      </if>
+      <if test="example.itemName!=null">
+      AND item_name=#{example.itemName}
+      </if>
+      <if test="example.itemType!=null">
+      AND item_type=#{example.itemType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.orderId!=null">
+      AND order_id=#{example.orderId}
+      </if>
+      <if test="example.parentId!=null">
+      AND parent_id=#{example.parentId}
+      </if>
+      <if test="example.router!=null">
+      AND router=#{example.router}
+      </if>
+    </trim>
+  </update>
+  <update id="updateChildrenQuantity">
+    UPDATE admin_menu_operation SET
+    children_quantity=children_quantity+#{quantity},modified_time=now()
+    WHERE item_id=#{itemId}
+  </update>
+  <delete id="delete">
+    DELETE FROM admin_menu_operation
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM admin_menu_operation
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_menu_operation
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_menu_operation
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_menu_operation
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_menu_operation
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_menu_operation
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_menu_operation
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_menu_operation
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

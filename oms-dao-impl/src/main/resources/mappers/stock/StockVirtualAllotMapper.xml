@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockVirtualAllotMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.stock.StockVirtualAllot">
+    <id column="stock_virtual_allot_id" property="stockVirtualAllotId"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="in_virtual_warehouse_id" property="inVirtualWarehouseId"/>
+    <result column="in_virtual_warehouse_name" property="inVirtualWarehouseName"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="out_virtual_warehouse_id" property="outVirtualWarehouseId"/>
+    <result column="out_virtual_warehouse_name" property="outVirtualWarehouseName"/>
+    <result column="plan_quantity" property="planQuantity"/>
+    <result column="quantity" property="quantity"/>
+    <result column="remark" property="remark"/>
+    <result column="status" property="status"/>
+    <result column="stock_virtual_allot_code" property="stockVirtualAllotCode"/>
+    <result column="version" property="version"/>
+  </resultMap>
+  <sql id="columns">audited_time,auditor,created_time,creator,in_virtual_warehouse_id,in_virtual_warehouse_name,modified_time,out_virtual_warehouse_id,out_virtual_warehouse_name,plan_quantity,quantity,remark,status,stock_virtual_allot_code,stock_virtual_allot_id,version</sql>
+  <sql id="pkWhere">
+    WHERE stock_virtual_allot_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTime!=null">AND audited_time=#{auditedTime}</if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="inVirtualWarehouseId!=null">AND in_virtual_warehouse_id=#{inVirtualWarehouseId}</if>
+      <if test="inVirtualWarehouseName!=null and inVirtualWarehouseName!=''">
+        AND in_virtual_warehouse_name=#{inVirtualWarehouseName}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outVirtualWarehouseId!=null">AND out_virtual_warehouse_id=#{outVirtualWarehouseId}</if>
+      <if test="outVirtualWarehouseName!=null and outVirtualWarehouseName!=''">
+        AND out_virtual_warehouse_name=#{outVirtualWarehouseName}
+      </if>
+      <if test="planQuantity!=null">AND plan_quantity=#{planQuantity}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="stockVirtualAllotCode!=null and stockVirtualAllotCode!=''">
+        AND stock_virtual_allot_code=#{stockVirtualAllotCode}
+      </if>
+      <if test="stockVirtualAllotId!=null">AND stock_virtual_allot_id=#{stockVirtualAllotId}</if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="inVirtualWarehouseId!=null">AND in_virtual_warehouse_id=#{inVirtualWarehouseId}</if>
+      <if test="inVirtualWarehouseName!=null and inVirtualWarehouseName!=''">
+        AND in_virtual_warehouse_name=#{inVirtualWarehouseName}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outVirtualWarehouseId!=null">AND out_virtual_warehouse_id=#{outVirtualWarehouseId}</if>
+      <if test="outVirtualWarehouseIds!=null and outVirtualWarehouseIds.size>0">
+        AND out_virtual_warehouse_id IN
+        <foreach item="item" index="index" collection="outVirtualWarehouseIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outVirtualWarehouseName!=null and outVirtualWarehouseName!=''">
+        AND out_virtual_warehouse_name=#{outVirtualWarehouseName}
+      </if>
+      <if test="planQuantity!=null">AND plan_quantity=#{planQuantity}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockVirtualAllotCode!=null and stockVirtualAllotCode!=''">
+        AND stock_virtual_allot_code=#{stockVirtualAllotCode}
+      </if>
+      <if test="stockVirtualAllotCodes!=null and stockVirtualAllotCodes.size>0">
+        AND stock_virtual_allot_code IN
+        <foreach item="item" index="index" collection="stockVirtualAllotCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockVirtualAllotId!=null">AND stock_virtual_allot_id=#{stockVirtualAllotId}</if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_virtual_allot_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.stock.StockVirtualAllot">
+    INSERT INTO oms_stock_virtual_allot(audited_time,auditor,created_time,creator,in_virtual_warehouse_id,in_virtual_warehouse_name,modified_time,out_virtual_warehouse_id,out_virtual_warehouse_name,plan_quantity,quantity,remark,status,stock_virtual_allot_code,stock_virtual_allot_id,version)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{auditedTime},
+      #{auditor},
+      now(),
+      #{creator},
+      #{inVirtualWarehouseId},
+      #{inVirtualWarehouseName},
+      now(),
+      #{outVirtualWarehouseId},
+      #{outVirtualWarehouseName},
+      #{planQuantity},
+      #{quantity},
+      #{remark},
+      #{status},
+      #{stockVirtualAllotCode},
+      #{stockVirtualAllotId},
+      1,
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.stock.StockVirtualAllot">
+    UPDATE oms_stock_virtual_allot
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="inVirtualWarehouseId!=null">in_virtual_warehouse_id=#{inVirtualWarehouseId},</if>
+      <if test="inVirtualWarehouseName!=null">in_virtual_warehouse_name=#{inVirtualWarehouseName},</if>
+      modified_time=now(),
+      <if test="outVirtualWarehouseId!=null">out_virtual_warehouse_id=#{outVirtualWarehouseId},</if>
+      <if test="outVirtualWarehouseName!=null">out_virtual_warehouse_name=#{outVirtualWarehouseName},</if>
+      <if test="planQuantity!=null">plan_quantity=#{planQuantity},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="stockVirtualAllotCode!=null">stock_virtual_allot_code=#{stockVirtualAllotCode},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_virtual_allot_id=#{stockVirtualAllotId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.stock.StockVirtualAllot">
+    UPDATE oms_stock_virtual_allot
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.auditedTime!=null">
+        audited_time=#{record.auditedTime},
+      </if>
+      <if test="record.auditor!=null">
+        auditor=#{record.auditor},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.inVirtualWarehouseId!=null">
+        in_virtual_warehouse_id=#{record.inVirtualWarehouseId},
+      </if>
+      <if test="record.inVirtualWarehouseName!=null">
+        in_virtual_warehouse_name=#{record.inVirtualWarehouseName},
+      </if>
+      modified_time=now(),
+      <if test="record.outVirtualWarehouseId!=null">
+        out_virtual_warehouse_id=#{record.outVirtualWarehouseId},
+      </if>
+      <if test="record.outVirtualWarehouseName!=null">
+        out_virtual_warehouse_name=#{record.outVirtualWarehouseName},
+      </if>
+      <if test="record.planQuantity!=null">
+        plan_quantity=#{record.planQuantity},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.stockVirtualAllotCode!=null">
+        stock_virtual_allot_code=#{record.stockVirtualAllotCode},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.auditedTime!=null">
+      AND audited_time=#{example.auditedTime}
+      </if>
+      <if test="example.auditor!=null">
+      AND auditor=#{example.auditor}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.inVirtualWarehouseId!=null">
+      AND in_virtual_warehouse_id=#{example.inVirtualWarehouseId}
+      </if>
+      <if test="example.inVirtualWarehouseName!=null">
+      AND in_virtual_warehouse_name=#{example.inVirtualWarehouseName}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outVirtualWarehouseId!=null">
+      AND out_virtual_warehouse_id=#{example.outVirtualWarehouseId}
+      </if>
+      <if test="example.outVirtualWarehouseIds!=null">
+      AND out_virtual_warehouse_id=#{example.outVirtualWarehouseIds}
+      </if>
+      <if test="example.outVirtualWarehouseName!=null">
+      AND out_virtual_warehouse_name=#{example.outVirtualWarehouseName}
+      </if>
+      <if test="example.planQuantity!=null">
+      AND plan_quantity=#{example.planQuantity}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.stockVirtualAllotCode!=null">
+      AND stock_virtual_allot_code=#{example.stockVirtualAllotCode}
+      </if>
+      <if test="example.stockVirtualAllotCodes!=null">
+      AND stock_virtual_allot_code=#{example.stockVirtualAllotCodes}
+      </if>
+      <if test="example.stockVirtualAllotId!=null">
+      AND stock_virtual_allot_id=#{example.stockVirtualAllotId}
+      </if>
+      AND version=#{example.version}
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_virtual_allot
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_virtual_allot
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_virtual_allot
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_virtual_allot
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_virtual_allot
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_virtual_allot
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_virtual_allot
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_virtual_allot
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_virtual_allot
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.custom.eeka.dao.StockChangeDao">
+  <resultMap id="resultMap" type="com.greatonce.oms.custom.eeka.bo.StockChange">
+    <result column="quantity" property="quantity"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="warehouse_code" property="warehouseCode"/>
+  </resultMap>
+
+  <select id="getStockChange" resultMap="resultMap">
+    select s.quantity as quantity,s.sku_code as sku_code,m.warehouse_code as warehouse_code from oms_stock s,
+           (select w.warehouse_code,w.warehouse_id,v.virtual_warehouse_id
+           from oms_virtual_warehouse v,oms_warehouse w where
+           v.warehouse_id = w.warehouse_id AND
+           SUBSTR(virtual_warehouse_code,LENGTH(virtual_warehouse_code),LENGTH(virtual_warehouse_code)) = 'V' ) as m
+           where s.virtual_warehouse_id = m.virtual_warehouse_id
+    <if test="skuCodes!=null and skuCodes.size>0">
+      AND s.sku_code IN
+      <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+
+</mapper>

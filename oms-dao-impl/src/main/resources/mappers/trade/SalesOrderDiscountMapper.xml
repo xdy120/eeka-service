@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderDiscountMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.SalesOrderDiscount">
+    <id column="sales_order_discount_id" property="salesOrderDiscountId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="discount_amount" property="discountAmount"/>
+    <result column="discount_name" property="discountName"/>
+    <result column="discount_type" property="discountType"/>
+    <result column="mall_paid_time" property="mallPaidTime"/>
+    <result column="member_card_no" property="memberCardNo"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+  </resultMap>
+  <sql id="columns">created_time,discount_amount,discount_name,discount_type,mall_paid_time,member_card_no,modified_time,sales_order_discount_id,sales_order_id</sql>
+  <sql id="pkWhere">
+    WHERE sales_order_discount_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="discountName!=null and discountName!=''">
+        AND discount_name=#{discountName}
+      </if>
+      <if test="discountType!=null">AND discount_type=#{discountType}</if>
+      <if test="mallPaidTime!=null">AND mall_paid_time=#{mallPaidTime}</if>
+      <if test="memberCardNo!=null and memberCardNo!=''">
+        AND member_card_no=#{memberCardNo}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="salesOrderDiscountId!=null">AND sales_order_discount_id=#{salesOrderDiscountId}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="discountName!=null and discountName!=''">
+        AND discount_name=#{discountName}
+      </if>
+      <if test="discountType!=null">AND discount_type=#{discountType}</if>
+      <if test="mallPaidTimeBegin!=null">
+        <![CDATA[AND mall_paid_time>=#{mallPaidTimeBegin}]]>
+      </if>
+      <if test="mallPaidTimeEnd!=null">
+        <![CDATA[AND mall_paid_time<#{mallPaidTimeEnd}]]>
+      </if>
+      <if test="memberCardNo!=null and memberCardNo!=''">
+        AND member_card_no=#{memberCardNo}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="salesOrderDiscountId!=null">AND sales_order_discount_id=#{salesOrderDiscountId}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sales_order_discount_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.SalesOrderDiscount">
+    INSERT INTO oms_sales_order_discount(created_time,discount_amount,discount_name,discount_type,mall_paid_time,member_card_no,modified_time,sales_order_discount_id,sales_order_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{discountAmount},
+      #{discountName},
+      #{discountType},
+      #{mallPaidTime},
+      #{memberCardNo},
+      now(),
+      #{salesOrderDiscountId},
+      #{salesOrderId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.SalesOrderDiscount">
+    UPDATE oms_sales_order_discount
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="discountAmount!=null">discount_amount=#{discountAmount},</if>
+      <if test="discountName!=null">discount_name=#{discountName},</if>
+      <if test="discountType!=null">discount_type=#{discountType},</if>
+      <if test="mallPaidTime!=null">mall_paid_time=#{mallPaidTime},</if>
+      <if test="memberCardNo!=null">member_card_no=#{memberCardNo},</if>
+      modified_time=now(),
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sales_order_discount_id=#{salesOrderDiscountId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.SalesOrderDiscount">
+    UPDATE oms_sales_order_discount
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.discountAmount!=null">
+        discount_amount=#{record.discountAmount},
+      </if>
+      <if test="record.discountName!=null">
+        discount_name=#{record.discountName},
+      </if>
+      <if test="record.discountType!=null">
+        discount_type=#{record.discountType},
+      </if>
+      <if test="record.mallPaidTime!=null">
+        mall_paid_time=#{record.mallPaidTime},
+      </if>
+      <if test="record.memberCardNo!=null">
+        member_card_no=#{record.memberCardNo},
+      </if>
+      modified_time=now(),
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.discountAmount!=null">
+      AND discount_amount=#{example.discountAmount}
+      </if>
+      <if test="example.discountName!=null">
+      AND discount_name=#{example.discountName}
+      </if>
+      <if test="example.discountType!=null">
+      AND discount_type=#{example.discountType}
+      </if>
+      <if test="example.mallPaidTime!=null">
+      AND mall_paid_time=#{example.mallPaidTime}
+      </if>
+      <if test="example.memberCardNo!=null">
+      AND member_card_no=#{example.memberCardNo}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.salesOrderDiscountId!=null">
+      AND sales_order_discount_id=#{example.salesOrderDiscountId}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_sales_order_discount
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_sales_order_discount
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_discount
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_discount
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_discount
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_discount
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_discount
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_discount
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_discount
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

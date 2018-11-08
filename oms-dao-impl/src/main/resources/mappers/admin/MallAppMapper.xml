@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.MallAppMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.admin.MallApp">
+    <id column="mall_app_id" property="mallAppId"/>
+    <result column="app_key" property="appKey"/>
+    <result column="app_secret" property="appSecret"/>
+    <result column="callback_url" property="callbackUrl"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="is_enable" property="enable"/>
+    <result column="mall_app_name" property="mallAppName"/>
+    <result column="mall_type" property="mallType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="safety_certificate" property="safetyCertificate"/>
+    <result column="service_url" property="serviceUrl"/>
+  </resultMap>
+  <sql id="columns">app_key,app_secret,callback_url,created_time,is_enable,mall_app_id,mall_app_name,mall_type,modified_time,safety_certificate,service_url</sql>
+  <sql id="pkWhere">
+    WHERE mall_app_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="appKey!=null and appKey!=''">
+        AND app_key=#{appKey}
+      </if>
+      <if test="appSecret!=null and appSecret!=''">
+        AND app_secret=#{appSecret}
+      </if>
+      <if test="callbackUrl!=null and callbackUrl!=''">
+        AND callback_url=#{callbackUrl}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="mallAppId!=null">AND mall_app_id=#{mallAppId}</if>
+      <if test="mallAppName!=null and mallAppName!=''">
+        AND mall_app_name=#{mallAppName}
+      </if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="safetyCertificate!=null and safetyCertificate!=''">
+        AND safety_certificate=#{safetyCertificate}
+      </if>
+      <if test="serviceUrl!=null and serviceUrl!=''">
+        AND service_url=#{serviceUrl}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="appKey!=null and appKey!=''">
+        AND app_key=#{appKey}
+      </if>
+      <if test="appSecret!=null and appSecret!=''">
+        AND app_secret=#{appSecret}
+      </if>
+      <if test="callbackUrl!=null and callbackUrl!=''">
+        AND callback_url=#{callbackUrl}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="mallAppId!=null">AND mall_app_id=#{mallAppId}</if>
+      <if test="mallAppName!=null and mallAppName!=''">
+        AND mall_app_name=#{mallAppName}
+      </if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="safetyCertificate!=null and safetyCertificate!=''">
+        AND safety_certificate=#{safetyCertificate}
+      </if>
+      <if test="serviceUrl!=null and serviceUrl!=''">
+        AND service_url=#{serviceUrl}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY mall_app_id ASC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.admin.MallApp">
+    INSERT INTO admin_mall_app(app_key,app_secret,callback_url,created_time,is_enable,mall_app_id,mall_app_name,mall_type,modified_time,safety_certificate,service_url)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{appKey},
+      #{appSecret},
+      #{callbackUrl},
+      now(),
+      #{enable},
+      #{mallAppId},
+      #{mallAppName},
+      #{mallType},
+      now(),
+      #{safetyCertificate},
+      #{serviceUrl},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.admin.MallApp">
+    UPDATE admin_mall_app
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="appKey!=null">app_key=#{appKey},</if>
+      <if test="appSecret!=null">app_secret=#{appSecret},</if>
+      <if test="callbackUrl!=null">callback_url=#{callbackUrl},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="mallAppName!=null">mall_app_name=#{mallAppName},</if>
+      <if test="mallType!=null">mall_type=#{mallType},</if>
+      modified_time=now(),
+      <if test="safetyCertificate!=null">safety_certificate=#{safetyCertificate},</if>
+      <if test="serviceUrl!=null">service_url=#{serviceUrl},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND mall_app_id=#{mallAppId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.admin.MallApp">
+    UPDATE admin_mall_app
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.appKey!=null">
+        app_key=#{record.appKey},
+      </if>
+      <if test="record.appSecret!=null">
+        app_secret=#{record.appSecret},
+      </if>
+      <if test="record.callbackUrl!=null">
+        callback_url=#{record.callbackUrl},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.mallAppName!=null">
+        mall_app_name=#{record.mallAppName},
+      </if>
+      <if test="record.mallType!=null">
+        mall_type=#{record.mallType},
+      </if>
+      modified_time=now(),
+      <if test="record.safetyCertificate!=null">
+        safety_certificate=#{record.safetyCertificate},
+      </if>
+      <if test="record.serviceUrl!=null">
+        service_url=#{record.serviceUrl},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.appKey!=null">
+      AND app_key=#{example.appKey}
+      </if>
+      <if test="example.appSecret!=null">
+      AND app_secret=#{example.appSecret}
+      </if>
+      <if test="example.callbackUrl!=null">
+      AND callback_url=#{example.callbackUrl}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.mallAppId!=null">
+      AND mall_app_id=#{example.mallAppId}
+      </if>
+      <if test="example.mallAppName!=null">
+      AND mall_app_name=#{example.mallAppName}
+      </if>
+      <if test="example.mallType!=null">
+      AND mall_type=#{example.mallType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.safetyCertificate!=null">
+      AND safety_certificate=#{example.safetyCertificate}
+      </if>
+      <if test="example.serviceUrl!=null">
+      AND service_url=#{example.serviceUrl}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM admin_mall_app
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM admin_mall_app
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_app
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_app
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_app
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_app
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_app
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_mall_app
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_mall_app
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

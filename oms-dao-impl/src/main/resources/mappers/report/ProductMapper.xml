@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.report.ProductMapper">
+
+  <resultMap id="returnResultMap" type="com.greatonce.oms.bo.report.ProductReturnBO">
+    <result column="unpacked_time" property="unpackedTime"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="refund_amount" property="refundAmount"/>
+  </resultMap>
+
+  <select id="exportProductReturnList" resultMap="returnResultMap">
+    select
+    r.unpacked_time,
+    d.product_code,
+    d.product_name,
+    d.sku_code,
+    d.sku_name,
+    sum(d.quantity) as quantity,
+    sum(d.refundable_amount) as refund_amount
+    from oms_return_order r ,oms_return_order_detail d,oms_return_notice_order_detail rnod,oms_return_notice_order rno
+    where r.return_order_id = d.return_order_id
+      AND rnod.return_order_id=r.return_order_id
+      AND rnod.return_order_detail_id=d.return_order_detail_id
+      AND rno.return_notice_order_id=rnod.return_notice_order_id
+    <if test="productCodes!=null and productCodes.size>0">
+      AND d.product_code IN
+      <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="skuCodes!=null and skuCodes.size>0">
+      AND d.sku_code IN
+      <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="unpackedTimeBegin!=null">
+      <![CDATA[AND rno.last_in_time>=#{unpackedTimeBegin}]]>
+    </if>
+    <if test="unpackedTimeEnd!=null">
+      <![CDATA[AND rno.last_in_time<#{unpackedTimeEnd}]]>
+    </if>
+    <if test="storeIds!=null and storeIds.size>0">
+      AND r.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    group by d.product_code,d.sku_code
+  </select>
+
+  <resultMap id="queryProductSalesMap" type="com.greatonce.oms.bo.report.ProductSalesBO">
+    <result column="delivery_time" property="deliveryTime"/>
+    <result column="mall_paid_time" property="mallPaidTime"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="settlement_amount" property="settlementAmount"/>
+    <result column="cost_amount" property="costPrice"/>
+  </resultMap>
+  <select id="exportProductSalesList" resultMap="queryProductSalesMap">
+    select
+    s.mall_paid_time,
+    d.product_code,
+    d.product_name,
+    d.sku_code,
+    d.sku_name,
+    sum(d.quantity) as quantity,
+    sum(d.settlement_amount) as settlement_amount
+    from
+    oms_sales_order o,oms_sales_order_sub s,oms_sales_order_detail d
+    where
+    o.sales_order_id = s.sales_order_id
+    and
+    o.sales_order_id = d.sales_order_id
+    and
+    d.`status`!= 5 AND d.is_deleted = 0
+    <if test="productCodes!=null and productCodes.size>0">
+      AND d.product_code IN
+      <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="skuCodes!=null and skuCodes.size>0">
+      AND d.sku_code IN
+      <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="mallPaidTimeBegin!=null">
+      <![CDATA[AND s.mall_paid_time>=#{mallPaidTimeBegin}]]>
+    </if>
+    <if test="mallPaidTimeEnd!=null">
+      <![CDATA[AND s.mall_paid_time<#{mallPaidTimeEnd}]]>
+    </if>
+    <if test="storeIds!=null and storeIds.size>0">
+      AND o.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    GROUP BY d.product_code,d.sku_code
+  </select>
+  <select id="exportDeliveriedProductSalesList" resultMap="queryProductSalesMap">
+    select
+    a.delivery_time,
+    s.mall_paid_time,
+    d.product_code,
+    d.product_name,
+    d.sku_code,
+    d.sku_name,
+    sum(d.quantity) as quantity,
+    sum(d.settlement_amount) as settlement_amount
+    from
+    oms_sales_order o,oms_sales_order_sub s,oms_sales_order_detail d,oms_dispatch_order_delivery a
+    where
+    o.sales_order_id = s.sales_order_id
+    and
+    o.sales_order_id = d.sales_order_id
+    and
+    o.sales_order_id = a.sales_order_id
+    and
+    d.`status`!= 5 AND d.is_deleted = 0
+    <if test="productCodes!=null and productCodes.size>0">
+      AND d.product_code IN
+      <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="skuCodes!=null and skuCodes.size>0">
+      AND d.sku_code IN
+      <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="mallPaidTimeBegin!=null">
+      <![CDATA[AND s.mall_paid_time>=#{mallPaidTimeBegin}]]>
+    </if>
+    <if test="mallPaidTimeEnd!=null">
+      <![CDATA[AND s.mall_paid_time<#{mallPaidTimeEnd}]]>
+    </if>
+    <if test="storeIds!=null and storeIds.size>0">
+      AND o.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    GROUP BY d.product_code,d.sku_code
+  </select>
+</mapper>

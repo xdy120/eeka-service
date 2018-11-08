@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockMapper">
+  <resultMap id="stockSumInfo" type="com.greatonce.oms.bo.stock.StockSumBO">
+    <result column="sku_id" property="skuId"/>
+    <result column="warehouse_id" property="warehouseId"/>
+    <result column="warehouse_name" property="warehouseName"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="sales_quantity" property="salesQuantity"/>
+    <result column="usable_quantity" property="usableQuantity"/>
+  </resultMap>
+  <resultMap id="stockCheckResult" type="com.greatonce.oms.bo.stock.StockCheckResultBO">
+    <result column="sku_id" property="skuId"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="quantity" property="quantity"/>
+    <result column="lock_quantity" property="lockQuantity"/>
+    <result column="less_lock_quantity" property="lessLockQuantity"/>
+  </resultMap>
+  <resultMap id="dispatchStockResult" type="com.greatonce.oms.bo.stock.DispatchStockInfoBO">
+    <result column="sku_id" property="skuId"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="quantity" property="quantity"/>
+    <result column="lock_quantity" property="lockQuantity"/>
+  </resultMap>
+  <select id="listSkuStockInfo" resultMap="stockSumInfo">
+    SELECT stock.sku_id, stock.quantity, stock.virtual_warehouse_id, stock.virtual_warehouse_name,
+    stock.warehouse_id, stock.warehouse_name, stock.quantity,
+    stock.quantity - SUM(CASE WHEN occupancy.status IN (2, 3) THEN IFNULL(occupancy.quantity, 0)
+    ELSE 0 END) AS sales_quantity,
+    stock.quantity - SUM(CASE WHEN occupancy.status IN (3) THEN IFNULL(occupancy.quantity, 0) ELSE 0
+    END) AS usable_quantity
+    FROM oms_stock stock LEFT JOIN oms_stock_occupancy occupancy ON stock.sku_id = occupancy.sku_id
+    AND stock.virtual_warehouse_id = occupancy.virtual_warehouse_id
+    WHERE stock.sku_id = #{skuId}
+    <if test="virtualWarehouseIds!=null and virtualWarehouseIds.size>0">
+      AND stock.virtual_warehouse_id IN
+      <foreach item="item" index="index" collection="virtualWarehouseIds" open="(" separator=","
+        close=")">#{item}
+      </foreach>
+    </if>
+    GROUP BY stock.sku_id, stock.quantity, stock.virtual_warehouse_id, stock.virtual_warehouse_name,
+    stock.warehouse_id, stock.warehouse_name, stock.quantity
+  </select>
+
+  <select id="getStockCheckResult" resultMap="stockCheckResult">
+        <![CDATA[
+    SELECT stock.sku_id,
+           stock.virtual_warehouse_id,
+           stock.quantity,
+           SUM(CASE
+                 WHEN occupancy.status = 3 OR
+                      (occupancy.status = 2 AND occupancy.sort_time < #{sortTime})
+                         THEN occupancy.quantity
+                 ELSE 0 END) AS lock_quantity,
+           SUM(CASE
+                 WHEN occupancy.status = 3
+                         THEN occupancy.quantity
+                 ELSE 0 END) AS less_lock_quantity
+    FROM oms_stock stock
+           LEFT JOIN oms_stock_occupancy occupancy ON stock.sku_id = occupancy.sku_id AND
+                                                      stock.virtual_warehouse_id = occupancy.virtual_warehouse_id
+    WHERE stock.sku_id = #{skuId}
+      AND stock.virtual_warehouse_id = #{virtualWarehouseId}
+    GROUP BY stock.sku_id, stock.virtual_warehouse_id
+    ]]>
+    </select>
+
+  <select id="listDispatchStock" resultMap="dispatchStockResult">
+    <![CDATA[
+        SELECT stock.sku_id,stock.virtual_warehouse_id,stock.quantity,
+        SUM(CASE WHEN occupancy.`status` = 3 OR (occupancy.`status` = 2 AND occupancy.sort_time < #{sortTime}) THEN occupancy.quantity ELSE 0 END) lock_quantity
+        FROM oms_stock stock LEFT JOIN oms_stock_occupancy occupancy ON stock.sku_id = occupancy.sku_id AND stock.virtual_warehouse_id = occupancy.virtual_warehouse_id
+        ]]>
+    <where>
+      stock.sku_id IN
+      <foreach item="item" index="index" collection="skuIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+      AND stock.virtual_warehouse_id IN
+      <foreach item="item" index="index" collection="virtualWarehouseIds" open="(" separator=","
+        close=")">#{item}
+      </foreach>
+    </where>
+    GROUP BY stock.sku_id, stock.virtual_warehouse_id
+  </select>
+
+
+  <resultMap id="queryStockResult" type="com.greatonce.oms.bo.stock.StockQueryBO"
+    extends="resultMap">
+    <result column="product_code" property="productCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="barcode" property="barcode"/>
+    <result column="sales_order_lock_quantity" property="salesOrderLockQuantity"/>
+    <result column="dispatch_order_lock_quantity" property="dispatchOrderLockQuantity"/>
+    <result column="return_order_lock_quantity" property="returnOrderLockQuantity"/>
+    <result column="other_lock_quantity" property="otherLockQuantity"/>
+    <result column="vip_lock_quantity" property="vipLockQuantity"/>
+    <result column="available" property="available"/>
+    <result column="saleable" property="saleable"/>
+    <result column="product_name" property="productName"/>
+  </resultMap>
+
+  <sql id="queryStockWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="query.hasStock == true">
+        <![CDATA[AND stock.quantity > 0]]>
+      </if>
+      <if test="query.hasStock == false">
+        <![CDATA[AND stock.quantity <= 0]]>
+      </if>
+      <if test="query.warehouseId!=null">AND stock.warehouse_id=#{query.warehouseId}</if>
+      <if test="query.virtualWarehouseIds!=null and query.virtualWarehouseIds.size>0">
+        AND stock.virtual_warehouse_id IN
+        <foreach item="item" index="index" collection="query.virtualWarehouseIds" open="("
+          separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="query.skuCodes!=null and query.skuCodes.size>0">AND stock.sku_code IN
+        <foreach item="item" index="index" collection="query.skuCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="query.productCodes!=null and query.productCodes.size>0">AND sku.product_code IN
+        <foreach item="item" index="index" collection="query.productCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="query.skuIds!=null and query.skuIds.size>0">AND sku.sku_id IN
+        <foreach item="item" index="index" collection="query.skuIds" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="countStock" resultType="int">
+    SELECT COUNT(*)
+    FROM oms_stock stock
+    JOIN oms_product_sku sku ON stock.sku_id = sku.sku_id
+    <include refid="queryStockWhere"/>
+  </select>
+  <select id="queryStock" resultMap="queryStockResult">
+    SELECT
+    stock.quantity,
+    stock.warehouse_id,
+    stock.warehouse_name,
+    stock.virtual_warehouse_id,
+    stock.virtual_warehouse_name,
+    stock.sku_id,
+    stock.sku_code,
+    stock.product_code,
+    stock.product_name,
+    stock.sku_name,
+    stock.transit_quantity,
+    IFNULL( SUM( CASE WHEN stock_occupancy_type = 2 AND STATUS IN ( 2, 3 ) THEN occ.quantity ELSE 0
+    END ), 0 ) AS sales_order_lock_quantity,
+    IFNULL( SUM( CASE WHEN stock_occupancy_type = 3 THEN occ.quantity ELSE 0 END ), 0 ) AS
+    dispatch_order_lock_quantity,
+    IFNULL( SUM( CASE WHEN stock_occupancy_type = 4 THEN occ.quantity ELSE 0 END
+    ), 0) AS return_order_lock_quantity,
+    IFNULL( SUM( CASE WHEN stock_occupancy_type IN ( 1, 5, 6, 10, 11) THEN occ.quantity ELSE 0 END
+    ), 0) AS other_lock_quantity,
+    IFNULL( SUM( CASE WHEN stock_occupancy_type IN ( 7, 8, 9 ) THEN occ.quantity ELSE 0 END ), 0 )
+    AS vip_lock_quantity,
+    IFNULL( SUM( CASE WHEN STATUS = 2 THEN occ.quantity ELSE 0 END ), 0 ) AS unlock_quantity,
+    IFNULL( SUM( CASE WHEN STATUS = 3 THEN occ.quantity ELSE 0 END ), 0 ) AS lock_quantity,
+    (stock.quantity - IFNULL( SUM( CASE WHEN STATUS = 3 THEN occ.quantity ELSE 0 END ), 0 ) ) AS
+    available,
+    (stock.quantity - IFNULL( SUM( CASE WHEN STATUS = 2 OR STATUS = 3 THEN occ.quantity ELSE 0 END
+    ), 0 ) ) AS saleable
+    FROM
+    (
+    SELECT
+    stock.quantity,
+    stock.warehouse_id,
+    stock.warehouse_name,
+    stock.virtual_warehouse_id,
+    stock.virtual_warehouse_name,
+    stock.transit_quantity,
+    stock.sku_id,
+    stock.sku_code,
+    sku.product_code,
+    sku.product_name,
+    sku.sku_name
+    FROM
+    oms_stock stock
+    JOIN oms_product_sku sku ON stock.sku_id = sku.sku_id
+    <include refid="queryStockWhere"/>
+    LIMIT #{offset},#{rows}
+    ) stock
+    LEFT JOIN oms_stock_occupancy occ
+    ON occ.sku_id = stock.sku_id AND occ.virtual_warehouse_id = stock.virtual_warehouse_id
+    GROUP BY
+    stock.quantity,
+    stock.warehouse_id,
+    stock.warehouse_name,
+    stock.virtual_warehouse_id,
+    stock.virtual_warehouse_name,
+    stock.sku_id,
+    stock.sku_code,
+    stock.product_code,
+    stock.product_name,
+    stock.sku_name,
+    stock.transit_quantity
+  </select>
+
+  <update id="adjustQuantity">
+    UPDATE oms_stock
+    SET quantity = quantity + #{quantity}
+    WHERE sku_id = #{skuId}
+      AND virtual_warehouse_id = #{virtualWarehouseId}
+  </update>
+
+  <update id="coverQuantity">
+    UPDATE oms_stock
+    SET quantity = #{quantity}
+    WHERE sku_id = #{skuId}
+      AND virtual_warehouse_id = #{virtualWarehouseId}
+  </update>
+
+  <update id="adjustTransitQuantity">
+    UPDATE oms_stock
+    SET transit_quantity = transit_quantity + #{transitQuantity}
+    WHERE sku_id = #{skuId}
+      AND virtual_warehouse_id = #{virtualWarehouseId}
+  </update>
+
+  <update id="transitIn">
+    <![CDATA[
+    UPDATE oms_stock
+    SET transit_quantity = IF(transit_quantity + #{transitQuantity}<0,9,transit_quantity + #{transitQuantity}),
+        quantity         = quantity + #{quantity}
+    WHERE sku_id = #{skuId}
+      AND virtual_warehouse_id = #{virtualWarehouseId}
+    ]]>
+  </update>
+
+  <select id="getStockQuantityResult" resultMap="stockCheckResult">
+    <![CDATA[
+    SELECT stock.sku_id,
+           stock.virtual_warehouse_id,
+           stock.quantity,
+           0 AS lock_quantity,
+           0 AS less_lock_quantity
+    FROM oms_stock stock
+    WHERE stock.sku_id = #{skuId}
+      AND stock.virtual_warehouse_id = #{virtualWarehouseId}
+    ]]>
+    </select>
+
+  <resultMap id="queryStockRatioResult" type="com.greatonce.oms.bo.stock.StockRatio">
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="warehouse_id" property="warehouseId"/>
+    <result column="warehouse_name" property="warehouseName"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="transit_quantity" property="transitQuantity"/>
+    <result column="ratio" property="ratio"/>
+
+  </resultMap>
+  <select id="queryStockRatio" resultMap="queryStockRatioResult">
+
+    SELECT
+    (
+    t.quantity - CASE
+    WHEN m.occNum IS NULL THEN
+    0
+    ELSE
+    m.occNum
+    END
+    ) quantity,
+    t.warehouse_id,
+    t.sku_id,
+    t.ratio,t.warehouse_name,t.virtual_warehouse_id,t.virtual_warehouse_name,t.sku_code,t.sku_name,t.product_code,t.product_name
+    FROM
+    (
+    SELECT
+    sum(n.quantity) AS quantity,
+    n.warehouse_id,
+    n.sku_id,
+    n.ratio,n.warehouse_name,n.virtual_warehouse_id,n.virtual_warehouse_name,n.sku_code,n.sku_name,n.product_code,n.product_name
+    FROM
+    (
+    SELECT
+    s.quantity,
+    s.warehouse_id,
+    s.sku_id,
+    s.ratio,w.warehouse_name,s.virtual_warehouse_id,s.virtual_warehouse_name,p.sku_code,p.sku_name,p.product_code,p.product_name
+    FROM
+    oms_stock s,
+    oms_warehouse w,oms_product_sku p
+    WHERE
+    s.warehouse_id = w.warehouse_id and s.sku_id = p.sku_id
+    /*AND w.warehouse_type IN ('1', '3')*/
+    <if test="warehouseType!=null and warehouseType.size>0">AND w.warehouse_type IN
+      <foreach item="item" index="index" collection="warehouseType" open="(" separator=","
+        close=")">#{item}
+      </foreach>
+    </if>
+    ) n
+    GROUP BY
+    n.warehouse_id,
+    n.sku_id
+    ) t
+    LEFT JOIN (
+    SELECT
+    sum(quantity) AS occNum,
+    warehouse_id,
+    sku_id
+    FROM
+    oms_stock_occupancy
+    GROUP BY
+    warehouse_id,
+    sku_id
+    ) m ON t.warehouse_id = m.warehouse_id
+    AND t.sku_id = m.sku_id
+    <where>
+      <if test="skuIds!=null and skuIds.size>0">AND t.sku_id IN
+        <foreach item="item" index="index" collection="skuIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+
+  </select>
+
+</mapper>

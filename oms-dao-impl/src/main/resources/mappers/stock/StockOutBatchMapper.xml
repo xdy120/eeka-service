@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockOutBatchMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.stock.StockOutBatch">
+    <id column="stock_out_batch_id" property="stockOutBatchId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="notice_order_code" property="noticeOrderCode"/>
+    <result column="notice_order_id" property="noticeOrderId"/>
+    <result column="notice_order_type" property="noticeOrderType"/>
+    <result column="out_time" property="outTime"/>
+    <result column="post_status" property="postStatus"/>
+    <result column="wms_order_code" property="wmsOrderCode"/>
+  </resultMap>
+  <sql id="columns">created_time,modified_time,notice_order_code,notice_order_id,notice_order_type,out_time,post_status,stock_out_batch_id,wms_order_code</sql>
+  <sql id="pkWhere">
+    WHERE stock_out_batch_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="noticeOrderCode!=null and noticeOrderCode!=''">
+        AND notice_order_code=#{noticeOrderCode}
+      </if>
+      <if test="noticeOrderId!=null">AND notice_order_id=#{noticeOrderId}</if>
+      <if test="noticeOrderType!=null">AND notice_order_type=#{noticeOrderType}</if>
+      <if test="outTime!=null">AND out_time=#{outTime}</if>
+      <if test="postStatus!=null">AND post_status=#{postStatus}</if>
+      <if test="stockOutBatchId!=null">AND stock_out_batch_id=#{stockOutBatchId}</if>
+      <if test="wmsOrderCode!=null and wmsOrderCode!=''">
+        AND wms_order_code=#{wmsOrderCode}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="noticeOrderCode!=null and noticeOrderCode!=''">
+        AND notice_order_code=#{noticeOrderCode}
+      </if>
+      <if test="noticeOrderId!=null">AND notice_order_id=#{noticeOrderId}</if>
+      <if test="noticeOrderType!=null">AND notice_order_type=#{noticeOrderType}</if>
+      <if test="outTimeBegin!=null">
+        <![CDATA[AND out_time>=#{outTimeBegin}]]>
+      </if>
+      <if test="outTimeEnd!=null">
+        <![CDATA[AND out_time<#{outTimeEnd}]]>
+      </if>
+      <if test="postStatus!=null">AND post_status=#{postStatus}</if>
+      <if test="stockOutBatchId!=null">AND stock_out_batch_id=#{stockOutBatchId}</if>
+      <if test="wmsOrderCode!=null and wmsOrderCode!=''">
+        AND wms_order_code=#{wmsOrderCode}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_out_batch_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.stock.StockOutBatch">
+    INSERT INTO oms_stock_out_batch(created_time,modified_time,notice_order_code,notice_order_id,notice_order_type,out_time,post_status,stock_out_batch_id,wms_order_code)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      now(),
+      #{noticeOrderCode},
+      #{noticeOrderId},
+      #{noticeOrderType},
+      #{outTime},
+      #{postStatus},
+      #{stockOutBatchId},
+      #{wmsOrderCode},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.stock.StockOutBatch">
+    UPDATE oms_stock_out_batch
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="noticeOrderCode!=null">notice_order_code=#{noticeOrderCode},</if>
+      <if test="noticeOrderId!=null">notice_order_id=#{noticeOrderId},</if>
+      <if test="noticeOrderType!=null">notice_order_type=#{noticeOrderType},</if>
+      <if test="outTime!=null">out_time=#{outTime},</if>
+      <if test="postStatus!=null">post_status=#{postStatus},</if>
+      <if test="wmsOrderCode!=null">wms_order_code=#{wmsOrderCode},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_out_batch_id=#{stockOutBatchId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.stock.StockOutBatch">
+    UPDATE oms_stock_out_batch
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="record.noticeOrderCode!=null">
+        notice_order_code=#{record.noticeOrderCode},
+      </if>
+      <if test="record.noticeOrderId!=null">
+        notice_order_id=#{record.noticeOrderId},
+      </if>
+      <if test="record.noticeOrderType!=null">
+        notice_order_type=#{record.noticeOrderType},
+      </if>
+      <if test="record.outTime!=null">
+        out_time=#{record.outTime},
+      </if>
+      <if test="record.postStatus!=null">
+        post_status=#{record.postStatus},
+      </if>
+      <if test="record.wmsOrderCode!=null">
+        wms_order_code=#{record.wmsOrderCode},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.noticeOrderCode!=null">
+      AND notice_order_code=#{example.noticeOrderCode}
+      </if>
+      <if test="example.noticeOrderId!=null">
+      AND notice_order_id=#{example.noticeOrderId}
+      </if>
+      <if test="example.noticeOrderType!=null">
+      AND notice_order_type=#{example.noticeOrderType}
+      </if>
+      <if test="example.outTime!=null">
+      AND out_time=#{example.outTime}
+      </if>
+      <if test="example.postStatus!=null">
+      AND post_status=#{example.postStatus}
+      </if>
+      <if test="example.stockOutBatchId!=null">
+      AND stock_out_batch_id=#{example.stockOutBatchId}
+      </if>
+      <if test="example.wmsOrderCode!=null">
+      AND wms_order_code=#{example.wmsOrderCode}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_out_batch
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_out_batch
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_out_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_out_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

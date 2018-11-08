@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.purchase.PurchaseOrderMapper">
+
+  <sql id="advanceWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="arrivalDateBegin!=null">
+        <![CDATA[AND po.arrival_date>=#{arrivalDateBegin}]]>
+      </if>
+      <if test="arrivalDateEnd!=null">
+        <![CDATA[AND po.arrival_date<#{arrivalDateEnd}]]>
+      </if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND po.audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND po.audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND po.auditor=#{auditor}
+      </if>
+      <if test="contractNo!=null and contractNo!=''">
+        AND po.contract_no=#{contractNo}
+      </if>
+      <if test="contractNos!=null and contractNos.size>0">
+        AND po.contract_no IN
+        <foreach item="item" index="index" collection="contractNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND po.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND po.created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND po.creator=#{creator}
+      </if>
+      <if test="expressFee!=null">AND po.express_fee=#{expressFee}</if>
+      <if test="fromCode!=null and fromCode!=''">
+        AND po.from_code=#{fromCode}
+      </if>
+      <if test="fromCodes!=null and fromCodes.size>0">
+        AND po.from_code IN
+        <foreach item="item" index="index" collection="fromCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inStatus!=null">AND po.in_status=#{inStatus}</if>
+      <if test="inStatuses!=null and inStatuses.size>0">
+        AND po.in_status IN
+        <foreach item="item" index="index" collection="inStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="lastInTimeBegin!=null">
+        <![CDATA[AND po.last_in_time>=#{lastInTimeBegin}]]>
+      </if>
+      <if test="lastInTimeEnd!=null">
+        <![CDATA[AND po.last_in_time<#{lastInTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND po.modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND po.modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="noticeOrderStatus!=null">AND po.notice_order_status=#{noticeOrderStatus}</if>
+      <if test="noticeOrderStatuses!=null and noticeOrderStatuses.size>0">
+        AND po.notice_order_status IN
+        <foreach item="item" index="index" collection="noticeOrderStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="purchaseDateBegin!=null">
+        <![CDATA[AND po.purchase_date>=#{purchaseDateBegin}]]>
+      </if>
+      <if test="purchaseDateEnd!=null">
+        <![CDATA[AND po.purchase_date<#{purchaseDateEnd}]]>
+      </if>
+      <if test="purchaseOrderCode!=null and purchaseOrderCode!=''">
+        AND po.purchase_order_code=#{purchaseOrderCode}
+      </if>
+      <if test="purchaseOrderCodes!=null and purchaseOrderCodes.size>0">
+        AND po.purchase_order_code IN
+        <foreach item="item" index="index" collection="purchaseOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="purchaseOrderId!=null">AND po.purchase_order_id=#{purchaseOrderId}</if>
+      <if test="purchaser!=null and purchaser!=''">
+        AND po.purchaser=#{purchaser}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND po.remark=#{remark}
+      </if>
+      <if test="status!=null">AND po.status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND po.status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="supplierCode!=null and supplierCode!=''">
+        AND po.supplier_code=#{supplierCode}
+      </if>
+      <if test="supplierId!=null">AND po.supplier_id=#{supplierId}</if>
+      <if test="supplierName!=null and supplierName!=''">
+        AND po.supplier_name=#{supplierName}
+      </if>
+      <if test="supplierShortName!=null and supplierShortName!=''">
+        AND po.supplier_short_name=#{supplierShortName}
+      </if>
+      <if test="version!=null">AND po.version=#{version}</if>
+      <if test="virtualWarehouseId!=null">AND po.virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND po.virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND po.warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND po.warehouse_name=#{warehouseName}
+      </if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND EXISTS(SELECT 1 FROM oms_purchase_order_detail pod WHERE po.purchase_order_id=pod.purchase_order_id AND pod.sku_code=#{skuCode})
+      </if>
+    </trim>
+  </sql>
+
+  <select id="advanceQuery" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_order po
+    <include refid="advanceWhere"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

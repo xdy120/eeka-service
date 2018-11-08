@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockTransitMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.stock.StockTransit">
+    <id column="stock_transit_id" property="stockTransitId"/>
+    <result column="arrival_date" property="arrivalDate"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="transit_quantity" property="transitQuantity"/>
+  </resultMap>
+  <sql id="columns">arrival_date,created_time,modified_time,sku_id,stock_transit_id,transit_quantity</sql>
+  <sql id="pkWhere">
+    WHERE stock_transit_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="arrivalDate!=null">AND arrival_date=#{arrivalDate}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="stockTransitId!=null">AND stock_transit_id=#{stockTransitId}</if>
+      <if test="transitQuantity!=null">AND transit_quantity=#{transitQuantity}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="arrivalDateBegin!=null">
+        <![CDATA[AND arrival_date>=#{arrivalDateBegin}]]>
+      </if>
+      <if test="arrivalDateEnd!=null">
+        <![CDATA[AND arrival_date<#{arrivalDateEnd}]]>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="stockTransitId!=null">AND stock_transit_id=#{stockTransitId}</if>
+      <if test="transitQuantity!=null">AND transit_quantity=#{transitQuantity}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_transit_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.stock.StockTransit">
+    INSERT INTO oms_stock_transit(arrival_date,created_time,modified_time,sku_id,stock_transit_id,transit_quantity)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{arrivalDate},
+      now(),
+      now(),
+      #{skuId},
+      #{stockTransitId},
+      #{transitQuantity},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.stock.StockTransit">
+    UPDATE oms_stock_transit
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="arrivalDate!=null">arrival_date=#{arrivalDate},</if>
+      modified_time=now(),
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="transitQuantity!=null">transit_quantity=#{transitQuantity},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_transit_id=#{stockTransitId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.stock.StockTransit">
+    UPDATE oms_stock_transit
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.arrivalDate!=null">
+        arrival_date=#{record.arrivalDate},
+      </if>
+      modified_time=now(),
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.transitQuantity!=null">
+        transit_quantity=#{record.transitQuantity},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.arrivalDate!=null">
+      AND arrival_date=#{example.arrivalDate}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.stockTransitId!=null">
+      AND stock_transit_id=#{example.stockTransitId}
+      </if>
+      <if test="example.transitQuantity!=null">
+      AND transit_quantity=#{example.transitQuantity}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_transit
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_transit
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_transit
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_transit
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_transit
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_transit
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_transit
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_transit
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_transit
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

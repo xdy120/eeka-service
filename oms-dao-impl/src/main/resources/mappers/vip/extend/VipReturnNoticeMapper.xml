@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipReturnNoticeMapper">
+  <sql id="customWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND main.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND main.created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND main.creator=#{creator}
+      </if>
+      <if test="inQuantity!=null">AND main.in_quantity=#{inQuantity}</if>
+      <if test="inStatus!=null">AND main.in_status=#{inStatus}</if>
+      <if test="inStatuses!=null and inStatuses.size>0">
+        AND main.in_status IN
+        <foreach item="item" index="index" collection="inStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="vipPriceAbnormal!=null">AND main.is_vip_price_abnormal=#{vipPriceAbnormal}</if>
+      <if test="lastInTimeBegin!=null">
+        <![CDATA[AND main.last_in_time>=#{lastInTimeBegin}]]>
+      </if>
+      <if test="lastInTimeEnd!=null">
+        <![CDATA[AND main.last_in_time<#{lastInTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND main.modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND main.modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="noticeQuantity!=null">AND main.notice_quantity=#{noticeQuantity}</if>
+      <if test="remark!=null and remark!=''">
+        AND main.remark=#{remark}
+      </if>
+      <if test="status!=null">AND main.status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND main.status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND main.store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND main.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">
+        AND main.store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND main.version=#{version}</if>
+      <if test="vipAmount!=null">AND main.vip_amount=#{vipAmount}</if>
+      <if test="vipReturnNoticeCode!=null and vipReturnNoticeCode!=''">
+        AND main.vip_return_notice_code=#{vipReturnNoticeCode}
+      </if>
+      <if test="vipReturnNoticeCodes!=null and vipReturnNoticeCodes.size>0">
+        AND main.vip_return_notice_code IN
+        <foreach item="item" index="index" collection="vipReturnNoticeCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="vipReturnNoticeId!=null">AND main.vip_return_notice_id=#{vipReturnNoticeId}</if>
+      <if test="vipWarehouseCode!=null and vipWarehouseCode!=''">
+        AND main.vip_warehouse_code=#{vipWarehouseCode}
+      </if>
+      <if test="vipWarehouseName!=null and vipWarehouseName!=''">
+        AND main.vip_warehouse_name=#{vipWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND main.warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND main.warehouse_name=#{warehouseName}
+      </if>
+    </trim>
+    <if test="skuCodes!=null and skuCodes.size>0">
+      AND main.vip_return_notice_id IN (SELECT vip_return_notice_id FROM oms_vip_return_notice_detail WHERE sku_code IN
+      <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">#{item}</foreach>)
+    </if>
+    <if test="vipReturnCodes!=null and vipReturnCodes.size>0">
+      AND main.vip_return_notice_id IN (SELECT vip_return_notice_id FROM oms_vip_return_notice_detail WHERE vip_return_code IN
+      <foreach item="item" index="index" collection="vipReturnCodes" open="(" separator="," close=")">#{item}</foreach>)
+    </if>
+  </sql>
+
+  <select id="listPageCustom" resultMap="resultMap">
+    SELECT main.* FROM oms_vip_return_notice main
+    <include refid="customWhere"/>
+    order by main.vip_return_notice_id DESC
+  </select>
+
+  <resultMap id="exportList" type="com.greatonce.oms.bo.vip.VipReturnNoticeExportBO">
+    <result column="vip_return_notice_code" property="vipReturnNoticeCode"/>
+    <result column="vip_return_code" property="vipReturnCode"/>
+    <result column="status" property="status"/>
+    <result column="in_status" property="inStatus"/>
+    <result column="store_name" property="storeName"/>
+    <result column="warehouse_name" property="warehouseName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="vip_price" property="vipPrice"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="in_quantity" property="inQuantity"/>
+    <result column="vip_amount" property="vipAmount"/>
+    <result column="last_in_time" property="lastInTime"/>
+    <result column="creator" property="creator"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+  </resultMap>
+  <select id="listExportVipReturnNotice" resultMap="exportList">
+    SELECT
+      main.vip_return_notice_code,
+      vip_return.vip_return_code,
+      main.status,
+      main.in_status,
+      main.store_name,
+      main.warehouse_name,
+      detail.sku_code,
+      detail.sku_name,
+      detail.vip_price,
+      detail.notice_quantity,
+      (IFNULL(detail.in_quantity,0)+IFNULL(in_substandard_quantity,0)) AS in_quantity,
+      detail.vip_amount,
+      main.last_in_time,
+      main.creator,
+      detail.created_time,
+      detail.modified_time
+    FROM oms_vip_return_notice main
+    JOIN oms_vip_return_notice_detail detail
+     ON main.vip_return_notice_id=detail.vip_return_notice_id
+    JOIN oms_vip_return vip_return
+     ON vip_return.vip_return_id=detail.vip_return_id
+    <include refid="customWhere"/>
+    order by main.vip_return_notice_id DESC
+  </select>
+
+</mapper>

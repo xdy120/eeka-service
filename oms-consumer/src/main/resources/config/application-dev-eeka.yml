@@ -1,0 +1,78 @@
+spring:
+  datasource:
+    oms:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://210.75.22.165:6033/oms_biz_test?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    report:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://210.75.22.165:6033/oms_biz_test?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    admin:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://210.75.22.165:6033/oms_admin_test?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    rds:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://210.75.22.165:6033/sys_info?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: jeoms888
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+  rabbitmq:
+    host: 114.55.15.205
+    port: 30006
+    username: dev
+    password: dev
+    virtual-host: dev
+  redis:
+    host: 114.55.15.205
+    port: 30005
+server:
+  port: 8184
+logging:
+  config: classpath:config/logback-consumer-dev.xml
+oms:
+  monitor: true
+  service:
+    name: consumer
+    custom: eeka
+  consumer:
+    translate:
+      order:
+        enabled: true
+        num: 1
+      refund:
+        enabled: false
+        num: 1
+      exchange:
+        enabled: false
+        num: 1
+    stock-upload:
+      enabled: false
+      num: 1
+    dispatch:
+      enabled: false
+      num: 1
+    notice:
+      enabled: false
+      dispatch-num: 1
+    order-report:
+      enabled: false

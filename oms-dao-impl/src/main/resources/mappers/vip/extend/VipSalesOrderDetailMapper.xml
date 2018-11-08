@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipSalesOrderDetailMapper">
+  <select id="listTradeIdsByStoreId" resultType="String">
+    SELECT DISTINCT trade_id
+    FROM oms_vip_sales_order_detail
+    WHERE store_id = #{storeId}
+  </select>
+</mapper>

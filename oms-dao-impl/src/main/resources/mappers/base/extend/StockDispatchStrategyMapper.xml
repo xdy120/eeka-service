@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.StockDispatchStrategyMapper">
+
+  <update id="customUpdate" parameterType="com.greatonce.oms.domain.base.StockDispatchStrategy">
+    UPDATE oms_stock_dispatch_strategy
+    <trim prefix="SET" suffixOverrides=",">
+      default_cod_express_id=#{defaultCodExpressId},
+      default_cod_express_name=#{defaultCodExpressName},
+      default_express_id=#{defaultExpressId},
+      default_express_name=#{defaultExpressName},
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="mallWarehouse!=null">mall_warehouse=#{mallWarehouse},</if>
+      modified_time=now(),
+      <if test="settingJson!=null">setting_json=#{settingJson},</if>
+      <if test="stockDispatchStrategyName!=null">
+        stock_dispatch_strategy_name=#{stockDispatchStrategyName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_dispatch_strategy_id=#{stockDispatchStrategyId}
+    </trim>
+  </update>
+</mapper>

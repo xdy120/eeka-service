@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderMarketingMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.SalesOrderMarketing">
+    <id column="sales_order_marketing_id" property="salesOrderMarketingId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="marketing_code" property="marketingCode"/>
+    <result column="marketing_id" property="marketingId"/>
+    <result column="marketing_name" property="marketingName"/>
+    <result column="marketing_type" property="marketingType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+  </resultMap>
+  <sql id="columns">created_time,marketing_code,marketing_id,marketing_name,marketing_type,modified_time,sales_order_id,sales_order_marketing_id</sql>
+  <sql id="pkWhere">
+    WHERE sales_order_marketing_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="marketingCode!=null and marketingCode!=''">
+        AND marketing_code=#{marketingCode}
+      </if>
+      <if test="marketingId!=null">AND marketing_id=#{marketingId}</if>
+      <if test="marketingName!=null and marketingName!=''">
+        AND marketing_name=#{marketingName}
+      </if>
+      <if test="marketingType!=null">AND marketing_type=#{marketingType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="salesOrderMarketingId!=null">AND sales_order_marketing_id=#{salesOrderMarketingId}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="marketingCode!=null and marketingCode!=''">
+        AND marketing_code=#{marketingCode}
+      </if>
+      <if test="marketingId!=null">AND marketing_id=#{marketingId}</if>
+      <if test="marketingName!=null and marketingName!=''">
+        AND marketing_name=#{marketingName}
+      </if>
+      <if test="marketingType!=null">AND marketing_type=#{marketingType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="salesOrderMarketingId!=null">AND sales_order_marketing_id=#{salesOrderMarketingId}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sales_order_marketing_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.SalesOrderMarketing">
+    INSERT INTO oms_sales_order_marketing(created_time,marketing_code,marketing_id,marketing_name,marketing_type,modified_time,sales_order_id,sales_order_marketing_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{marketingCode},
+      #{marketingId},
+      #{marketingName},
+      #{marketingType},
+      now(),
+      #{salesOrderId},
+      #{salesOrderMarketingId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.SalesOrderMarketing">
+    UPDATE oms_sales_order_marketing
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="marketingCode!=null">marketing_code=#{marketingCode},</if>
+      <if test="marketingId!=null">marketing_id=#{marketingId},</if>
+      <if test="marketingName!=null">marketing_name=#{marketingName},</if>
+      <if test="marketingType!=null">marketing_type=#{marketingType},</if>
+      modified_time=now(),
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sales_order_marketing_id=#{salesOrderMarketingId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.SalesOrderMarketing">
+    UPDATE oms_sales_order_marketing
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.marketingCode!=null">
+        marketing_code=#{record.marketingCode},
+      </if>
+      <if test="record.marketingId!=null">
+        marketing_id=#{record.marketingId},
+      </if>
+      <if test="record.marketingName!=null">
+        marketing_name=#{record.marketingName},
+      </if>
+      <if test="record.marketingType!=null">
+        marketing_type=#{record.marketingType},
+      </if>
+      modified_time=now(),
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.marketingCode!=null">
+      AND marketing_code=#{example.marketingCode}
+      </if>
+      <if test="example.marketingId!=null">
+      AND marketing_id=#{example.marketingId}
+      </if>
+      <if test="example.marketingName!=null">
+      AND marketing_name=#{example.marketingName}
+      </if>
+      <if test="example.marketingType!=null">
+      AND marketing_type=#{example.marketingType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.salesOrderMarketingId!=null">
+      AND sales_order_marketing_id=#{example.salesOrderMarketingId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_sales_order_marketing
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_sales_order_marketing
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_marketing
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_marketing
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_marketing
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_marketing
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_marketing
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_marketing
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_marketing
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

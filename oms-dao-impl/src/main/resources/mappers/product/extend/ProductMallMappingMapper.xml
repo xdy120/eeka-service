@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.product.ProductMallMappingMapper">
+
+    <!--根据skuId 和 storeId 查询铺货关系 -->
+    <select id="listFull" resultMap="resultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM oms_product_mall_mapping
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="skuIds != null">
+                AND sku_id IN
+                <foreach item="item" index="index" collection="skuIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="storeIds != null">
+                AND store_id IN
+                <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+    </select>
+    <select id="listAutoUploadMapping" resultMap="resultMap">
+        SELECT store_id,sku_id
+        FROM oms_product_mall_mapping
+        WHERE store_id =#{_parameter} AND is_matched=1 AND is_auto_upload=1
+    </select>
+    <select id="listStoreMapping" resultMap="resultMap">
+        SELECT product_mall_mapping_id,unique_id
+        FROM oms_product_mall_mapping
+        WHERE store_id =#{_parameter}
+    </select>
+    <select id="beginMarketing" resultMap="resultMap">
+        UPDATE oms_product_mall_mapping
+        SET is_auto_upload = 0,
+        marketing_id = #{marketingId},marketing_type=#{marketingType}
+        WHERE
+        store_id = #{storeId} AND sku_id=#{skuId}
+        <if test="mallProductId != null">AND mall_product_id=#{mallProductId}</if>
+    </select>
+    <select id="endMarketing" resultMap="resultMap">
+        UPDATE oms_product_mall_mapping
+        SET is_auto_upload=1,
+        marketing_id=null,marketing_type=null
+        WHERE
+        store_id = #{storeId} AND sku_id=#{skuId}
+        <if test="mallProductId != null">AND mall_product_id=#{mallProductId}</if>
+    </select>
+</mapper>

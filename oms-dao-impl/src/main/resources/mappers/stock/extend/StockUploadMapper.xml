@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockUploadMapper">
+
+    <resultMap id="listQuantityResult" type="com.greatonce.oms.bo.stock.StockQuantityBO">
+        <id property="virtualWarehouseId" column="virtual_warehouse_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="lockedQuantity" column="locked_quantity"/>
+    </resultMap>
+    <!--计算一个sku 在多个仓库中的库存 返回List-->
+    <select id="listQuantity" resultMap="listQuantityResult">
+
+        SELECT s.virtual_warehouse_id,s.sku_id,s.quantity,SUM(IFNULL(o.quantity,0)) locked_quantity
+        FROM oms_stock s
+        LEFT JOIN oms_stock_occupancy o
+        ON s.virtual_warehouse_id=o.virtual_warehouse_id AND s.sku_id=o.sku_id AND o.status=3
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="skuId != null and skuId != '' ">
+                s.sku_id=#{skuId}
+            </if>
+            <if test="warehouseIds != null">
+                AND s.virtual_warehouse_id in
+                <foreach item="item" index="index" collection="warehouseIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        group by s.virtual_warehouse_id,s.sku_id,s.quantity
+        <!--select stock.virtual_warehouse_id,stock.sku_id,stock.quantity,sum(IFNULL(occupancy.quantity,0)) as lock_quantity
+        from oms_stock stock
+        left join oms_stock_occupancy occupancy
+        on stock.virtual_warehouse_id=occupancy.virtual_warehouse_id and stock.sku_id=occupancy.sku_id
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="skuId != null AND skuId != '' ">
+                AND stock.sku_id = #{skuId}
+            </if>
+            <if test="warehouseIds != null">
+                AND stock.virtual_warehouse_id in
+                <foreach item="item" index="index" collection="warehouseIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        group by stock.virtual_warehouse_id,stock.sku_id,stock.quantity-->
+    </select>
+
+    <!--计算预售的数量-->
+    <select id="selectPresellQuantity" resultType="Integer">
+        SELECT IFNULL(pd.quantity,0) - SUM(IFNULL(sod.quantity,0))
+        FROM oms_presell_detail AS pd
+        LEFT JOIN oms_sales_order_detail AS sod
+        ON pd.presell_id=sod.presell_id AND pd.sku_id= sod.sku_id AND <![CDATA[sod.status <> 0]]> AND sod.sales_order_detail_refund_status in(1,2)
+        WHERE pd.presell_id=#{presellId} AND pd.sku_id=#{skuId}
+        </select>
+
+    <!--计算可售的数量-->
+    <select id="getCanSaleTotal" resultType="Integer">
+        SELECT IFNULL((SELECT SUM(quantity) FROM oms_stock WHERE sku_id = #{skuId}
+        <if test="warehouseIds!=null ">
+            and virtual_warehouse_id in
+            <foreach item="item" index="index" collection="warehouseIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ),0)-IFNULL((SELECT SUM(quantity) FROM oms_stock_occupancy WHERE sku_id = #{skuId}
+        <if test="warehouseIds!=null ">
+            and virtual_warehouse_id in
+            <foreach item="item" index="index" collection="warehouseIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ),0)
+
+    </select>
+
+</mapper>

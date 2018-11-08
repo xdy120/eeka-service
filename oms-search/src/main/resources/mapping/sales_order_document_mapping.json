@@ -1,0 +1,70 @@
+{
+  "mappings": {
+    "order": {
+      "properties": {
+        "salesOrderId": {
+          "type": "long"
+        },
+        "actualAmount": {
+          "type": "double"
+        },
+        "address": {
+          "type": "text",
+          "analyzer": "ik_max_word"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "storeId": {
+          "type": "long"
+        },
+        "skuCodes": {
+          "type": "text"
+        },
+        "productCodes": {
+          "type": "text"
+        },
+        "productNames": {
+          "type": "text",
+          "analyzer": "ik_max_word"
+        },
+        "buyerMemo": {
+          "type": "text",
+          "analyzer": "ik_max_word"
+        },
+        "sellerMemo": {
+          "type": "text",
+          "analyzer": "ik_max_word"
+        },
+        "oos": {
+          "type": "boolean"
+        },
+        "prepay": {
+          "type": "boolean"
+        },
+        "urgent": {
+          "type": "boolean"
+        },
+        "manual": {
+          "type": "boolean"
+        },
+        "createdTime": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        "mallPaidTime": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        "auditedTime": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        "holdDate": {
+          "type": "date",
+          "format": "yyyy-MM-dd"
+        }
+      }
+    }
+  }
+}

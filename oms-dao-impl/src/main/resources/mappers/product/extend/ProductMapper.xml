@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.product.ProductMapper">
+  <select id="exists" resultType="integer">
+        SELECT 1
+        FROM oms_product
+        WHERE product_code = #{_parameter} AND is_enable = 1
+        LIMIT 1
+    </select>
+
+  <select id="listPageExtend" resultMap="resultMap">
+    SELECT p.*
+    FROM oms_product p
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="barcode!=null and barcode!=''">AND p.barcode=#{barcode}</if>
+      <if test="barcodes!=null and barcodes.size>0">
+        AND p.barcode IN
+        <foreach item="item" index="index" collection="barcodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productCode!=null and productCode!=''">AND p.product_code=#{productCode}</if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND p.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="productId!=null">AND p.product_id=#{productId}</if>
+      <if test="productIds!=null and productIds.size>0">
+        AND p.product_id IN
+        <foreach item="item" index="index" collection="productIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productName!=null and productName!=''">
+        <bind name="productName_like" value="_parameter.productName+'%'"/>
+        AND p.product_name like #{productName_like}
+      </if>
+      <if test="skuCodes!=null">
+        AND EXISTS (
+        SELECT 1 FROM oms_product_sku sku WHERE p.product_id=sku.product_id AND sku.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+        )
+      </if>
+      <if test="brandCode!=null and brandCode!=''">AND p.brand_code=#{brandCode}</if>
+      <if test="brandName!=null and brandName!=''">AND p.brand_name=#{brandName}</if>
+      <if test="listingYear!=null and listingYear!=''">AND p.listing_year=#{listingYear}</if>
+      <if test="waveband!=null and waveband!=''">AND p.waveband=#{waveband}</if>
+      <if test="prepackage!=null">
+        AND EXISTS ( SELECT 1 from oms_product_sku WHERE p.product_id
+        =oms_product_sku.product_id and is_prepackage = #{prepackage} )
+      </if>
+    </trim>
+    ORDER BY product_id DESC
+  </select>
+
+  <select id="getByCode" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM
+    oms_product
+    WHERE product_code=#{_parameter}
+  </select>
+
+</mapper>

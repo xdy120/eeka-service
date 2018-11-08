@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.SmsTemplateMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.SmsTemplate">
+    <id column="sms_template_id" property="smsTemplateId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="is_enable" property="enable"/>
+    <result column="member_type" property="memberType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="sms_account_id" property="smsAccountId"/>
+    <result column="sms_account_name" property="smsAccountName"/>
+    <result column="sms_content" property="smsContent"/>
+    <result column="sms_template_name" property="smsTemplateName"/>
+    <result column="sms_template_type" property="smsTemplateType"/>
+  </resultMap>
+  <sql id="columns">created_time,is_enable,member_type,modified_time,sms_account_id,sms_account_name,sms_content,sms_template_id,sms_template_name,sms_template_type</sql>
+  <sql id="pkWhere">
+    WHERE sms_template_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="memberType!=null">AND member_type=#{memberType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="smsAccountId!=null">AND sms_account_id=#{smsAccountId}</if>
+      <if test="smsAccountName!=null and smsAccountName!=''">
+        AND sms_account_name=#{smsAccountName}
+      </if>
+      <if test="smsContent!=null and smsContent!=''">
+        AND sms_content=#{smsContent}
+      </if>
+      <if test="smsTemplateId!=null">AND sms_template_id=#{smsTemplateId}</if>
+      <if test="smsTemplateName!=null and smsTemplateName!=''">
+        AND sms_template_name=#{smsTemplateName}
+      </if>
+      <if test="smsTemplateType!=null">AND sms_template_type=#{smsTemplateType}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="memberType!=null">AND member_type=#{memberType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="smsAccountId!=null">AND sms_account_id=#{smsAccountId}</if>
+      <if test="smsAccountName!=null and smsAccountName!=''">
+        AND sms_account_name=#{smsAccountName}
+      </if>
+      <if test="smsContent!=null and smsContent!=''">
+        AND sms_content=#{smsContent}
+      </if>
+      <if test="smsTemplateId!=null">AND sms_template_id=#{smsTemplateId}</if>
+      <if test="smsTemplateName!=null and smsTemplateName!=''">
+        AND sms_template_name=#{smsTemplateName}
+      </if>
+      <if test="smsTemplateType!=null">AND sms_template_type=#{smsTemplateType}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sms_template_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.SmsTemplate">
+    INSERT INTO oms_sms_template(created_time,is_enable,member_type,modified_time,sms_account_id,sms_account_name,sms_content,sms_template_id,sms_template_name,sms_template_type)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{enable},
+      #{memberType},
+      now(),
+      #{smsAccountId},
+      #{smsAccountName},
+      #{smsContent},
+      #{smsTemplateId},
+      #{smsTemplateName},
+      #{smsTemplateType},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.SmsTemplate">
+    UPDATE oms_sms_template
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="memberType!=null">member_type=#{memberType},</if>
+      modified_time=now(),
+      <if test="smsAccountId!=null">sms_account_id=#{smsAccountId},</if>
+      <if test="smsAccountName!=null">sms_account_name=#{smsAccountName},</if>
+      <if test="smsContent!=null">sms_content=#{smsContent},</if>
+      <if test="smsTemplateName!=null">sms_template_name=#{smsTemplateName},</if>
+      <if test="smsTemplateType!=null">sms_template_type=#{smsTemplateType},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sms_template_id=#{smsTemplateId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.SmsTemplate">
+    UPDATE oms_sms_template
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.memberType!=null">
+        member_type=#{record.memberType},
+      </if>
+      modified_time=now(),
+      <if test="record.smsAccountId!=null">
+        sms_account_id=#{record.smsAccountId},
+      </if>
+      <if test="record.smsAccountName!=null">
+        sms_account_name=#{record.smsAccountName},
+      </if>
+      <if test="record.smsContent!=null">
+        sms_content=#{record.smsContent},
+      </if>
+      <if test="record.smsTemplateName!=null">
+        sms_template_name=#{record.smsTemplateName},
+      </if>
+      <if test="record.smsTemplateType!=null">
+        sms_template_type=#{record.smsTemplateType},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.memberType!=null">
+      AND member_type=#{example.memberType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.smsAccountId!=null">
+      AND sms_account_id=#{example.smsAccountId}
+      </if>
+      <if test="example.smsAccountName!=null">
+      AND sms_account_name=#{example.smsAccountName}
+      </if>
+      <if test="example.smsContent!=null">
+      AND sms_content=#{example.smsContent}
+      </if>
+      <if test="example.smsTemplateId!=null">
+      AND sms_template_id=#{example.smsTemplateId}
+      </if>
+      <if test="example.smsTemplateName!=null">
+      AND sms_template_name=#{example.smsTemplateName}
+      </if>
+      <if test="example.smsTemplateType!=null">
+      AND sms_template_type=#{example.smsTemplateType}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_sms_template
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_sms_template
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sms_template
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sms_template
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sms_template
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sms_template
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sms_template
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sms_template
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sms_template
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

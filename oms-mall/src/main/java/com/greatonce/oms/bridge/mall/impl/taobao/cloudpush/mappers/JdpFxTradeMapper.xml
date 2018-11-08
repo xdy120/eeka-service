@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.mappers.JdpFxTradeMapper">
+  <resultMap id="resultMap"
+    type="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpFxTrade">
+    <id column="fenxiao_id" property="fenxiaoId"/>
+    <result column="status" property="status"/>
+    <result column="tc_order_id" property="tcOrderId"/>
+    <result column="supplier_username" property="supplierUsername"/>
+    <result column="distributor_username" property="distributorUsername"/>
+    <result column="created" property="created"/>
+    <result column="modified" property="modified"/>
+    <result column="jdp_hashcode" property="jdpHashcode"/>
+    <result column="jdp_response" property="jdpResponse"/>
+    <result column="jdp_modified" property="jdpModified"/>
+    <result column="jdp_created" property="jdpCreated"/>
+  </resultMap>
+  <sql
+    id="columns">status,tc_order_id,supplier_username,distributor_username,created,modified,jdp_hashcode,jdp_response,jdp_modified,jdp_created</sql>
+  <sql id="pkWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND fenxiao_id=#{fenxiaoId}
+    </trim>
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="fenxiaoId!=null">AND fenxiao_id=#{fenxiaoId}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="tcOrderId!=null">AND tc_order_id=#{tcOrderId}</if>
+      <if test="supplierUsername!=null">AND supplier_username=#{supplierUsername}</if>
+      <if test="distributorUsername!=null">AND distributor_username=#{distributorUsername}</if>
+      <if test="created!=null">AND created=#{created}</if>
+      <if test="modified!=null">AND modified=#{modified}</if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpModified!=null">AND jdp_modified=#{jdpModified}</if>
+      <if test="jdpCreated!=null">AND jdp_created=#{jdpCreated}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="fenxiaoId!=null">AND fenxiao_id=#{fenxiaoId}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="tcOrderId!=null">AND tc_order_id=#{tcOrderId}</if>
+      <if test="supplierUsername!=null">AND supplier_username=#{supplierUsername}</if>
+      <if test="distributorUsername!=null">AND distributor_username=#{distributorUsername}</if>
+      <if test="createdBegin!=null"><![CDATA[AND created>=#{createdBegin}]]></if>
+      <if test="createdEnd!=null"><![CDATA[AND created<#{createdEnd}]]></if>
+      <if test="modifiedBegin!=null"><![CDATA[AND modified>=#{modifiedBegin}]]></if>
+      <if test="modifiedEnd!=null"><![CDATA[AND modified<#{modifiedEnd}]]></if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpModifiedBegin!=null"><![CDATA[AND jdp_modified>=#{jdpModifiedBegin}]]></if>
+      <if test="jdpModifiedEnd!=null"><![CDATA[AND jdp_modified<#{jdpModifiedEnd}]]></if>
+      <if test="jdpCreatedBegin!=null"><![CDATA[AND jdp_created>=#{jdpCreatedBegin}]]></if>
+      <if test="jdpCreatedEnd!=null"><![CDATA[AND jdp_created<#{jdpCreatedEnd}]]></if>
+    </trim>
+  </sql>
+  <insert id="insert"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpFxTrade">
+    INSERT INTO jdp_fx_trade(status,tc_order_id,supplier_username,distributor_username,created,modified,jdp_hashcode,jdp_response,jdp_modified,jdp_created)
+    VALUES(#{fenxiao_id},#{status},#{tc_order_id},#{supplier_username},#{distributor_username},#{created},#{modified},#{jdp_hashcode},#{jdp_response},#{jdp_modified},#{jdp_created})
+  </insert>
+  <update id="update"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpFxTrade">
+    UPDATE jdp_fx_trade
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="status!=null">status=#{status},</if>
+      <if test="tcOrderId!=null">tc_order_id=#{tcOrderId},</if>
+      <if test="supplierUsername!=null">supplier_username=#{supplierUsername},</if>
+      <if test="distributorUsername!=null">distributor_username=#{distributorUsername},</if>
+      <if test="created!=null">created=#{created},</if>
+      <if test="modified!=null">modified=#{modified},</if>
+      <if test="jdpHashcode!=null">jdp_hashcode=#{jdpHashcode},</if>
+      <if test="jdpResponse!=null">jdp_response=#{jdpResponse},</if>
+      <if test="jdpModified!=null">jdp_modified=#{jdpModified},</if>
+      <if test="jdpCreated!=null">jdp_created=#{jdpCreated}</if>
+    </trim>
+    <include refid="pkWhere"/>
+  </update>
+  <delete id="delete">
+    DELETE FROM jdp_fx_trade
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteExample">
+    DELETE FROM jdp_fx_trade
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_fx_trade
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_fx_trade
+    <include refid="where"/>
+    ORDER BY fenxiao_id
+  </select>
+  <select id="listExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_fx_trade
+    <include refid="equalWhere"/>
+    ORDER BY fenxiao_id
+  </select>
+  <select id="listField" parameterType="map" resultMap="resultMap">
+    SELECT ${PARAM_LIST_FIELD_KEY} FROM jdp_fx_trade
+    <include refid="where"/>
+    ORDER BY fenxiao_id
+  </select>
+</mapper>

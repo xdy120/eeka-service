@@ -1,0 +1,12 @@
+[Unit]
+Description=oms-consumer
+
+[Service]
+WorkingDirectory=/opt/oms
+PrivateTmp=true
+Restart=always
+Type=simple
+ExecStart=/usr/java/jdk1.8.0_181-amd64/jre/bin/java -jar -Xmx4g -Xms1g -Xss512k -Dloader.path=. -Dspring.profiles.active=consumer-prod /opt/oms/lib/oms-consumer-3.0-SNAPSHOT.jar
+
+[Install]
+WantedBy=multi-user.target

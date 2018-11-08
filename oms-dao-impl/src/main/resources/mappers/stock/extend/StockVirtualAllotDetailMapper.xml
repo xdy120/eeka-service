@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockVirtualAllotDetailMapper">
+    <select id="listAvailable" resultMap="resultMap">
+        SELECT
+            allot_detail.stock_virtual_allot_detail_id,
+            allot_detail.sku_id,
+            allot_detail.sku_code,
+            allot_detail.plan_quantity,
+            IFNULL( stock.quantity, 0 ) - SUM( IFNULL( stock_occupancy.quantity, 0 ) ) quantity
+        FROM
+            oms_stock_virtual_allot allot
+            JOIN oms_stock_virtual_allot_detail allot_detail ON allot.stock_virtual_allot_id = allot_detail.stock_virtual_allot_id
+            LEFT JOIN oms_stock stock ON allot_detail.sku_id = stock.sku_id
+            AND allot.out_virtual_warehouse_id = stock.virtual_warehouse_id
+            LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+            AND stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+            AND stock_occupancy.status = 3
+        WHERE
+            allot.stock_virtual_allot_id = #{_parameter}
+        GROUP BY
+            allot_detail.sku_id,
+            allot_detail.sku_code,
+            allot_detail.plan_quantity
+    </select>
+
+    <select id="listSaleable" resultMap="resultMap">
+        SELECT
+            allot_detail.stock_virtual_allot_detail_id,
+            allot_detail.sku_id,
+            allot_detail.sku_code,
+            allot_detail.plan_quantity,
+            IFNULL( stock.quantity, 0 ) - SUM( IFNULL( stock_occupancy.quantity, 0 ) ) quantity
+        FROM
+            oms_stock_virtual_allot allot
+            JOIN oms_stock_virtual_allot_detail allot_detail ON allot.stock_virtual_allot_id = allot_detail.stock_virtual_allot_id
+            LEFT JOIN oms_stock stock ON allot_detail.sku_id = stock.sku_id
+            AND allot.out_virtual_warehouse_id = stock.virtual_warehouse_id
+            LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+            AND stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+            AND stock_occupancy.status IN(2,3)
+        WHERE
+            allot.stock_virtual_allot_id = #{_parameter}
+        GROUP BY
+            allot_detail.sku_id,
+            allot_detail.sku_code,
+            allot_detail.plan_quantity
+    </select>
+</mapper>

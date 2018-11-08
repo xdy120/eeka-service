@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.marketing.ActivityDetailMapper">
+   <update id="updateLockQuantity" parameterType="com.greatonce.oms.domain.marketing.ActivityDetail">
+       UPDATE  oms_activity_detail SET lock_quantity=lock_quantity+#{lockQuantity}
+       WHERE  activity_detail_id=#{activityDetailId}
+   </update>
+
+    <select id="listAvailable" resultMap="resultMap">
+        <![CDATA[
+        SELECT
+            activity_detail.activity_detail_id,
+            activity_detail.sku_id,
+            activity_detail.sku_code,
+            activity_detail.plan_quantity-activity_detail.lock_quantity plan_quantity,
+            IFNULL( stock.quantity, 0 ) - SUM( IFNULL( stock_occupancy.quantity, 0 ) ) lock_quantity
+        FROM
+            oms_activity_detail activity_detail
+            LEFT JOIN oms_stock stock ON activity_detail.sku_id = stock.sku_id
+            LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+            AND stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+            AND stock_occupancy.status = 3
+        WHERE
+            activity_detail.plan_quantity>activity_detail.lock_quantity
+            AND activity_detail.activity_id = #{activityId}
+            AND stock.virtual_warehouse_id=#{virtualWarehouseId}
+        GROUP BY
+			activity_detail.activity_detail_id,
+            activity_detail.sku_id,
+            activity_detail.sku_code,
+            activity_detail.plan_quantity,
+            activity_detail.lock_quantity
+        ]]>
+    </select>
+</mapper>

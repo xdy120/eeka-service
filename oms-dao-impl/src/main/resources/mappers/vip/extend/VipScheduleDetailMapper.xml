@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipScheduleDetailMapper">
+  <select id="listAvailable" resultMap="resultMap">
+    SELECT
+           schedule_detail.vip_schedule_detail_id,
+           schedule_detail.sku_id,
+           schedule_detail.sku_code,
+           schedule_detail.plan_quantity,
+           IFNULL( stock.quantity, 0 ) - SUM( IFNULL( stock_occupancy.quantity, 0 ) ) quantity
+    FROM
+         oms_vip_schedule schedule
+           JOIN oms_vip_schedule_detail schedule_detail ON schedule.vip_schedule_id = schedule_detail.vip_schedule_id
+           LEFT JOIN oms_stock stock ON schedule_detail.sku_id = stock.sku_id
+                                          AND schedule.virtual_warehouse_id = stock.virtual_warehouse_id
+           LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+                                                              AND stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+                                                              AND stock_occupancy.STATUS =3
+    WHERE
+      schedule.vip_schedule_id = #{_parameter}
+    GROUP BY
+             schedule_detail.sku_id,
+             schedule_detail.sku_code,
+             schedule_detail.plan_quantity
+  </select>
+
+  <select id="listSaleable" resultMap="resultMap">
+    SELECT
+           schedule_detail.vip_schedule_detail_id,
+           schedule_detail.sku_id,
+           schedule_detail.sku_code,
+           schedule_detail.plan_quantity,
+           IFNULL( stock.quantity, 0 ) - SUM( IFNULL( stock_occupancy.quantity, 0 ) ) quantity
+    FROM
+         oms_vip_schedule schedule
+           JOIN oms_vip_schedule_detail schedule_detail ON schedule.vip_schedule_id = schedule_detail.vip_schedule_id
+           LEFT JOIN oms_stock stock ON schedule_detail.sku_id = stock.sku_id
+                                          AND schedule.virtual_warehouse_id = stock.virtual_warehouse_id
+           LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+                                                              AND stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+                                                              AND stock_occupancy.STATUS IN ( 2, 3 )
+    WHERE
+      schedule.vip_schedule_id = #{_parameter}
+    GROUP BY
+             schedule_detail.sku_id,
+             schedule_detail.sku_code,
+             schedule_detail.plan_quantity
+  </select>
+</mapper>

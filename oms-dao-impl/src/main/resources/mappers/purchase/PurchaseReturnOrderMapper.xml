@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.purchase.PurchaseReturnOrderMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.purchase.PurchaseReturnOrder">
+    <id column="purchase_return_order_id" property="purchaseReturnOrderId"/>
+    <result column="address" property="address"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="contact" property="contact"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="from_code" property="fromCode"/>
+    <result column="last_out_time" property="lastOutTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="out_status" property="outStatus"/>
+    <result column="outer_code" property="outerCode"/>
+    <result column="purchase_order_code" property="purchaseOrderCode"/>
+    <result column="purchase_order_id" property="purchaseOrderId"/>
+    <result column="purchase_return_order_code" property="purchaseReturnOrderCode"/>
+    <result column="purchase_return_type" property="purchaseReturnType"/>
+    <result column="remark" property="remark"/>
+    <result column="status" property="status"/>
+    <result column="supplier_code" property="supplierCode"/>
+    <result column="supplier_id" property="supplierId"/>
+    <result column="supplier_name" property="supplierName"/>
+    <result column="supplier_short_name" property="supplierShortName"/>
+    <result column="telephone" property="telephone"/>
+    <result column="version" property="version"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+    <result column="warehouse_id" property="warehouseId"/>
+    <result column="warehouse_name" property="warehouseName"/>
+  </resultMap>
+  <sql id="columns">address,audited_time,auditor,contact,created_time,creator,from_code,last_out_time,modified_time,out_status,outer_code,purchase_order_code,purchase_order_id,purchase_return_order_code,purchase_return_order_id,purchase_return_type,remark,status,supplier_code,supplier_id,supplier_name,supplier_short_name,telephone,version,virtual_warehouse_id,virtual_warehouse_name,warehouse_id,warehouse_name</sql>
+  <sql id="pkWhere">
+    WHERE purchase_return_order_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="auditedTime!=null">AND audited_time=#{auditedTime}</if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="fromCode!=null and fromCode!=''">
+        AND from_code=#{fromCode}
+      </if>
+      <if test="lastOutTime!=null">AND last_out_time=#{lastOutTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outStatus!=null">AND out_status=#{outStatus}</if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="purchaseOrderCode!=null and purchaseOrderCode!=''">
+        AND purchase_order_code=#{purchaseOrderCode}
+      </if>
+      <if test="purchaseOrderId!=null">AND purchase_order_id=#{purchaseOrderId}</if>
+      <if test="purchaseReturnOrderCode!=null and purchaseReturnOrderCode!=''">
+        AND purchase_return_order_code=#{purchaseReturnOrderCode}
+      </if>
+      <if test="purchaseReturnOrderId!=null">AND purchase_return_order_id=#{purchaseReturnOrderId}</if>
+      <if test="purchaseReturnType!=null and purchaseReturnType!=''">
+        AND purchase_return_type=#{purchaseReturnType}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="supplierCode!=null and supplierCode!=''">
+        AND supplier_code=#{supplierCode}
+      </if>
+      <if test="supplierId!=null">AND supplier_id=#{supplierId}</if>
+      <if test="supplierName!=null and supplierName!=''">
+        AND supplier_name=#{supplierName}
+      </if>
+      <if test="supplierShortName!=null and supplierShortName!=''">
+        AND supplier_short_name=#{supplierShortName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND warehouse_name=#{warehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="contact!=null and contact!=''">
+        <bind name="contact_like" value="_parameter.contact+'%'"/>
+        AND contact like #{contact_like}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="fromCode!=null and fromCode!=''">
+        AND from_code=#{fromCode}
+      </if>
+      <if test="fromCodes!=null and fromCodes.size>0">
+        AND from_code IN
+        <foreach item="item" index="index" collection="fromCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="lastOutTimeBegin!=null">
+        <![CDATA[AND last_out_time>=#{lastOutTimeBegin}]]>
+      </if>
+      <if test="lastOutTimeEnd!=null">
+        <![CDATA[AND last_out_time<#{lastOutTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outStatus!=null">AND out_status=#{outStatus}</if>
+      <if test="outStatuses!=null and outStatuses.size>0">
+        AND out_status IN
+        <foreach item="item" index="index" collection="outStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="outerCodes!=null and outerCodes.size>0">
+        AND outer_code IN
+        <foreach item="item" index="index" collection="outerCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="purchaseOrderCode!=null and purchaseOrderCode!=''">
+        AND purchase_order_code=#{purchaseOrderCode}
+      </if>
+      <if test="purchaseOrderCodes!=null and purchaseOrderCodes.size>0">
+        AND purchase_order_code IN
+        <foreach item="item" index="index" collection="purchaseOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="purchaseOrderId!=null">AND purchase_order_id=#{purchaseOrderId}</if>
+      <if test="purchaseReturnOrderCode!=null and purchaseReturnOrderCode!=''">
+        AND purchase_return_order_code=#{purchaseReturnOrderCode}
+      </if>
+      <if test="purchaseReturnOrderCodes!=null and purchaseReturnOrderCodes.size>0">
+        AND purchase_return_order_code IN
+        <foreach item="item" index="index" collection="purchaseReturnOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="purchaseReturnOrderId!=null">AND purchase_return_order_id=#{purchaseReturnOrderId}</if>
+      <if test="purchaseReturnType!=null and purchaseReturnType!=''">
+        AND purchase_return_type=#{purchaseReturnType}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="supplierCode!=null and supplierCode!=''">
+        AND supplier_code=#{supplierCode}
+      </if>
+      <if test="supplierId!=null">AND supplier_id=#{supplierId}</if>
+      <if test="supplierName!=null and supplierName!=''">
+        AND supplier_name=#{supplierName}
+      </if>
+      <if test="supplierShortName!=null and supplierShortName!=''">
+        AND supplier_short_name=#{supplierShortName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND warehouse_name=#{warehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY purchase_return_order_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.purchase.PurchaseReturnOrder">
+    INSERT INTO oms_purchase_return_order(address,audited_time,auditor,contact,created_time,creator,from_code,last_out_time,modified_time,out_status,outer_code,purchase_order_code,purchase_order_id,purchase_return_order_code,purchase_return_order_id,purchase_return_type,remark,status,supplier_code,supplier_id,supplier_name,supplier_short_name,telephone,version,virtual_warehouse_id,virtual_warehouse_name,warehouse_id,warehouse_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{address},
+      #{auditedTime},
+      #{auditor},
+      #{contact},
+      now(),
+      #{creator},
+      #{fromCode},
+      #{lastOutTime},
+      now(),
+      #{outStatus},
+      #{outerCode},
+      #{purchaseOrderCode},
+      #{purchaseOrderId},
+      #{purchaseReturnOrderCode},
+      #{purchaseReturnOrderId},
+      #{purchaseReturnType},
+      #{remark},
+      #{status},
+      #{supplierCode},
+      #{supplierId},
+      #{supplierName},
+      #{supplierShortName},
+      #{telephone},
+      1,
+      #{virtualWarehouseId},
+      #{virtualWarehouseName},
+      #{warehouseId},
+      #{warehouseName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.purchase.PurchaseReturnOrder">
+    UPDATE oms_purchase_return_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="address!=null">address=#{address},</if>
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="contact!=null">contact=#{contact},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="fromCode!=null">from_code=#{fromCode},</if>
+      <if test="lastOutTime!=null">last_out_time=#{lastOutTime},</if>
+      modified_time=now(),
+      <if test="outStatus!=null">out_status=#{outStatus},</if>
+      <if test="outerCode!=null">outer_code=#{outerCode},</if>
+      <if test="purchaseOrderCode!=null">purchase_order_code=#{purchaseOrderCode},</if>
+      <if test="purchaseOrderId!=null">purchase_order_id=#{purchaseOrderId},</if>
+      <if test="purchaseReturnOrderCode!=null">purchase_return_order_code=#{purchaseReturnOrderCode},</if>
+      <if test="purchaseReturnType!=null">purchase_return_type=#{purchaseReturnType},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="supplierCode!=null">supplier_code=#{supplierCode},</if>
+      <if test="supplierId!=null">supplier_id=#{supplierId},</if>
+      <if test="supplierName!=null">supplier_name=#{supplierName},</if>
+      <if test="supplierShortName!=null">supplier_short_name=#{supplierShortName},</if>
+      <if test="telephone!=null">telephone=#{telephone},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+      <if test="virtualWarehouseId!=null">virtual_warehouse_id=#{virtualWarehouseId},</if>
+      <if test="virtualWarehouseName!=null">virtual_warehouse_name=#{virtualWarehouseName},</if>
+      <if test="warehouseId!=null">warehouse_id=#{warehouseId},</if>
+      <if test="warehouseName!=null">warehouse_name=#{warehouseName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND purchase_return_order_id=#{purchaseReturnOrderId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.purchase.PurchaseReturnOrder">
+    UPDATE oms_purchase_return_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.address!=null">
+        address=#{record.address},
+      </if>
+      <if test="record.auditedTime!=null">
+        audited_time=#{record.auditedTime},
+      </if>
+      <if test="record.auditor!=null">
+        auditor=#{record.auditor},
+      </if>
+      <if test="record.contact!=null">
+        contact=#{record.contact},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.fromCode!=null">
+        from_code=#{record.fromCode},
+      </if>
+      <if test="record.lastOutTime!=null">
+        last_out_time=#{record.lastOutTime},
+      </if>
+      modified_time=now(),
+      <if test="record.outStatus!=null">
+        out_status=#{record.outStatus},
+      </if>
+      <if test="record.outerCode!=null">
+        outer_code=#{record.outerCode},
+      </if>
+      <if test="record.purchaseOrderCode!=null">
+        purchase_order_code=#{record.purchaseOrderCode},
+      </if>
+      <if test="record.purchaseOrderId!=null">
+        purchase_order_id=#{record.purchaseOrderId},
+      </if>
+      <if test="record.purchaseReturnOrderCode!=null">
+        purchase_return_order_code=#{record.purchaseReturnOrderCode},
+      </if>
+      <if test="record.purchaseReturnType!=null">
+        purchase_return_type=#{record.purchaseReturnType},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.supplierCode!=null">
+        supplier_code=#{record.supplierCode},
+      </if>
+      <if test="record.supplierId!=null">
+        supplier_id=#{record.supplierId},
+      </if>
+      <if test="record.supplierName!=null">
+        supplier_name=#{record.supplierName},
+      </if>
+      <if test="record.supplierShortName!=null">
+        supplier_short_name=#{record.supplierShortName},
+      </if>
+      <if test="record.telephone!=null">
+        telephone=#{record.telephone},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+      <if test="record.virtualWarehouseId!=null">
+        virtual_warehouse_id=#{record.virtualWarehouseId},
+      </if>
+      <if test="record.virtualWarehouseName!=null">
+        virtual_warehouse_name=#{record.virtualWarehouseName},
+      </if>
+      <if test="record.warehouseId!=null">
+        warehouse_id=#{record.warehouseId},
+      </if>
+      <if test="record.warehouseName!=null">
+        warehouse_name=#{record.warehouseName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.address!=null">
+      AND address=#{example.address}
+      </if>
+      <if test="example.auditedTime!=null">
+      AND audited_time=#{example.auditedTime}
+      </if>
+      <if test="example.auditor!=null">
+      AND auditor=#{example.auditor}
+      </if>
+      <if test="example.contact!=null">
+      AND contact=#{example.contact}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.fromCode!=null">
+      AND from_code=#{example.fromCode}
+      </if>
+      <if test="example.fromCodes!=null">
+      AND from_code=#{example.fromCodes}
+      </if>
+      <if test="example.lastOutTime!=null">
+      AND last_out_time=#{example.lastOutTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outStatus!=null">
+      AND out_status=#{example.outStatus}
+      </if>
+      <if test="example.outStatuses!=null">
+      AND out_status=#{example.outStatuses}
+      </if>
+      <if test="example.outerCode!=null">
+      AND outer_code=#{example.outerCode}
+      </if>
+      <if test="example.outerCodes!=null">
+      AND outer_code=#{example.outerCodes}
+      </if>
+      <if test="example.purchaseOrderCode!=null">
+      AND purchase_order_code=#{example.purchaseOrderCode}
+      </if>
+      <if test="example.purchaseOrderCodes!=null">
+      AND purchase_order_code=#{example.purchaseOrderCodes}
+      </if>
+      <if test="example.purchaseOrderId!=null">
+      AND purchase_order_id=#{example.purchaseOrderId}
+      </if>
+      <if test="example.purchaseReturnOrderCode!=null">
+      AND purchase_return_order_code=#{example.purchaseReturnOrderCode}
+      </if>
+      <if test="example.purchaseReturnOrderCodes!=null">
+      AND purchase_return_order_code=#{example.purchaseReturnOrderCodes}
+      </if>
+      <if test="example.purchaseReturnOrderId!=null">
+      AND purchase_return_order_id=#{example.purchaseReturnOrderId}
+      </if>
+      <if test="example.purchaseReturnType!=null">
+      AND purchase_return_type=#{example.purchaseReturnType}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.supplierCode!=null">
+      AND supplier_code=#{example.supplierCode}
+      </if>
+      <if test="example.supplierId!=null">
+      AND supplier_id=#{example.supplierId}
+      </if>
+      <if test="example.supplierName!=null">
+      AND supplier_name=#{example.supplierName}
+      </if>
+      <if test="example.supplierShortName!=null">
+      AND supplier_short_name=#{example.supplierShortName}
+      </if>
+      <if test="example.telephone!=null">
+      AND telephone=#{example.telephone}
+      </if>
+      AND version=#{example.version}
+      <if test="example.virtualWarehouseId!=null">
+      AND virtual_warehouse_id=#{example.virtualWarehouseId}
+      </if>
+      <if test="example.virtualWarehouseName!=null">
+      AND virtual_warehouse_name=#{example.virtualWarehouseName}
+      </if>
+      <if test="example.warehouseId!=null">
+      AND warehouse_id=#{example.warehouseId}
+      </if>
+      <if test="example.warehouseName!=null">
+      AND warehouse_name=#{example.warehouseName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_purchase_return_order
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_purchase_return_order
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_return_order
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_return_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_return_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_return_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_return_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_purchase_return_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_purchase_return_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.WarehouseRegionMapper">
+    <delete id="deleteRegion">
+        DELETE FROM oms_warehouse_region
+        WHERE warehouse_id=#{_parameter}
+    </delete>
+    <sql id="onlyColumns">region_id</sql>
+    <select id="listColumns" resultMap="resultMap">
+        SELECT
+        <include refid="onlyColumns"/>
+        FROM oms_warehouse_region
+        <include refid="where"/>
+        ORDER BY warehouse_region_id DESC
+    </select>
+</mapper>

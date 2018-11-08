@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.FieldMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.admin.Field">
+    <id column="field_id" property="fieldId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="field_column" property="fieldColumn"/>
+    <result column="field_name" property="fieldName"/>
+    <result column="modified_time" property="modifiedTime"/>
+  </resultMap>
+  <sql id="columns">created_time,field_column,field_id,field_name,modified_time</sql>
+  <sql id="pkWhere">
+    WHERE field_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="fieldColumn!=null and fieldColumn!=''">
+        AND field_column=#{fieldColumn}
+      </if>
+      <if test="fieldId!=null">AND field_id=#{fieldId}</if>
+      <if test="fieldName!=null and fieldName!=''">
+        AND field_name=#{fieldName}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="fieldColumn!=null and fieldColumn!=''">
+        AND field_column=#{fieldColumn}
+      </if>
+      <if test="fieldId!=null">AND field_id=#{fieldId}</if>
+      <if test="fieldName!=null and fieldName!=''">
+        AND field_name=#{fieldName}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY field_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.admin.Field">
+    INSERT INTO admin_field(created_time,field_column,field_id,field_name,modified_time)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{fieldColumn},
+      #{fieldId},
+      #{fieldName},
+      now(),
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.admin.Field">
+    UPDATE admin_field
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="fieldColumn!=null">field_column=#{fieldColumn},</if>
+      <if test="fieldName!=null">field_name=#{fieldName},</if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND field_id=#{fieldId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.admin.Field">
+    UPDATE admin_field
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.fieldColumn!=null">
+        field_column=#{record.fieldColumn},
+      </if>
+      <if test="record.fieldName!=null">
+        field_name=#{record.fieldName},
+      </if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.fieldColumn!=null">
+      AND field_column=#{example.fieldColumn}
+      </if>
+      <if test="example.fieldId!=null">
+      AND field_id=#{example.fieldId}
+      </if>
+      <if test="example.fieldName!=null">
+      AND field_name=#{example.fieldName}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM admin_field
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM admin_field
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_field
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_field
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_field
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_field
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_field
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_field
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_field
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.RefundApplyOrderMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.RefundApplyOrder">
+    <id column="refund_apply_order_id" property="refundApplyOrderId"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="applied_time" property="appliedTime"/>
+    <result column="apply_amount" property="applyAmount"/>
+    <result column="apply_quantity" property="applyQuantity"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="express_name" property="expressName"/>
+    <result column="express_no" property="expressNo"/>
+    <result column="in_product_code" property="inProductCode"/>
+    <result column="in_product_id" property="inProductId"/>
+    <result column="in_product_name" property="inProductName"/>
+    <result column="in_sku_code" property="inSkuCode"/>
+    <result column="in_sku_id" property="inSkuId"/>
+    <result column="in_sku_name" property="inSkuName"/>
+    <result column="is_whole" property="whole"/>
+    <result column="mall_detail_id" property="mallDetailId"/>
+    <result column="mall_refund_id" property="mallRefundId"/>
+    <result column="mall_refund_phase" property="mallRefundPhase"/>
+    <result column="mall_refund_status" property="mallRefundStatus"/>
+    <result column="mall_refund_version" property="mallRefundVersion"/>
+    <result column="mall_type" property="mallType"/>
+    <result column="member_id" property="memberId"/>
+    <result column="member_name" property="memberName"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="pay_account" property="payAccount"/>
+    <result column="reason" property="reason"/>
+    <result column="refund_apply_order_type" property="refundApplyOrderType"/>
+    <result column="status" property="status"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="trade_id" property="tradeId"/>
+  </resultMap>
+  <sql id="columns">actual_amount,applied_time,apply_amount,apply_quantity,created_time,express_name,express_no,in_product_code,in_product_id,in_product_name,in_sku_code,in_sku_id,in_sku_name,is_whole,mall_detail_id,mall_refund_id,mall_refund_phase,mall_refund_status,mall_refund_version,mall_type,member_id,member_name,modified_time,pay_account,reason,refund_apply_order_id,refund_apply_order_type,status,store_id,store_name,trade_id</sql>
+  <sql id="pkWhere">
+    WHERE refund_apply_order_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="appliedTime!=null">AND applied_time=#{appliedTime}</if>
+      <if test="applyAmount!=null">AND apply_amount=#{applyAmount}</if>
+      <if test="applyQuantity!=null">AND apply_quantity=#{applyQuantity}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="expressName!=null and expressName!=''">
+        AND express_name=#{expressName}
+      </if>
+      <if test="expressNo!=null and expressNo!=''">
+        AND express_no=#{expressNo}
+      </if>
+      <if test="inProductCode!=null and inProductCode!=''">
+        AND in_product_code=#{inProductCode}
+      </if>
+      <if test="inProductId!=null">AND in_product_id=#{inProductId}</if>
+      <if test="inProductName!=null and inProductName!=''">
+        AND in_product_name=#{inProductName}
+      </if>
+      <if test="inSkuCode!=null and inSkuCode!=''">
+        AND in_sku_code=#{inSkuCode}
+      </if>
+      <if test="inSkuId!=null">AND in_sku_id=#{inSkuId}</if>
+      <if test="inSkuName!=null and inSkuName!=''">
+        AND in_sku_name=#{inSkuName}
+      </if>
+      <if test="whole!=null">AND is_whole=#{whole}</if>
+      <if test="mallDetailId!=null and mallDetailId!=''">
+        AND mall_detail_id=#{mallDetailId}
+      </if>
+      <if test="mallRefundId!=null and mallRefundId!=''">
+        AND mall_refund_id=#{mallRefundId}
+      </if>
+      <if test="mallRefundPhase!=null">AND mall_refund_phase=#{mallRefundPhase}</if>
+      <if test="mallRefundStatus!=null">AND mall_refund_status=#{mallRefundStatus}</if>
+      <if test="mallRefundVersion!=null and mallRefundVersion!=''">
+        AND mall_refund_version=#{mallRefundVersion}
+      </if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        AND member_name=#{memberName}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="payAccount!=null and payAccount!=''">
+        AND pay_account=#{payAccount}
+      </if>
+      <if test="reason!=null and reason!=''">
+        AND reason=#{reason}
+      </if>
+      <if test="refundApplyOrderId!=null">AND refund_apply_order_id=#{refundApplyOrderId}</if>
+      <if test="refundApplyOrderType!=null">AND refund_apply_order_type=#{refundApplyOrderType}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="appliedTimeBegin!=null">
+        <![CDATA[AND applied_time>=#{appliedTimeBegin}]]>
+      </if>
+      <if test="appliedTimeEnd!=null">
+        <![CDATA[AND applied_time<#{appliedTimeEnd}]]>
+      </if>
+      <if test="applyAmount!=null">AND apply_amount=#{applyAmount}</if>
+      <if test="applyQuantity!=null">AND apply_quantity=#{applyQuantity}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="expressName!=null and expressName!=''">
+        AND express_name=#{expressName}
+      </if>
+      <if test="expressNo!=null and expressNo!=''">
+        AND express_no=#{expressNo}
+      </if>
+      <if test="expressNos!=null and expressNos.size>0">
+        AND express_no IN
+        <foreach item="item" index="index" collection="expressNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inProductCode!=null and inProductCode!=''">
+        AND in_product_code=#{inProductCode}
+      </if>
+      <if test="inProductCodes!=null and inProductCodes.size>0">
+        AND in_product_code IN
+        <foreach item="item" index="index" collection="inProductCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inProductId!=null">AND in_product_id=#{inProductId}</if>
+      <if test="inProductName!=null and inProductName!=''">
+        AND in_product_name=#{inProductName}
+      </if>
+      <if test="inSkuCode!=null and inSkuCode!=''">
+        AND in_sku_code=#{inSkuCode}
+      </if>
+      <if test="inSkuCodes!=null and inSkuCodes.size>0">
+        AND in_sku_code IN
+        <foreach item="item" index="index" collection="inSkuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inSkuId!=null">AND in_sku_id=#{inSkuId}</if>
+      <if test="inSkuName!=null and inSkuName!=''">
+        AND in_sku_name=#{inSkuName}
+      </if>
+      <if test="whole!=null">AND is_whole=#{whole}</if>
+      <if test="mallDetailId!=null and mallDetailId!=''">
+        AND mall_detail_id=#{mallDetailId}
+      </if>
+      <if test="mallRefundId!=null and mallRefundId!=''">
+        AND mall_refund_id=#{mallRefundId}
+      </if>
+      <if test="mallRefundIds!=null and mallRefundIds.size>0">
+        AND mall_refund_id IN
+        <foreach item="item" index="index" collection="mallRefundIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="mallRefundPhase!=null">AND mall_refund_phase=#{mallRefundPhase}</if>
+      <if test="mallRefundStatus!=null">AND mall_refund_status=#{mallRefundStatus}</if>
+      <if test="mallRefundVersion!=null and mallRefundVersion!=''">
+        AND mall_refund_version=#{mallRefundVersion}
+      </if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        <bind name="memberName_like" value="_parameter.memberName+'%'"/>
+        AND member_name like #{memberName_like}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="payAccount!=null and payAccount!=''">
+        AND pay_account=#{payAccount}
+      </if>
+      <if test="reason!=null and reason!=''">
+        AND reason=#{reason}
+      </if>
+      <if test="refundApplyOrderId!=null">AND refund_apply_order_id=#{refundApplyOrderId}</if>
+      <if test="refundApplyOrderType!=null">AND refund_apply_order_type=#{refundApplyOrderType}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="tradeIds!=null and tradeIds.size>0">
+        AND trade_id IN
+        <foreach item="item" index="index" collection="tradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY refund_apply_order_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.RefundApplyOrder">
+    INSERT INTO oms_refund_apply_order(actual_amount,applied_time,apply_amount,apply_quantity,created_time,express_name,express_no,in_product_code,in_product_id,in_product_name,in_sku_code,in_sku_id,in_sku_name,is_whole,mall_detail_id,mall_refund_id,mall_refund_phase,mall_refund_status,mall_refund_version,mall_type,member_id,member_name,modified_time,pay_account,reason,refund_apply_order_id,refund_apply_order_type,status,store_id,store_name,trade_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{actualAmount},
+      #{appliedTime},
+      #{applyAmount},
+      #{applyQuantity},
+      now(),
+      #{expressName},
+      #{expressNo},
+      #{inProductCode},
+      #{inProductId},
+      #{inProductName},
+      #{inSkuCode},
+      #{inSkuId},
+      #{inSkuName},
+      #{whole},
+      #{mallDetailId},
+      #{mallRefundId},
+      #{mallRefundPhase},
+      #{mallRefundStatus},
+      #{mallRefundVersion},
+      #{mallType},
+      #{memberId},
+      #{memberName},
+      now(),
+      #{payAccount},
+      #{reason},
+      #{refundApplyOrderId},
+      #{refundApplyOrderType},
+      #{status},
+      #{storeId},
+      #{storeName},
+      #{tradeId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.RefundApplyOrder">
+    UPDATE oms_refund_apply_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="actualAmount!=null">actual_amount=#{actualAmount},</if>
+      <if test="appliedTime!=null">applied_time=#{appliedTime},</if>
+      <if test="applyAmount!=null">apply_amount=#{applyAmount},</if>
+      <if test="applyQuantity!=null">apply_quantity=#{applyQuantity},</if>
+      <if test="expressName!=null">express_name=#{expressName},</if>
+      <if test="expressNo!=null">express_no=#{expressNo},</if>
+      <if test="inProductCode!=null">in_product_code=#{inProductCode},</if>
+      <if test="inProductId!=null">in_product_id=#{inProductId},</if>
+      <if test="inProductName!=null">in_product_name=#{inProductName},</if>
+      <if test="inSkuCode!=null">in_sku_code=#{inSkuCode},</if>
+      <if test="inSkuId!=null">in_sku_id=#{inSkuId},</if>
+      <if test="inSkuName!=null">in_sku_name=#{inSkuName},</if>
+      <if test="whole!=null">is_whole=#{whole},</if>
+      <if test="mallDetailId!=null">mall_detail_id=#{mallDetailId},</if>
+      <if test="mallRefundId!=null">mall_refund_id=#{mallRefundId},</if>
+      <if test="mallRefundPhase!=null">mall_refund_phase=#{mallRefundPhase},</if>
+      <if test="mallRefundStatus!=null">mall_refund_status=#{mallRefundStatus},</if>
+      <if test="mallRefundVersion!=null">mall_refund_version=#{mallRefundVersion},</if>
+      <if test="mallType!=null">mall_type=#{mallType},</if>
+      <if test="memberId!=null">member_id=#{memberId},</if>
+      <if test="memberName!=null">member_name=#{memberName},</if>
+      modified_time=now(),
+      <if test="payAccount!=null">pay_account=#{payAccount},</if>
+      <if test="reason!=null">reason=#{reason},</if>
+      <if test="refundApplyOrderType!=null">refund_apply_order_type=#{refundApplyOrderType},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND refund_apply_order_id=#{refundApplyOrderId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.RefundApplyOrder">
+    UPDATE oms_refund_apply_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.actualAmount!=null">
+        actual_amount=#{record.actualAmount},
+      </if>
+      <if test="record.appliedTime!=null">
+        applied_time=#{record.appliedTime},
+      </if>
+      <if test="record.applyAmount!=null">
+        apply_amount=#{record.applyAmount},
+      </if>
+      <if test="record.applyQuantity!=null">
+        apply_quantity=#{record.applyQuantity},
+      </if>
+      <if test="record.expressName!=null">
+        express_name=#{record.expressName},
+      </if>
+      <if test="record.expressNo!=null">
+        express_no=#{record.expressNo},
+      </if>
+      <if test="record.inProductCode!=null">
+        in_product_code=#{record.inProductCode},
+      </if>
+      <if test="record.inProductId!=null">
+        in_product_id=#{record.inProductId},
+      </if>
+      <if test="record.inProductName!=null">
+        in_product_name=#{record.inProductName},
+      </if>
+      <if test="record.inSkuCode!=null">
+        in_sku_code=#{record.inSkuCode},
+      </if>
+      <if test="record.inSkuId!=null">
+        in_sku_id=#{record.inSkuId},
+      </if>
+      <if test="record.inSkuName!=null">
+        in_sku_name=#{record.inSkuName},
+      </if>
+      <if test="record.whole!=null">
+        is_whole=#{record.whole},
+      </if>
+      <if test="record.mallDetailId!=null">
+        mall_detail_id=#{record.mallDetailId},
+      </if>
+      <if test="record.mallRefundId!=null">
+        mall_refund_id=#{record.mallRefundId},
+      </if>
+      <if test="record.mallRefundPhase!=null">
+        mall_refund_phase=#{record.mallRefundPhase},
+      </if>
+      <if test="record.mallRefundStatus!=null">
+        mall_refund_status=#{record.mallRefundStatus},
+      </if>
+      <if test="record.mallRefundVersion!=null">
+        mall_refund_version=#{record.mallRefundVersion},
+      </if>
+      <if test="record.mallType!=null">
+        mall_type=#{record.mallType},
+      </if>
+      <if test="record.memberId!=null">
+        member_id=#{record.memberId},
+      </if>
+      <if test="record.memberName!=null">
+        member_name=#{record.memberName},
+      </if>
+      modified_time=now(),
+      <if test="record.payAccount!=null">
+        pay_account=#{record.payAccount},
+      </if>
+      <if test="record.reason!=null">
+        reason=#{record.reason},
+      </if>
+      <if test="record.refundApplyOrderType!=null">
+        refund_apply_order_type=#{record.refundApplyOrderType},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.actualAmount!=null">
+      AND actual_amount=#{example.actualAmount}
+      </if>
+      <if test="example.appliedTime!=null">
+      AND applied_time=#{example.appliedTime}
+      </if>
+      <if test="example.applyAmount!=null">
+      AND apply_amount=#{example.applyAmount}
+      </if>
+      <if test="example.applyQuantity!=null">
+      AND apply_quantity=#{example.applyQuantity}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.expressName!=null">
+      AND express_name=#{example.expressName}
+      </if>
+      <if test="example.expressNo!=null">
+      AND express_no=#{example.expressNo}
+      </if>
+      <if test="example.expressNos!=null">
+      AND express_no=#{example.expressNos}
+      </if>
+      <if test="example.inProductCode!=null">
+      AND in_product_code=#{example.inProductCode}
+      </if>
+      <if test="example.inProductCodes!=null">
+      AND in_product_code=#{example.inProductCodes}
+      </if>
+      <if test="example.inProductId!=null">
+      AND in_product_id=#{example.inProductId}
+      </if>
+      <if test="example.inProductName!=null">
+      AND in_product_name=#{example.inProductName}
+      </if>
+      <if test="example.inSkuCode!=null">
+      AND in_sku_code=#{example.inSkuCode}
+      </if>
+      <if test="example.inSkuCodes!=null">
+      AND in_sku_code=#{example.inSkuCodes}
+      </if>
+      <if test="example.inSkuId!=null">
+      AND in_sku_id=#{example.inSkuId}
+      </if>
+      <if test="example.inSkuName!=null">
+      AND in_sku_name=#{example.inSkuName}
+      </if>
+      <if test="example.whole!=null">
+      AND is_whole=#{example.whole}
+      </if>
+      <if test="example.mallDetailId!=null">
+      AND mall_detail_id=#{example.mallDetailId}
+      </if>
+      <if test="example.mallRefundId!=null">
+      AND mall_refund_id=#{example.mallRefundId}
+      </if>
+      <if test="example.mallRefundIds!=null">
+      AND mall_refund_id=#{example.mallRefundIds}
+      </if>
+      <if test="example.mallRefundPhase!=null">
+      AND mall_refund_phase=#{example.mallRefundPhase}
+      </if>
+      <if test="example.mallRefundStatus!=null">
+      AND mall_refund_status=#{example.mallRefundStatus}
+      </if>
+      <if test="example.mallRefundVersion!=null">
+      AND mall_refund_version=#{example.mallRefundVersion}
+      </if>
+      <if test="example.mallType!=null">
+      AND mall_type=#{example.mallType}
+      </if>
+      <if test="example.memberId!=null">
+      AND member_id=#{example.memberId}
+      </if>
+      <if test="example.memberName!=null">
+      AND member_name=#{example.memberName}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.payAccount!=null">
+      AND pay_account=#{example.payAccount}
+      </if>
+      <if test="example.reason!=null">
+      AND reason=#{example.reason}
+      </if>
+      <if test="example.refundApplyOrderId!=null">
+      AND refund_apply_order_id=#{example.refundApplyOrderId}
+      </if>
+      <if test="example.refundApplyOrderType!=null">
+      AND refund_apply_order_type=#{example.refundApplyOrderType}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeIds!=null">
+      AND store_id=#{example.storeIds}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+      <if test="example.tradeIds!=null">
+      AND trade_id=#{example.tradeIds}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_refund_apply_order
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_refund_apply_order
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_apply_order
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_apply_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_apply_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_refund_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_refund_apply_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

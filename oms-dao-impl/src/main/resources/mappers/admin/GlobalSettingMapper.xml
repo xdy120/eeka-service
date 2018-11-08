@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.GlobalSettingMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.admin.GlobalSetting">
+    <id column="global_setting_id" property="globalSettingId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="global_setting_json" property="globalSettingJson"/>
+    <result column="global_setting_type" property="globalSettingType"/>
+    <result column="modified_time" property="modifiedTime"/>
+  </resultMap>
+  <sql id="columns">created_time,global_setting_id,global_setting_json,global_setting_type,modified_time</sql>
+  <sql id="pkWhere">
+    WHERE global_setting_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="globalSettingId!=null">AND global_setting_id=#{globalSettingId}</if>
+      <if test="globalSettingJson!=null and globalSettingJson!=''">
+        AND global_setting_json=#{globalSettingJson}
+      </if>
+      <if test="globalSettingType!=null">AND global_setting_type=#{globalSettingType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="globalSettingId!=null">AND global_setting_id=#{globalSettingId}</if>
+      <if test="globalSettingJson!=null and globalSettingJson!=''">
+        AND global_setting_json=#{globalSettingJson}
+      </if>
+      <if test="globalSettingType!=null">AND global_setting_type=#{globalSettingType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY global_setting_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.admin.GlobalSetting">
+    INSERT INTO admin_global_setting(created_time,global_setting_id,global_setting_json,global_setting_type,modified_time)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{globalSettingId},
+      #{globalSettingJson},
+      #{globalSettingType},
+      now(),
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.admin.GlobalSetting">
+    UPDATE admin_global_setting
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="globalSettingJson!=null">global_setting_json=#{globalSettingJson},</if>
+      <if test="globalSettingType!=null">global_setting_type=#{globalSettingType},</if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND global_setting_id=#{globalSettingId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.admin.GlobalSetting">
+    UPDATE admin_global_setting
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.globalSettingJson!=null">
+        global_setting_json=#{record.globalSettingJson},
+      </if>
+      <if test="record.globalSettingType!=null">
+        global_setting_type=#{record.globalSettingType},
+      </if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.globalSettingId!=null">
+      AND global_setting_id=#{example.globalSettingId}
+      </if>
+      <if test="example.globalSettingJson!=null">
+      AND global_setting_json=#{example.globalSettingJson}
+      </if>
+      <if test="example.globalSettingType!=null">
+      AND global_setting_type=#{example.globalSettingType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM admin_global_setting
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM admin_global_setting
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_setting
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_setting
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_setting
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_global_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_global_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

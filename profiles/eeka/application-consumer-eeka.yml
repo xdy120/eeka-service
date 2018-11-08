@@ -1,0 +1,15 @@
+oms:
+  consumer:
+    task:
+      corePoolSize: 32
+      maxPoolSize: 64
+    eeka:
+      enabled: true
+      fms:
+        customerId: je_oms_eeka_fms
+    stock-upload:
+      num: 4
+      enabled: true
+    event-report:
+      enabled: true
+      ignore: true

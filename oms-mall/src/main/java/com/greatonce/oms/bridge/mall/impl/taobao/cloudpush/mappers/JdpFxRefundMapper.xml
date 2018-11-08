@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.mappers.JdpFxRefundMapper">
+  <resultMap id="resultMap"
+    type="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpFxRefund">
+    <id column="sub_order_id" property="subOrderId"/>
+    <result column="refund_create_time" property="refundCreateTime"/>
+    <result column="refund_status" property="refundStatus"/>
+    <result column="supplier_nick" property="supplierNick"/>
+    <result column="distributor_nick" property="distributorNick"/>
+    <result column="modified" property="modified"/>
+    <result column="jdp_hashcode" property="jdpHashcode"/>
+    <result column="jdp_response" property="jdpResponse"/>
+    <result column="jdp_modified" property="jdpModified"/>
+    <result column="jdp_created" property="jdpCreated"/>
+  </resultMap>
+  <sql
+    id="columns">refund_create_time,refund_status,supplier_nick,distributor_nick,modified,jdp_hashcode,jdp_response,jdp_modified,jdp_created</sql>
+  <sql id="pkWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sub_order_id=#{subOrderId}
+    </trim>
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="subOrderId!=null">AND sub_order_id=#{subOrderId}</if>
+      <if test="refundCreateTime!=null">AND refund_create_time=#{refundCreateTime}</if>
+      <if test="refundStatus!=null">AND refund_status=#{refundStatus}</if>
+      <if test="supplierNick!=null">AND supplier_nick=#{supplierNick}</if>
+      <if test="distributorNick!=null">AND distributor_nick=#{distributorNick}</if>
+      <if test="modified!=null">AND modified=#{modified}</if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpModified!=null">AND jdp_modified=#{jdpModified}</if>
+      <if test="jdpCreated!=null">AND jdp_created=#{jdpCreated}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="subOrderId!=null">AND sub_order_id=#{subOrderId}</if>
+      <if test="refundCreateTimeBegin!=null">
+        <![CDATA[AND refund_create_time>=#{refundCreateTimeBegin}]]></if>
+      <if test="refundCreateTimeEnd!=null">
+        <![CDATA[AND refund_create_time<#{refundCreateTimeEnd}]]></if>
+      <if test="refundStatus!=null">AND refund_status=#{refundStatus}</if>
+      <if test="supplierNick!=null">AND supplier_nick=#{supplierNick}</if>
+      <if test="distributorNick!=null">AND distributor_nick=#{distributorNick}</if>
+      <if test="modifiedBegin!=null"><![CDATA[AND modified>=#{modifiedBegin}]]></if>
+      <if test="modifiedEnd!=null"><![CDATA[AND modified<#{modifiedEnd}]]></if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpModifiedBegin!=null"><![CDATA[AND jdp_modified>=#{jdpModifiedBegin}]]></if>
+      <if test="jdpModifiedEnd!=null"><![CDATA[AND jdp_modified<#{jdpModifiedEnd}]]></if>
+      <if test="jdpCreatedBegin!=null"><![CDATA[AND jdp_created>=#{jdpCreatedBegin}]]></if>
+      <if test="jdpCreatedEnd!=null"><![CDATA[AND jdp_created<#{jdpCreatedEnd}]]></if>
+    </trim>
+  </sql>
+  <insert id="insert"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpFxRefund">
+    INSERT INTO jdp_fx_refund(refund_create_time,refund_status,supplier_nick,distributor_nick,modified,jdp_hashcode,jdp_response,jdp_modified,jdp_created)
+    VALUES(#{sub_order_id},#{refund_create_time},#{refund_status},#{supplier_nick},#{distributor_nick},#{modified},#{jdp_hashcode},#{jdp_response},#{jdp_modified},#{jdp_created})
+  </insert>
+  <update id="update"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpFxRefund">
+    UPDATE jdp_fx_refund
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="refundCreateTime!=null">refund_create_time=#{refundCreateTime},</if>
+      <if test="refundStatus!=null">refund_status=#{refundStatus},</if>
+      <if test="supplierNick!=null">supplier_nick=#{supplierNick},</if>
+      <if test="distributorNick!=null">distributor_nick=#{distributorNick},</if>
+      <if test="modified!=null">modified=#{modified},</if>
+      <if test="jdpHashcode!=null">jdp_hashcode=#{jdpHashcode},</if>
+      <if test="jdpResponse!=null">jdp_response=#{jdpResponse},</if>
+      <if test="jdpModified!=null">jdp_modified=#{jdpModified},</if>
+      <if test="jdpCreated!=null">jdp_created=#{jdpCreated}</if>
+    </trim>
+    <include refid="pkWhere"/>
+  </update>
+  <delete id="delete">
+    DELETE FROM jdp_fx_refund
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteExample">
+    DELETE FROM jdp_fx_refund
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_fx_refund
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_fx_refund
+    <include refid="where"/>
+    ORDER BY sub_order_id
+  </select>
+  <select id="listExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_fx_refund
+    <include refid="equalWhere"/>
+    ORDER BY sub_order_id
+  </select>
+  <select id="listField" parameterType="map" resultMap="resultMap">
+    SELECT ${PARAM_LIST_FIELD_KEY} FROM jdp_fx_refund
+    <include refid="where"/>
+    ORDER BY sub_order_id
+  </select>
+</mapper>

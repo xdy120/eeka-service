@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>oms-three-service</artifactId>
+    <groupId>com.greatonce</groupId>
+    <version>3.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>oms-biz-impl</artifactId>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.greatonce</groupId>
+      <artifactId>oms-domain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.greatonce</groupId>
+      <artifactId>oms-dao</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.greatonce</groupId>
+      <artifactId>oms-biz</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.greatonce</groupId>
+      <artifactId>oms-dao-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.greatonce</groupId>
+      <artifactId>oms-mall</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.greatonce</groupId>
+      <artifactId>oms-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.ginta</groupId>
+      <artifactId>jsch-spring-boot-starter</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

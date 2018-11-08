@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockLoanOutDetailMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.stock.StockLoanOutDetail">
+    <id column="stock_loan_out_detail_id" property="stockLoanOutDetailId"/>
+    <result column="alert_quantity" property="alertQuantity"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="out_quantity" property="outQuantity"/>
+    <result column="out_time" property="outTime"/>
+    <result column="plan_quantity" property="planQuantity"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="return_quantity" property="returnQuantity"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="stock_loan_out_id" property="stockLoanOutId"/>
+    <result column="surplus_quantity" property="surplusQuantity"/>
+    <result column="verification_reason" property="verificationReason"/>
+    <result column="verification_user" property="verificationUser"/>
+  </resultMap>
+  <sql id="columns">alert_quantity,created_time,modified_time,notice_quantity,out_quantity,out_time,plan_quantity,product_code,product_id,product_name,return_quantity,sku_code,sku_id,sku_name,stock_loan_out_detail_id,stock_loan_out_id,surplus_quantity,verification_reason,verification_user</sql>
+  <sql id="pkWhere">
+    WHERE stock_loan_out_detail_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="alertQuantity!=null">AND alert_quantity=#{alertQuantity}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="noticeQuantity!=null">AND notice_quantity=#{noticeQuantity}</if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="outTime!=null">AND out_time=#{outTime}</if>
+      <if test="planQuantity!=null">AND plan_quantity=#{planQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="returnQuantity!=null">AND return_quantity=#{returnQuantity}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="stockLoanOutDetailId!=null">AND stock_loan_out_detail_id=#{stockLoanOutDetailId}</if>
+      <if test="stockLoanOutId!=null">AND stock_loan_out_id=#{stockLoanOutId}</if>
+      <if test="surplusQuantity!=null">AND surplus_quantity=#{surplusQuantity}</if>
+      <if test="verificationReason!=null and verificationReason!=''">
+        AND verification_reason=#{verificationReason}
+      </if>
+      <if test="verificationUser!=null and verificationUser!=''">
+        AND verification_user=#{verificationUser}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="alertQuantity!=null">AND alert_quantity=#{alertQuantity}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="noticeQuantity!=null">AND notice_quantity=#{noticeQuantity}</if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="outTimeBegin!=null">
+        <![CDATA[AND out_time>=#{outTimeBegin}]]>
+      </if>
+      <if test="outTimeEnd!=null">
+        <![CDATA[AND out_time<#{outTimeEnd}]]>
+      </if>
+      <if test="planQuantity!=null">AND plan_quantity=#{planQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="returnQuantity!=null">AND return_quantity=#{returnQuantity}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="stockLoanOutDetailId!=null">AND stock_loan_out_detail_id=#{stockLoanOutDetailId}</if>
+      <if test="stockLoanOutId!=null">AND stock_loan_out_id=#{stockLoanOutId}</if>
+      <if test="surplusQuantity!=null">AND surplus_quantity=#{surplusQuantity}</if>
+      <if test="verificationReason!=null and verificationReason!=''">
+        AND verification_reason=#{verificationReason}
+      </if>
+      <if test="verificationUser!=null and verificationUser!=''">
+        AND verification_user=#{verificationUser}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_loan_out_detail_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.stock.StockLoanOutDetail">
+    INSERT INTO oms_stock_loan_out_detail(alert_quantity,created_time,modified_time,notice_quantity,out_quantity,out_time,plan_quantity,product_code,product_id,product_name,return_quantity,sku_code,sku_id,sku_name,stock_loan_out_detail_id,stock_loan_out_id,surplus_quantity,verification_reason,verification_user)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{alertQuantity},
+      now(),
+      now(),
+      #{noticeQuantity},
+      #{outQuantity},
+      #{outTime},
+      #{planQuantity},
+      #{productCode},
+      #{productId},
+      #{productName},
+      #{returnQuantity},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+      #{stockLoanOutDetailId},
+      #{stockLoanOutId},
+      #{surplusQuantity},
+      #{verificationReason},
+      #{verificationUser},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.stock.StockLoanOutDetail">
+    UPDATE oms_stock_loan_out_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="alertQuantity!=null">alert_quantity=#{alertQuantity},</if>
+      modified_time=now(),
+      <if test="noticeQuantity!=null">notice_quantity=#{noticeQuantity},</if>
+      <if test="outQuantity!=null">out_quantity=#{outQuantity},</if>
+      <if test="outTime!=null">out_time=#{outTime},</if>
+      <if test="planQuantity!=null">plan_quantity=#{planQuantity},</if>
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="returnQuantity!=null">return_quantity=#{returnQuantity},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="stockLoanOutId!=null">stock_loan_out_id=#{stockLoanOutId},</if>
+      <if test="surplusQuantity!=null">surplus_quantity=#{surplusQuantity},</if>
+      <if test="verificationReason!=null">verification_reason=#{verificationReason},</if>
+      <if test="verificationUser!=null">verification_user=#{verificationUser},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_loan_out_detail_id=#{stockLoanOutDetailId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.stock.StockLoanOutDetail">
+    UPDATE oms_stock_loan_out_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.alertQuantity!=null">
+        alert_quantity=#{record.alertQuantity},
+      </if>
+      modified_time=now(),
+      <if test="record.noticeQuantity!=null">
+        notice_quantity=#{record.noticeQuantity},
+      </if>
+      <if test="record.outQuantity!=null">
+        out_quantity=#{record.outQuantity},
+      </if>
+      <if test="record.outTime!=null">
+        out_time=#{record.outTime},
+      </if>
+      <if test="record.planQuantity!=null">
+        plan_quantity=#{record.planQuantity},
+      </if>
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.returnQuantity!=null">
+        return_quantity=#{record.returnQuantity},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+      <if test="record.stockLoanOutId!=null">
+        stock_loan_out_id=#{record.stockLoanOutId},
+      </if>
+      <if test="record.surplusQuantity!=null">
+        surplus_quantity=#{record.surplusQuantity},
+      </if>
+      <if test="record.verificationReason!=null">
+        verification_reason=#{record.verificationReason},
+      </if>
+      <if test="record.verificationUser!=null">
+        verification_user=#{record.verificationUser},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.alertQuantity!=null">
+      AND alert_quantity=#{example.alertQuantity}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.noticeQuantity!=null">
+      AND notice_quantity=#{example.noticeQuantity}
+      </if>
+      <if test="example.outQuantity!=null">
+      AND out_quantity=#{example.outQuantity}
+      </if>
+      <if test="example.outTime!=null">
+      AND out_time=#{example.outTime}
+      </if>
+      <if test="example.planQuantity!=null">
+      AND plan_quantity=#{example.planQuantity}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.returnQuantity!=null">
+      AND return_quantity=#{example.returnQuantity}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+      <if test="example.stockLoanOutDetailId!=null">
+      AND stock_loan_out_detail_id=#{example.stockLoanOutDetailId}
+      </if>
+      <if test="example.stockLoanOutId!=null">
+      AND stock_loan_out_id=#{example.stockLoanOutId}
+      </if>
+      <if test="example.surplusQuantity!=null">
+      AND surplus_quantity=#{example.surplusQuantity}
+      </if>
+      <if test="example.verificationReason!=null">
+      AND verification_reason=#{example.verificationReason}
+      </if>
+      <if test="example.verificationUser!=null">
+      AND verification_user=#{example.verificationUser}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_loan_out_detail
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_loan_out_detail
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out_detail
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_loan_out_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_loan_out_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

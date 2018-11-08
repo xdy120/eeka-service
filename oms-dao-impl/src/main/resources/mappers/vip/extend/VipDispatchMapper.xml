@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipDispatchMapper">
+  <resultMap id="queryDispatchMap" type="com.greatonce.oms.bo.vip.VipDispatchOrderBO"
+    extends="com.greatonce.oms.dao.vip.VipDispatchMapper.resultMap">
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="out_quantity" property="outQuantity"/>
+  </resultMap>
+
+  <!--根据发货单id 按配货单 汇总明细 通知数量 出库数量-->
+  <select id="queryDispatch" resultMap="queryDispatchMap">
+    SELECT dispatch.vip_dispatch_id,
+           dispatch.vip_dispatch_code,
+           dispatch.picking_code,
+           dispatch.vip_delivery_code,
+           dispatch.status,
+           dispatch.out_status,
+           sum(details.notice_quantity) AS notice_quantity,
+           sum(details.out_quantity)    AS out_quantity
+    FROM oms_vip_dispatch AS dispatch
+           LEFT JOIN oms_vip_dispatch_detail AS details
+           on dispatch.vip_dispatch_id = details.vip_dispatch_id
+    WHERE dispatch.vip_delivery_id = #{vipDeliveryId}
+    GROUP BY dispatch.vip_dispatch_id, dispatch.vip_dispatch_code, dispatch.picking_code,
+             dispatch.vip_delivery_code, dispatch.status, dispatch.out_status
+    ORDER BY vip_dispatch_id DESC
+  </select>
+</mapper>

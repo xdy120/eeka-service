@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.purchase.PurchaseNoticeOrderDetailMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.purchase.PurchaseNoticeOrderDetail">
+    <id column="purchase_notice_order_detail_id" property="purchaseNoticeOrderDetailId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="in_quantity" property="inQuantity"/>
+    <result column="in_substandard_quantity" property="inSubstandardQuantity"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="purchase_notice_order_id" property="purchaseNoticeOrderId"/>
+    <result column="purchase_order_detail_id" property="purchaseOrderDetailId"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_name" property="skuName"/>
+  </resultMap>
+  <sql id="columns">created_time,in_quantity,in_substandard_quantity,modified_time,notice_quantity,product_code,product_id,product_name,purchase_notice_order_detail_id,purchase_notice_order_id,purchase_order_detail_id,sku_code,sku_id,sku_name</sql>
+  <sql id="pkWhere">
+    WHERE purchase_notice_order_detail_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="inQuantity!=null">AND in_quantity=#{inQuantity}</if>
+      <if test="inSubstandardQuantity!=null">AND in_substandard_quantity=#{inSubstandardQuantity}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="noticeQuantity!=null">AND notice_quantity=#{noticeQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="purchaseNoticeOrderDetailId!=null">AND purchase_notice_order_detail_id=#{purchaseNoticeOrderDetailId}</if>
+      <if test="purchaseNoticeOrderId!=null">AND purchase_notice_order_id=#{purchaseNoticeOrderId}</if>
+      <if test="purchaseOrderDetailId!=null">AND purchase_order_detail_id=#{purchaseOrderDetailId}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="inQuantity!=null">AND in_quantity=#{inQuantity}</if>
+      <if test="inSubstandardQuantity!=null">AND in_substandard_quantity=#{inSubstandardQuantity}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="noticeQuantity!=null">AND notice_quantity=#{noticeQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="purchaseNoticeOrderDetailId!=null">AND purchase_notice_order_detail_id=#{purchaseNoticeOrderDetailId}</if>
+      <if test="purchaseNoticeOrderId!=null">AND purchase_notice_order_id=#{purchaseNoticeOrderId}</if>
+      <if test="purchaseOrderDetailId!=null">AND purchase_order_detail_id=#{purchaseOrderDetailId}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY purchase_notice_order_detail_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.purchase.PurchaseNoticeOrderDetail">
+    INSERT INTO oms_purchase_notice_order_detail(created_time,in_quantity,in_substandard_quantity,modified_time,notice_quantity,product_code,product_id,product_name,purchase_notice_order_detail_id,purchase_notice_order_id,purchase_order_detail_id,sku_code,sku_id,sku_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{inQuantity},
+      #{inSubstandardQuantity},
+      now(),
+      #{noticeQuantity},
+      #{productCode},
+      #{productId},
+      #{productName},
+      #{purchaseNoticeOrderDetailId},
+      #{purchaseNoticeOrderId},
+      #{purchaseOrderDetailId},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.purchase.PurchaseNoticeOrderDetail">
+    UPDATE oms_purchase_notice_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="inQuantity!=null">in_quantity=#{inQuantity},</if>
+      <if test="inSubstandardQuantity!=null">in_substandard_quantity=#{inSubstandardQuantity},</if>
+      modified_time=now(),
+      <if test="noticeQuantity!=null">notice_quantity=#{noticeQuantity},</if>
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="purchaseNoticeOrderId!=null">purchase_notice_order_id=#{purchaseNoticeOrderId},</if>
+      <if test="purchaseOrderDetailId!=null">purchase_order_detail_id=#{purchaseOrderDetailId},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND purchase_notice_order_detail_id=#{purchaseNoticeOrderDetailId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.purchase.PurchaseNoticeOrderDetail">
+    UPDATE oms_purchase_notice_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.inQuantity!=null">
+        in_quantity=#{record.inQuantity},
+      </if>
+      <if test="record.inSubstandardQuantity!=null">
+        in_substandard_quantity=#{record.inSubstandardQuantity},
+      </if>
+      modified_time=now(),
+      <if test="record.noticeQuantity!=null">
+        notice_quantity=#{record.noticeQuantity},
+      </if>
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.purchaseNoticeOrderId!=null">
+        purchase_notice_order_id=#{record.purchaseNoticeOrderId},
+      </if>
+      <if test="record.purchaseOrderDetailId!=null">
+        purchase_order_detail_id=#{record.purchaseOrderDetailId},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.inQuantity!=null">
+      AND in_quantity=#{example.inQuantity}
+      </if>
+      <if test="example.inSubstandardQuantity!=null">
+      AND in_substandard_quantity=#{example.inSubstandardQuantity}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.noticeQuantity!=null">
+      AND notice_quantity=#{example.noticeQuantity}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productCodes!=null">
+      AND product_code=#{example.productCodes}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.purchaseNoticeOrderDetailId!=null">
+      AND purchase_notice_order_detail_id=#{example.purchaseNoticeOrderDetailId}
+      </if>
+      <if test="example.purchaseNoticeOrderId!=null">
+      AND purchase_notice_order_id=#{example.purchaseNoticeOrderId}
+      </if>
+      <if test="example.purchaseOrderDetailId!=null">
+      AND purchase_order_detail_id=#{example.purchaseOrderDetailId}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuCodes!=null">
+      AND sku_code=#{example.skuCodes}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_purchase_notice_order_detail
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_purchase_notice_order_detail
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_notice_order_detail
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_notice_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_notice_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_notice_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_purchase_notice_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_purchase_notice_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_purchase_notice_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

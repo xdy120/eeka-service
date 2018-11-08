@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.StoreMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.Store">
+    <id column="store_id" property="storeId"/>
+    <result column="access_token_expiration_time" property="accessTokenExpirationTime"/>
+    <result column="access_token" property="accessToken"/>
+    <result column="address" property="address"/>
+    <result column="company_id" property="companyId"/>
+    <result column="company_name" property="companyName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="is_enable" property="enable"/>
+    <result column="mall_app_id" property="mallAppId"/>
+    <result column="mall_type" property="mallType"/>
+    <result column="mobile" property="mobile"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="nickname" property="nickname"/>
+    <result column="refresh_token_expiration_time" property="refreshTokenExpirationTime"/>
+    <result column="refresh_token" property="refreshToken"/>
+    <result column="remark" property="remark"/>
+    <result column="setting_json" property="settingJson"/>
+    <result column="store_code" property="storeCode"/>
+    <result column="store_name" property="storeName"/>
+    <result column="telephone" property="telephone"/>
+  </resultMap>
+  <sql id="columns">access_token_expiration_time,access_token,address,company_id,company_name,created_time,is_enable,mall_app_id,mall_type,mobile,modified_time,nickname,refresh_token_expiration_time,refresh_token,remark,setting_json,store_code,store_id,store_name,telephone</sql>
+  <sql id="pkWhere">
+    WHERE store_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="accessTokenExpirationTime!=null">AND access_token_expiration_time=#{accessTokenExpirationTime}</if>
+      <if test="accessToken!=null and accessToken!=''">
+        AND access_token=#{accessToken}
+      </if>
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="companyId!=null">AND company_id=#{companyId}</if>
+      <if test="companyName!=null and companyName!=''">
+        AND company_name=#{companyName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="mallAppId!=null">AND mall_app_id=#{mallAppId}</if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="nickname!=null and nickname!=''">
+        AND nickname=#{nickname}
+      </if>
+      <if test="refreshTokenExpirationTime!=null">AND refresh_token_expiration_time=#{refreshTokenExpirationTime}</if>
+      <if test="refreshToken!=null and refreshToken!=''">
+        AND refresh_token=#{refreshToken}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="settingJson!=null and settingJson!=''">
+        AND setting_json=#{settingJson}
+      </if>
+      <if test="storeCode!=null and storeCode!=''">
+        AND store_code=#{storeCode}
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="accessTokenExpirationTimeBegin!=null">
+        <![CDATA[AND access_token_expiration_time>=#{accessTokenExpirationTimeBegin}]]>
+      </if>
+      <if test="accessTokenExpirationTimeEnd!=null">
+        <![CDATA[AND access_token_expiration_time<#{accessTokenExpirationTimeEnd}]]>
+      </if>
+      <if test="accessToken!=null and accessToken!=''">
+        AND access_token=#{accessToken}
+      </if>
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="companyId!=null">AND company_id=#{companyId}</if>
+      <if test="companyName!=null and companyName!=''">
+        AND company_name=#{companyName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="mallAppId!=null">AND mall_app_id=#{mallAppId}</if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="nickname!=null and nickname!=''">
+        AND nickname=#{nickname}
+      </if>
+      <if test="refreshTokenExpirationTimeBegin!=null">
+        <![CDATA[AND refresh_token_expiration_time>=#{refreshTokenExpirationTimeBegin}]]>
+      </if>
+      <if test="refreshTokenExpirationTimeEnd!=null">
+        <![CDATA[AND refresh_token_expiration_time<#{refreshTokenExpirationTimeEnd}]]>
+      </if>
+      <if test="refreshToken!=null and refreshToken!=''">
+        AND refresh_token=#{refreshToken}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="settingJson!=null and settingJson!=''">
+        AND setting_json=#{settingJson}
+      </if>
+      <if test="storeCode!=null and storeCode!=''">
+        AND store_code=#{storeCode}
+      </if>
+      <if test="storeCodes!=null and storeCodes.size>0">
+        AND store_code IN
+        <foreach item="item" index="index" collection="storeCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">
+        <bind name="storeName_like" value="_parameter.storeName+'%'"/>
+        AND store_name like #{storeName_like}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY store_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.Store">
+    INSERT INTO oms_store(access_token_expiration_time,access_token,address,company_id,company_name,created_time,is_enable,mall_app_id,mall_type,mobile,modified_time,nickname,refresh_token_expiration_time,refresh_token,remark,setting_json,store_code,store_id,store_name,telephone)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{accessTokenExpirationTime},
+      #{accessToken},
+      #{address},
+      #{companyId},
+      #{companyName},
+      now(),
+      #{enable},
+      #{mallAppId},
+      #{mallType},
+      #{mobile},
+      now(),
+      #{nickname},
+      #{refreshTokenExpirationTime},
+      #{refreshToken},
+      #{remark},
+      #{settingJson},
+      #{storeCode},
+      #{storeId},
+      #{storeName},
+      #{telephone},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.Store">
+    UPDATE oms_store
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="accessTokenExpirationTime!=null">access_token_expiration_time=#{accessTokenExpirationTime},</if>
+      <if test="accessToken!=null">access_token=#{accessToken},</if>
+      <if test="address!=null">address=#{address},</if>
+      <if test="companyId!=null">company_id=#{companyId},</if>
+      <if test="companyName!=null">company_name=#{companyName},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="mallAppId!=null">mall_app_id=#{mallAppId},</if>
+      <if test="mallType!=null">mall_type=#{mallType},</if>
+      <if test="mobile!=null">mobile=#{mobile},</if>
+      modified_time=now(),
+      <if test="nickname!=null">nickname=#{nickname},</if>
+      <if test="refreshTokenExpirationTime!=null">refresh_token_expiration_time=#{refreshTokenExpirationTime},</if>
+      <if test="refreshToken!=null">refresh_token=#{refreshToken},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="settingJson!=null">setting_json=#{settingJson},</if>
+      <if test="storeCode!=null">store_code=#{storeCode},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="telephone!=null">telephone=#{telephone},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND store_id=#{storeId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.Store">
+    UPDATE oms_store
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.accessTokenExpirationTime!=null">
+        access_token_expiration_time=#{record.accessTokenExpirationTime},
+      </if>
+      <if test="record.accessToken!=null">
+        access_token=#{record.accessToken},
+      </if>
+      <if test="record.address!=null">
+        address=#{record.address},
+      </if>
+      <if test="record.companyId!=null">
+        company_id=#{record.companyId},
+      </if>
+      <if test="record.companyName!=null">
+        company_name=#{record.companyName},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.mallAppId!=null">
+        mall_app_id=#{record.mallAppId},
+      </if>
+      <if test="record.mallType!=null">
+        mall_type=#{record.mallType},
+      </if>
+      <if test="record.mobile!=null">
+        mobile=#{record.mobile},
+      </if>
+      modified_time=now(),
+      <if test="record.nickname!=null">
+        nickname=#{record.nickname},
+      </if>
+      <if test="record.refreshTokenExpirationTime!=null">
+        refresh_token_expiration_time=#{record.refreshTokenExpirationTime},
+      </if>
+      <if test="record.refreshToken!=null">
+        refresh_token=#{record.refreshToken},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.settingJson!=null">
+        setting_json=#{record.settingJson},
+      </if>
+      <if test="record.storeCode!=null">
+        store_code=#{record.storeCode},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.telephone!=null">
+        telephone=#{record.telephone},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.accessTokenExpirationTime!=null">
+      AND access_token_expiration_time=#{example.accessTokenExpirationTime}
+      </if>
+      <if test="example.accessToken!=null">
+      AND access_token=#{example.accessToken}
+      </if>
+      <if test="example.address!=null">
+      AND address=#{example.address}
+      </if>
+      <if test="example.companyId!=null">
+      AND company_id=#{example.companyId}
+      </if>
+      <if test="example.companyName!=null">
+      AND company_name=#{example.companyName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.mallAppId!=null">
+      AND mall_app_id=#{example.mallAppId}
+      </if>
+      <if test="example.mallType!=null">
+      AND mall_type=#{example.mallType}
+      </if>
+      <if test="example.mobile!=null">
+      AND mobile=#{example.mobile}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.nickname!=null">
+      AND nickname=#{example.nickname}
+      </if>
+      <if test="example.refreshTokenExpirationTime!=null">
+      AND refresh_token_expiration_time=#{example.refreshTokenExpirationTime}
+      </if>
+      <if test="example.refreshToken!=null">
+      AND refresh_token=#{example.refreshToken}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.settingJson!=null">
+      AND setting_json=#{example.settingJson}
+      </if>
+      <if test="example.storeCode!=null">
+      AND store_code=#{example.storeCode}
+      </if>
+      <if test="example.storeCodes!=null">
+      AND store_code=#{example.storeCodes}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeIds!=null">
+      AND store_id=#{example.storeIds}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.telephone!=null">
+      AND telephone=#{example.telephone}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_store
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_store
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_store
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_store
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_store
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

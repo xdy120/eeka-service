@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.WarehouseMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.Warehouse">
+    <id column="warehouse_id" property="warehouseId"/>
+    <result column="address" property="address"/>
+    <result column="brand_codes" property="brandCodes"/>
+    <result column="brand_names" property="brandNames"/>
+    <result column="city_id" property="cityId"/>
+    <result column="city_name" property="cityName"/>
+    <result column="contact" property="contact"/>
+    <result column="country_id" property="countryId"/>
+    <result column="country_name" property="countryName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="district_id" property="districtId"/>
+    <result column="district_name" property="districtName"/>
+    <result column="is_enable" property="enable"/>
+    <result column="is_match_region" property="matchRegion"/>
+    <result column="mobile" property="mobile"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="outer_code" property="outerCode"/>
+    <result column="owner_code" property="ownerCode"/>
+    <result column="province_id" property="provinceId"/>
+    <result column="province_name" property="provinceName"/>
+    <result column="telephone" property="telephone"/>
+    <result column="warehouse_code" property="warehouseCode"/>
+    <result column="warehouse_name" property="warehouseName"/>
+    <result column="warehouse_type" property="warehouseType"/>
+    <result column="waybill_strategy" property="waybillStrategy"/>
+    <result column="wms_app_id" property="wmsAppId"/>
+  </resultMap>
+  <sql id="columns">address,brand_codes,brand_names,city_id,city_name,contact,country_id,country_name,created_time,district_id,district_name,is_enable,is_match_region,mobile,modified_time,outer_code,owner_code,province_id,province_name,telephone,warehouse_code,warehouse_id,warehouse_name,warehouse_type,waybill_strategy,wms_app_id</sql>
+  <sql id="pkWhere">
+    WHERE warehouse_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="brandCodes!=null and brandCodes!=''">
+        AND brand_codes=#{brandCodes}
+      </if>
+      <if test="brandNames!=null and brandNames!=''">
+        AND brand_names=#{brandNames}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="matchRegion!=null">AND is_match_region=#{matchRegion}</if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="ownerCode!=null and ownerCode!=''">
+        AND owner_code=#{ownerCode}
+      </if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="warehouseCode!=null and warehouseCode!=''">
+        AND warehouse_code=#{warehouseCode}
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND warehouse_name=#{warehouseName}
+      </if>
+      <if test="warehouseType!=null">AND warehouse_type=#{warehouseType}</if>
+      <if test="waybillStrategy!=null">AND waybill_strategy=#{waybillStrategy}</if>
+      <if test="wmsAppId!=null">AND wms_app_id=#{wmsAppId}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="brandCodes!=null and brandCodes!=''">
+        AND brand_codes=#{brandCodes}
+      </if>
+      <if test="brandNames!=null and brandNames!=''">
+        AND brand_names=#{brandNames}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="matchRegion!=null">AND is_match_region=#{matchRegion}</if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="ownerCode!=null and ownerCode!=''">
+        AND owner_code=#{ownerCode}
+      </if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="warehouseCode!=null and warehouseCode!=''">
+        AND warehouse_code=#{warehouseCode}
+      </if>
+      <if test="warehouseCodes!=null and warehouseCodes.size>0">
+        AND warehouse_code IN
+        <foreach item="item" index="index" collection="warehouseCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseIds!=null and warehouseIds.size>0">
+        AND warehouse_id IN
+        <foreach item="item" index="index" collection="warehouseIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        <bind name="warehouseName_like" value="_parameter.warehouseName+'%'"/>
+        AND warehouse_name like #{warehouseName_like}
+      </if>
+      <if test="warehouseType!=null">AND warehouse_type=#{warehouseType}</if>
+      <if test="warehouseTypes!=null and warehouseTypes.size>0">
+        AND warehouse_type IN
+        <foreach item="item" index="index" collection="warehouseTypes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="waybillStrategy!=null">AND waybill_strategy=#{waybillStrategy}</if>
+      <if test="wmsAppId!=null">AND wms_app_id=#{wmsAppId}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY warehouse_id ASC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.Warehouse">
+    INSERT INTO oms_warehouse(address,brand_codes,brand_names,city_id,city_name,contact,country_id,country_name,created_time,district_id,district_name,is_enable,is_match_region,mobile,modified_time,outer_code,owner_code,province_id,province_name,telephone,warehouse_code,warehouse_id,warehouse_name,warehouse_type,waybill_strategy,wms_app_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{address},
+      #{brandCodes},
+      #{brandNames},
+      #{cityId},
+      #{cityName},
+      #{contact},
+      #{countryId},
+      #{countryName},
+      now(),
+      #{districtId},
+      #{districtName},
+      #{enable},
+      #{matchRegion},
+      #{mobile},
+      now(),
+      #{outerCode},
+      #{ownerCode},
+      #{provinceId},
+      #{provinceName},
+      #{telephone},
+      #{warehouseCode},
+      #{warehouseId},
+      #{warehouseName},
+      #{warehouseType},
+      #{waybillStrategy},
+      #{wmsAppId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.Warehouse">
+    UPDATE oms_warehouse
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="address!=null">address=#{address},</if>
+      <if test="brandCodes!=null">brand_codes=#{brandCodes},</if>
+      <if test="brandNames!=null">brand_names=#{brandNames},</if>
+      <if test="cityId!=null">city_id=#{cityId},</if>
+      <if test="cityName!=null">city_name=#{cityName},</if>
+      <if test="contact!=null">contact=#{contact},</if>
+      <if test="countryId!=null">country_id=#{countryId},</if>
+      <if test="countryName!=null">country_name=#{countryName},</if>
+      <if test="districtId!=null">district_id=#{districtId},</if>
+      <if test="districtName!=null">district_name=#{districtName},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="matchRegion!=null">is_match_region=#{matchRegion},</if>
+      <if test="mobile!=null">mobile=#{mobile},</if>
+      modified_time=now(),
+      <if test="outerCode!=null">outer_code=#{outerCode},</if>
+      <if test="ownerCode!=null">owner_code=#{ownerCode},</if>
+      <if test="provinceId!=null">province_id=#{provinceId},</if>
+      <if test="provinceName!=null">province_name=#{provinceName},</if>
+      <if test="telephone!=null">telephone=#{telephone},</if>
+      <if test="warehouseCode!=null">warehouse_code=#{warehouseCode},</if>
+      <if test="warehouseName!=null">warehouse_name=#{warehouseName},</if>
+      <if test="warehouseType!=null">warehouse_type=#{warehouseType},</if>
+      <if test="waybillStrategy!=null">waybill_strategy=#{waybillStrategy},</if>
+      <if test="wmsAppId!=null">wms_app_id=#{wmsAppId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND warehouse_id=#{warehouseId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.Warehouse">
+    UPDATE oms_warehouse
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.address!=null">
+        address=#{record.address},
+      </if>
+      <if test="record.brandCodes!=null">
+        brand_codes=#{record.brandCodes},
+      </if>
+      <if test="record.brandNames!=null">
+        brand_names=#{record.brandNames},
+      </if>
+      <if test="record.cityId!=null">
+        city_id=#{record.cityId},
+      </if>
+      <if test="record.cityName!=null">
+        city_name=#{record.cityName},
+      </if>
+      <if test="record.contact!=null">
+        contact=#{record.contact},
+      </if>
+      <if test="record.countryId!=null">
+        country_id=#{record.countryId},
+      </if>
+      <if test="record.countryName!=null">
+        country_name=#{record.countryName},
+      </if>
+      <if test="record.districtId!=null">
+        district_id=#{record.districtId},
+      </if>
+      <if test="record.districtName!=null">
+        district_name=#{record.districtName},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.matchRegion!=null">
+        is_match_region=#{record.matchRegion},
+      </if>
+      <if test="record.mobile!=null">
+        mobile=#{record.mobile},
+      </if>
+      modified_time=now(),
+      <if test="record.outerCode!=null">
+        outer_code=#{record.outerCode},
+      </if>
+      <if test="record.ownerCode!=null">
+        owner_code=#{record.ownerCode},
+      </if>
+      <if test="record.provinceId!=null">
+        province_id=#{record.provinceId},
+      </if>
+      <if test="record.provinceName!=null">
+        province_name=#{record.provinceName},
+      </if>
+      <if test="record.telephone!=null">
+        telephone=#{record.telephone},
+      </if>
+      <if test="record.warehouseCode!=null">
+        warehouse_code=#{record.warehouseCode},
+      </if>
+      <if test="record.warehouseName!=null">
+        warehouse_name=#{record.warehouseName},
+      </if>
+      <if test="record.warehouseType!=null">
+        warehouse_type=#{record.warehouseType},
+      </if>
+      <if test="record.waybillStrategy!=null">
+        waybill_strategy=#{record.waybillStrategy},
+      </if>
+      <if test="record.wmsAppId!=null">
+        wms_app_id=#{record.wmsAppId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.address!=null">
+      AND address=#{example.address}
+      </if>
+      <if test="example.brandCodes!=null">
+      AND brand_codes=#{example.brandCodes}
+      </if>
+      <if test="example.brandNames!=null">
+      AND brand_names=#{example.brandNames}
+      </if>
+      <if test="example.cityId!=null">
+      AND city_id=#{example.cityId}
+      </if>
+      <if test="example.cityName!=null">
+      AND city_name=#{example.cityName}
+      </if>
+      <if test="example.contact!=null">
+      AND contact=#{example.contact}
+      </if>
+      <if test="example.countryId!=null">
+      AND country_id=#{example.countryId}
+      </if>
+      <if test="example.countryName!=null">
+      AND country_name=#{example.countryName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.districtId!=null">
+      AND district_id=#{example.districtId}
+      </if>
+      <if test="example.districtName!=null">
+      AND district_name=#{example.districtName}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.matchRegion!=null">
+      AND is_match_region=#{example.matchRegion}
+      </if>
+      <if test="example.mobile!=null">
+      AND mobile=#{example.mobile}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outerCode!=null">
+      AND outer_code=#{example.outerCode}
+      </if>
+      <if test="example.ownerCode!=null">
+      AND owner_code=#{example.ownerCode}
+      </if>
+      <if test="example.provinceId!=null">
+      AND province_id=#{example.provinceId}
+      </if>
+      <if test="example.provinceName!=null">
+      AND province_name=#{example.provinceName}
+      </if>
+      <if test="example.telephone!=null">
+      AND telephone=#{example.telephone}
+      </if>
+      <if test="example.warehouseCode!=null">
+      AND warehouse_code=#{example.warehouseCode}
+      </if>
+      <if test="example.warehouseCodes!=null">
+      AND warehouse_code=#{example.warehouseCodes}
+      </if>
+      <if test="example.warehouseId!=null">
+      AND warehouse_id=#{example.warehouseId}
+      </if>
+      <if test="example.warehouseIds!=null">
+      AND warehouse_id=#{example.warehouseIds}
+      </if>
+      <if test="example.warehouseName!=null">
+      AND warehouse_name=#{example.warehouseName}
+      </if>
+      <if test="example.warehouseType!=null">
+      AND warehouse_type=#{example.warehouseType}
+      </if>
+      <if test="example.warehouseTypes!=null">
+      AND warehouse_type=#{example.warehouseTypes}
+      </if>
+      <if test="example.waybillStrategy!=null">
+      AND waybill_strategy=#{example.waybillStrategy}
+      </if>
+      <if test="example.wmsAppId!=null">
+      AND wms_app_id=#{example.wmsAppId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_warehouse
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_warehouse
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_warehouse
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_warehouse
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_warehouse
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_warehouse
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_warehouse
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_warehouse
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_warehouse
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

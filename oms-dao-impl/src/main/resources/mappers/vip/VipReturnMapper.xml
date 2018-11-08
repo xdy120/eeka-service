@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipReturnMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.vip.VipReturn">
+    <id column="vip_return_id" property="vipReturnId"/>
+    <result column="box_quantity" property="boxQuantity"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="is_abnormal" property="abnormal"/>
+    <result column="is_vip_price_abnormal" property="vipPriceAbnormal"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="outer_code" property="outerCode"/>
+    <result column="quantity" property="quantity"/>
+    <result column="remark" property="remark"/>
+    <result column="return_time" property="returnTime"/>
+    <result column="scan_quantity" property="scanQuantity"/>
+    <result column="sign_time" property="signTime"/>
+    <result column="signer" property="signer"/>
+    <result column="sku_quantity" property="skuQuantity"/>
+    <result column="status" property="status"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="version" property="version"/>
+    <result column="vip_amount" property="vipAmount"/>
+    <result column="vip_return_code" property="vipReturnCode"/>
+    <result column="vip_return_type" property="vipReturnType"/>
+    <result column="vip_sign_status" property="vipSignStatus"/>
+    <result column="vip_warehouse_code" property="vipWarehouseCode"/>
+    <result column="vip_warehouse_name" property="vipWarehouseName"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+  </resultMap>
+  <sql id="columns">box_quantity,created_time,creator,is_abnormal,is_vip_price_abnormal,modified_time,outer_code,quantity,remark,return_time,scan_quantity,sign_time,signer,sku_quantity,status,store_id,store_name,version,vip_amount,vip_return_code,vip_return_id,vip_return_type,vip_sign_status,vip_warehouse_code,vip_warehouse_name,virtual_warehouse_id,virtual_warehouse_name</sql>
+  <sql id="pkWhere">
+    WHERE vip_return_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="boxQuantity!=null">AND box_quantity=#{boxQuantity}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="abnormal!=null">AND is_abnormal=#{abnormal}</if>
+      <if test="vipPriceAbnormal!=null">AND is_vip_price_abnormal=#{vipPriceAbnormal}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="returnTime!=null">AND return_time=#{returnTime}</if>
+      <if test="scanQuantity!=null">AND scan_quantity=#{scanQuantity}</if>
+      <if test="signTime!=null">AND sign_time=#{signTime}</if>
+      <if test="signer!=null and signer!=''">
+        AND signer=#{signer}
+      </if>
+      <if test="skuQuantity!=null">AND sku_quantity=#{skuQuantity}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="vipAmount!=null">AND vip_amount=#{vipAmount}</if>
+      <if test="vipReturnCode!=null and vipReturnCode!=''">
+        AND vip_return_code=#{vipReturnCode}
+      </if>
+      <if test="vipReturnId!=null">AND vip_return_id=#{vipReturnId}</if>
+      <if test="vipReturnType!=null and vipReturnType!=''">
+        AND vip_return_type=#{vipReturnType}
+      </if>
+      <if test="vipSignStatus!=null">AND vip_sign_status=#{vipSignStatus}</if>
+      <if test="vipWarehouseCode!=null and vipWarehouseCode!=''">
+        AND vip_warehouse_code=#{vipWarehouseCode}
+      </if>
+      <if test="vipWarehouseName!=null and vipWarehouseName!=''">
+        AND vip_warehouse_name=#{vipWarehouseName}
+      </if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="boxQuantity!=null">AND box_quantity=#{boxQuantity}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="abnormal!=null">AND is_abnormal=#{abnormal}</if>
+      <if test="vipPriceAbnormal!=null">AND is_vip_price_abnormal=#{vipPriceAbnormal}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="outerCodes!=null and outerCodes.size>0">
+        AND outer_code IN
+        <foreach item="item" index="index" collection="outerCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="returnTimeBegin!=null">
+        <![CDATA[AND return_time>=#{returnTimeBegin}]]>
+      </if>
+      <if test="returnTimeEnd!=null">
+        <![CDATA[AND return_time<#{returnTimeEnd}]]>
+      </if>
+      <if test="scanQuantity!=null">AND scan_quantity=#{scanQuantity}</if>
+      <if test="signTimeBegin!=null">
+        <![CDATA[AND sign_time>=#{signTimeBegin}]]>
+      </if>
+      <if test="signTimeEnd!=null">
+        <![CDATA[AND sign_time<#{signTimeEnd}]]>
+      </if>
+      <if test="signer!=null and signer!=''">
+        AND signer=#{signer}
+      </if>
+      <if test="skuQuantity!=null">AND sku_quantity=#{skuQuantity}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="vipAmount!=null">AND vip_amount=#{vipAmount}</if>
+      <if test="vipReturnCode!=null and vipReturnCode!=''">
+        AND vip_return_code=#{vipReturnCode}
+      </if>
+      <if test="vipReturnCodes!=null and vipReturnCodes.size>0">
+        AND vip_return_code IN
+        <foreach item="item" index="index" collection="vipReturnCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="vipReturnId!=null">AND vip_return_id=#{vipReturnId}</if>
+      <if test="vipReturnType!=null and vipReturnType!=''">
+        AND vip_return_type=#{vipReturnType}
+      </if>
+      <if test="vipSignStatus!=null">AND vip_sign_status=#{vipSignStatus}</if>
+      <if test="vipSignStatuses!=null and vipSignStatuses.size>0">
+        AND vip_sign_status IN
+        <foreach item="item" index="index" collection="vipSignStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="vipWarehouseCode!=null and vipWarehouseCode!=''">
+        AND vip_warehouse_code=#{vipWarehouseCode}
+      </if>
+      <if test="vipWarehouseName!=null and vipWarehouseName!=''">
+        AND vip_warehouse_name=#{vipWarehouseName}
+      </if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY vip_return_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.vip.VipReturn">
+    INSERT INTO oms_vip_return(box_quantity,created_time,creator,is_abnormal,is_vip_price_abnormal,modified_time,outer_code,quantity,remark,return_time,scan_quantity,sign_time,signer,sku_quantity,status,store_id,store_name,version,vip_amount,vip_return_code,vip_return_id,vip_return_type,vip_sign_status,vip_warehouse_code,vip_warehouse_name,virtual_warehouse_id,virtual_warehouse_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{boxQuantity},
+      now(),
+      #{creator},
+      #{abnormal},
+      #{vipPriceAbnormal},
+      now(),
+      #{outerCode},
+      #{quantity},
+      #{remark},
+      #{returnTime},
+      #{scanQuantity},
+      #{signTime},
+      #{signer},
+      #{skuQuantity},
+      #{status},
+      #{storeId},
+      #{storeName},
+      1,
+      #{vipAmount},
+      #{vipReturnCode},
+      #{vipReturnId},
+      #{vipReturnType},
+      #{vipSignStatus},
+      #{vipWarehouseCode},
+      #{vipWarehouseName},
+      #{virtualWarehouseId},
+      #{virtualWarehouseName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.vip.VipReturn">
+    UPDATE oms_vip_return
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="boxQuantity!=null">box_quantity=#{boxQuantity},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="abnormal!=null">is_abnormal=#{abnormal},</if>
+      <if test="vipPriceAbnormal!=null">is_vip_price_abnormal=#{vipPriceAbnormal},</if>
+      modified_time=now(),
+      <if test="outerCode!=null">outer_code=#{outerCode},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="returnTime!=null">return_time=#{returnTime},</if>
+      <if test="scanQuantity!=null">scan_quantity=#{scanQuantity},</if>
+      <if test="signTime!=null">sign_time=#{signTime},</if>
+      <if test="signer!=null">signer=#{signer},</if>
+      <if test="skuQuantity!=null">sku_quantity=#{skuQuantity},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+      <if test="vipAmount!=null">vip_amount=#{vipAmount},</if>
+      <if test="vipReturnCode!=null">vip_return_code=#{vipReturnCode},</if>
+      <if test="vipReturnType!=null">vip_return_type=#{vipReturnType},</if>
+      <if test="vipSignStatus!=null">vip_sign_status=#{vipSignStatus},</if>
+      <if test="vipWarehouseCode!=null">vip_warehouse_code=#{vipWarehouseCode},</if>
+      <if test="vipWarehouseName!=null">vip_warehouse_name=#{vipWarehouseName},</if>
+      <if test="virtualWarehouseId!=null">virtual_warehouse_id=#{virtualWarehouseId},</if>
+      <if test="virtualWarehouseName!=null">virtual_warehouse_name=#{virtualWarehouseName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND vip_return_id=#{vipReturnId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.vip.VipReturn">
+    UPDATE oms_vip_return
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.boxQuantity!=null">
+        box_quantity=#{record.boxQuantity},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.abnormal!=null">
+        is_abnormal=#{record.abnormal},
+      </if>
+      <if test="record.vipPriceAbnormal!=null">
+        is_vip_price_abnormal=#{record.vipPriceAbnormal},
+      </if>
+      modified_time=now(),
+      <if test="record.outerCode!=null">
+        outer_code=#{record.outerCode},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.returnTime!=null">
+        return_time=#{record.returnTime},
+      </if>
+      <if test="record.scanQuantity!=null">
+        scan_quantity=#{record.scanQuantity},
+      </if>
+      <if test="record.signTime!=null">
+        sign_time=#{record.signTime},
+      </if>
+      <if test="record.signer!=null">
+        signer=#{record.signer},
+      </if>
+      <if test="record.skuQuantity!=null">
+        sku_quantity=#{record.skuQuantity},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+      <if test="record.vipAmount!=null">
+        vip_amount=#{record.vipAmount},
+      </if>
+      <if test="record.vipReturnCode!=null">
+        vip_return_code=#{record.vipReturnCode},
+      </if>
+      <if test="record.vipReturnType!=null">
+        vip_return_type=#{record.vipReturnType},
+      </if>
+      <if test="record.vipSignStatus!=null">
+        vip_sign_status=#{record.vipSignStatus},
+      </if>
+      <if test="record.vipWarehouseCode!=null">
+        vip_warehouse_code=#{record.vipWarehouseCode},
+      </if>
+      <if test="record.vipWarehouseName!=null">
+        vip_warehouse_name=#{record.vipWarehouseName},
+      </if>
+      <if test="record.virtualWarehouseId!=null">
+        virtual_warehouse_id=#{record.virtualWarehouseId},
+      </if>
+      <if test="record.virtualWarehouseName!=null">
+        virtual_warehouse_name=#{record.virtualWarehouseName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.boxQuantity!=null">
+      AND box_quantity=#{example.boxQuantity}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.abnormal!=null">
+      AND is_abnormal=#{example.abnormal}
+      </if>
+      <if test="example.vipPriceAbnormal!=null">
+      AND is_vip_price_abnormal=#{example.vipPriceAbnormal}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outerCode!=null">
+      AND outer_code=#{example.outerCode}
+      </if>
+      <if test="example.outerCodes!=null">
+      AND outer_code=#{example.outerCodes}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.returnTime!=null">
+      AND return_time=#{example.returnTime}
+      </if>
+      <if test="example.scanQuantity!=null">
+      AND scan_quantity=#{example.scanQuantity}
+      </if>
+      <if test="example.signTime!=null">
+      AND sign_time=#{example.signTime}
+      </if>
+      <if test="example.signer!=null">
+      AND signer=#{example.signer}
+      </if>
+      <if test="example.skuQuantity!=null">
+      AND sku_quantity=#{example.skuQuantity}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeIds!=null">
+      AND store_id=#{example.storeIds}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      AND version=#{example.version}
+      <if test="example.vipAmount!=null">
+      AND vip_amount=#{example.vipAmount}
+      </if>
+      <if test="example.vipReturnCode!=null">
+      AND vip_return_code=#{example.vipReturnCode}
+      </if>
+      <if test="example.vipReturnCodes!=null">
+      AND vip_return_code=#{example.vipReturnCodes}
+      </if>
+      <if test="example.vipReturnId!=null">
+      AND vip_return_id=#{example.vipReturnId}
+      </if>
+      <if test="example.vipReturnType!=null">
+      AND vip_return_type=#{example.vipReturnType}
+      </if>
+      <if test="example.vipSignStatus!=null">
+      AND vip_sign_status=#{example.vipSignStatus}
+      </if>
+      <if test="example.vipSignStatuses!=null">
+      AND vip_sign_status=#{example.vipSignStatuses}
+      </if>
+      <if test="example.vipWarehouseCode!=null">
+      AND vip_warehouse_code=#{example.vipWarehouseCode}
+      </if>
+      <if test="example.vipWarehouseName!=null">
+      AND vip_warehouse_name=#{example.vipWarehouseName}
+      </if>
+      <if test="example.virtualWarehouseId!=null">
+      AND virtual_warehouse_id=#{example.virtualWarehouseId}
+      </if>
+      <if test="example.virtualWarehouseName!=null">
+      AND virtual_warehouse_name=#{example.virtualWarehouseName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_vip_return
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_vip_return
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_return
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_return
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_return
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_return
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_return
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_return
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_return
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

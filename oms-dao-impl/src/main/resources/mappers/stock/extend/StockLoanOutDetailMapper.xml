@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockLoanOutDetailMapper">
+  <select id="listAvailable" resultMap="resultMap">
+    SELECT loan_out_detail.stock_loan_out_detail_id,
+           loan_out_detail.sku_id,
+           loan_out_detail.sku_code,
+           loan_out_detail.plan_quantity,
+           IFNULL(stock.quantity, 0) - SUM(IFNULL(stock_occupancy.quantity, 0)) notice_quantity
+    FROM oms_stock_loan_out loan_out
+           JOIN oms_stock_loan_out_detail loan_out_detail
+           ON loan_out.stock_loan_out_id = loan_out_detail.stock_loan_out_id
+           LEFT JOIN oms_stock stock ON loan_out_detail.sku_id = stock.sku_id
+                                          AND
+                                        loan_out.virtual_warehouse_id = stock.virtual_warehouse_id
+           LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+                                                              AND
+                                                            stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+                                                              AND stock_occupancy.STATUS = 2
+    WHERE loan_out.stock_loan_out_id = #{_parameter}
+    GROUP BY loan_out_detail.sku_id,
+             loan_out_detail.sku_code,
+             loan_out_detail.plan_quantity
+  </select>
+
+  <select id="listSaleable" resultMap="resultMap">
+    SELECT loan_out_detail.stock_loan_out_detail_id,
+           loan_out_detail.sku_id,
+           loan_out_detail.sku_code,
+           loan_out_detail.plan_quantity,
+           IFNULL(stock.quantity, 0) - SUM(IFNULL(stock_occupancy.quantity, 0)) notice_quantity
+    FROM oms_stock_loan_out loan_out
+           JOIN oms_stock_loan_out_detail loan_out_detail
+           ON loan_out.stock_loan_out_id = loan_out_detail.stock_loan_out_id
+           LEFT JOIN oms_stock stock ON loan_out_detail.sku_id = stock.sku_id
+                                          AND
+                                        loan_out.virtual_warehouse_id = stock.virtual_warehouse_id
+           LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+                                                              AND
+                                                            stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+                                                              AND stock_occupancy.STATUS IN (2, 3)
+    WHERE loan_out.stock_loan_out_id = #{_parameter}
+    GROUP BY loan_out_detail.sku_id,
+             loan_out_detail.sku_code,
+             loan_out_detail.plan_quantity
+  </select>
+</mapper>

@@ -1,0 +1,14 @@
+PUT product_sku
+{
+  "settings": {
+    "index": {
+      "analysis.analyzer.default.type": "ik_max_word"
+    }
+  },
+  "mappings": {
+    "doc": {
+      "properties": {
+      }
+    }
+  }
+}

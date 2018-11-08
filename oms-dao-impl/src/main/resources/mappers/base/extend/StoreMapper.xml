@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.StoreMapper">
+    <select id="multiList" resultMap="resultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM oms_store
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="storeId!=null">AND store_id=#{storeId}</if>
+            <if test="storeIds!=null">AND store_id IN
+                <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="enable!=null">AND is_enable=#{enable}</if>
+
+            <if test="storeName!=null and storeName!=''">
+                <bind name="pattern" value="_parameter.storeName+'%'"/>
+                AND store_name LIKE #{pattern}
+            </if>
+            <if test="storeCodes!=null and storeCodes!=''">
+                AND store_code IN
+                <foreach item="item" index="index" collection="storeCodes" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="nickname!=null and nickname!=''">
+                AND nickname=#{nickname}
+            </if>
+            <if test="accessToken!=null and accessToken!=''">
+                AND access_token=#{accessToken}
+            </if>
+            <if test="refreshToken!=null and refreshToken!=''">
+                AND refresh_token=#{refreshToken}
+            </if>
+            <if test="mallType!=null">AND mall_type=#{mallType,jdbcType=INTEGER}</if>
+        </trim>
+        ORDER BY store_id
+    </select>
+
+    <select id="listMatch" resultMap="resultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM oms_store
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="storeId!=null">AND store_id IN
+                <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="key!=null and key!=''">
+                AND (store_name LIKE #{pattern} OR store_code LIKE #{pattern})
+            </if>
+            AND is_enable=1
+        </trim>
+    </select>
+    <select id="exists" resultType="integer">
+        SELECT 1
+        FROM oms_store
+        WHERE store_code = #{_parameter} LIMIT 1
+    </select>
+</mapper>

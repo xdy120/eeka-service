@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderInvoiceMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.SalesOrderInvoice">
+    <id column="sales_order_invoice_id" property="salesOrderInvoiceId"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="gmf_address" property="gmfAddress"/>
+    <result column="gmf_bank_name" property="gmfBankName"/>
+    <result column="gmf_bank_no" property="gmfBankNo"/>
+    <result column="gmf_mobile" property="gmfMobile"/>
+    <result column="invoice_content" property="invoiceContent"/>
+    <result column="invoice_title" property="invoiceTitle"/>
+    <result column="invoice_type" property="invoiceType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+    <result column="taxpayer_id" property="taxpayerId"/>
+  </resultMap>
+  <sql id="columns">actual_amount,created_time,gmf_address,gmf_bank_name,gmf_bank_no,gmf_mobile,invoice_content,invoice_title,invoice_type,modified_time,sales_order_id,sales_order_invoice_id,taxpayer_id</sql>
+  <sql id="pkWhere">
+    WHERE sales_order_invoice_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="gmfAddress!=null and gmfAddress!=''">
+        AND gmf_address=#{gmfAddress}
+      </if>
+      <if test="gmfBankName!=null and gmfBankName!=''">
+        AND gmf_bank_name=#{gmfBankName}
+      </if>
+      <if test="gmfBankNo!=null and gmfBankNo!=''">
+        AND gmf_bank_no=#{gmfBankNo}
+      </if>
+      <if test="gmfMobile!=null and gmfMobile!=''">
+        AND gmf_mobile=#{gmfMobile}
+      </if>
+      <if test="invoiceContent!=null and invoiceContent!=''">
+        AND invoice_content=#{invoiceContent}
+      </if>
+      <if test="invoiceTitle!=null and invoiceTitle!=''">
+        AND invoice_title=#{invoiceTitle}
+      </if>
+      <if test="invoiceType!=null">AND invoice_type=#{invoiceType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="salesOrderInvoiceId!=null">AND sales_order_invoice_id=#{salesOrderInvoiceId}</if>
+      <if test="taxpayerId!=null and taxpayerId!=''">
+        AND taxpayer_id=#{taxpayerId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="gmfAddress!=null and gmfAddress!=''">
+        AND gmf_address=#{gmfAddress}
+      </if>
+      <if test="gmfBankName!=null and gmfBankName!=''">
+        AND gmf_bank_name=#{gmfBankName}
+      </if>
+      <if test="gmfBankNo!=null and gmfBankNo!=''">
+        AND gmf_bank_no=#{gmfBankNo}
+      </if>
+      <if test="gmfMobile!=null and gmfMobile!=''">
+        AND gmf_mobile=#{gmfMobile}
+      </if>
+      <if test="invoiceContent!=null and invoiceContent!=''">
+        AND invoice_content=#{invoiceContent}
+      </if>
+      <if test="invoiceTitle!=null and invoiceTitle!=''">
+        AND invoice_title=#{invoiceTitle}
+      </if>
+      <if test="invoiceType!=null">AND invoice_type=#{invoiceType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="salesOrderInvoiceId!=null">AND sales_order_invoice_id=#{salesOrderInvoiceId}</if>
+      <if test="taxpayerId!=null and taxpayerId!=''">
+        AND taxpayer_id=#{taxpayerId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sales_order_invoice_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.SalesOrderInvoice">
+    INSERT INTO oms_sales_order_invoice(actual_amount,created_time,gmf_address,gmf_bank_name,gmf_bank_no,gmf_mobile,invoice_content,invoice_title,invoice_type,modified_time,sales_order_id,sales_order_invoice_id,taxpayer_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{actualAmount},
+      now(),
+      #{gmfAddress},
+      #{gmfBankName},
+      #{gmfBankNo},
+      #{gmfMobile},
+      #{invoiceContent},
+      #{invoiceTitle},
+      #{invoiceType},
+      now(),
+      #{salesOrderId},
+      #{salesOrderInvoiceId},
+      #{taxpayerId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.SalesOrderInvoice">
+    UPDATE oms_sales_order_invoice
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="actualAmount!=null">actual_amount=#{actualAmount},</if>
+      <if test="gmfAddress!=null">gmf_address=#{gmfAddress},</if>
+      <if test="gmfBankName!=null">gmf_bank_name=#{gmfBankName},</if>
+      <if test="gmfBankNo!=null">gmf_bank_no=#{gmfBankNo},</if>
+      <if test="gmfMobile!=null">gmf_mobile=#{gmfMobile},</if>
+      <if test="invoiceContent!=null">invoice_content=#{invoiceContent},</if>
+      <if test="invoiceTitle!=null">invoice_title=#{invoiceTitle},</if>
+      <if test="invoiceType!=null">invoice_type=#{invoiceType},</if>
+      modified_time=now(),
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+      <if test="taxpayerId!=null">taxpayer_id=#{taxpayerId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sales_order_invoice_id=#{salesOrderInvoiceId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.SalesOrderInvoice">
+    UPDATE oms_sales_order_invoice
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.actualAmount!=null">
+        actual_amount=#{record.actualAmount},
+      </if>
+      <if test="record.gmfAddress!=null">
+        gmf_address=#{record.gmfAddress},
+      </if>
+      <if test="record.gmfBankName!=null">
+        gmf_bank_name=#{record.gmfBankName},
+      </if>
+      <if test="record.gmfBankNo!=null">
+        gmf_bank_no=#{record.gmfBankNo},
+      </if>
+      <if test="record.gmfMobile!=null">
+        gmf_mobile=#{record.gmfMobile},
+      </if>
+      <if test="record.invoiceContent!=null">
+        invoice_content=#{record.invoiceContent},
+      </if>
+      <if test="record.invoiceTitle!=null">
+        invoice_title=#{record.invoiceTitle},
+      </if>
+      <if test="record.invoiceType!=null">
+        invoice_type=#{record.invoiceType},
+      </if>
+      modified_time=now(),
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+      <if test="record.taxpayerId!=null">
+        taxpayer_id=#{record.taxpayerId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.actualAmount!=null">
+      AND actual_amount=#{example.actualAmount}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.gmfAddress!=null">
+      AND gmf_address=#{example.gmfAddress}
+      </if>
+      <if test="example.gmfBankName!=null">
+      AND gmf_bank_name=#{example.gmfBankName}
+      </if>
+      <if test="example.gmfBankNo!=null">
+      AND gmf_bank_no=#{example.gmfBankNo}
+      </if>
+      <if test="example.gmfMobile!=null">
+      AND gmf_mobile=#{example.gmfMobile}
+      </if>
+      <if test="example.invoiceContent!=null">
+      AND invoice_content=#{example.invoiceContent}
+      </if>
+      <if test="example.invoiceTitle!=null">
+      AND invoice_title=#{example.invoiceTitle}
+      </if>
+      <if test="example.invoiceType!=null">
+      AND invoice_type=#{example.invoiceType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.salesOrderInvoiceId!=null">
+      AND sales_order_invoice_id=#{example.salesOrderInvoiceId}
+      </if>
+      <if test="example.taxpayerId!=null">
+      AND taxpayer_id=#{example.taxpayerId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_sales_order_invoice
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_sales_order_invoice
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_invoice
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_invoice
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_invoice
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_invoice
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_invoice
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_invoice
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_invoice
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

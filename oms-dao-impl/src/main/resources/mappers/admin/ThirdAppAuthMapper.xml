@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.ThirdAppAuthMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.admin.ThirdAppAuth">
+    <id column="third_app_auth_id" property="thirdAppAuthId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="expire_time" property="expireTime"/>
+    <result column="is_enable" property="enable"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="organization_id" property="organizationId"/>
+    <result column="third_app_id" property="thirdAppId"/>
+    <result column="token" property="token"/>
+  </resultMap>
+  <sql id="columns">created_time,expire_time,is_enable,modified_time,organization_id,third_app_auth_id,third_app_id,token</sql>
+  <sql id="pkWhere">
+    WHERE third_app_auth_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="expireTime!=null">AND expire_time=#{expireTime}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="organizationId!=null">AND organization_id=#{organizationId}</if>
+      <if test="thirdAppAuthId!=null">AND third_app_auth_id=#{thirdAppAuthId}</if>
+      <if test="thirdAppId!=null">AND third_app_id=#{thirdAppId}</if>
+      <if test="token!=null and token!=''">
+        AND token=#{token}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="expireTimeBegin!=null">
+        <![CDATA[AND expire_time>=#{expireTimeBegin}]]>
+      </if>
+      <if test="expireTimeEnd!=null">
+        <![CDATA[AND expire_time<#{expireTimeEnd}]]>
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="organizationId!=null">AND organization_id=#{organizationId}</if>
+      <if test="thirdAppAuthId!=null">AND third_app_auth_id=#{thirdAppAuthId}</if>
+      <if test="thirdAppId!=null">AND third_app_id=#{thirdAppId}</if>
+      <if test="token!=null and token!=''">
+        AND token=#{token}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY third_app_auth_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.admin.ThirdAppAuth">
+    INSERT INTO admin_third_app_auth(created_time,expire_time,is_enable,modified_time,organization_id,third_app_auth_id,third_app_id,token)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{expireTime},
+      #{enable},
+      now(),
+      #{organizationId},
+      #{thirdAppAuthId},
+      #{thirdAppId},
+      #{token},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.admin.ThirdAppAuth">
+    UPDATE admin_third_app_auth
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="expireTime!=null">expire_time=#{expireTime},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      modified_time=now(),
+      <if test="organizationId!=null">organization_id=#{organizationId},</if>
+      <if test="thirdAppId!=null">third_app_id=#{thirdAppId},</if>
+      <if test="token!=null">token=#{token},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND third_app_auth_id=#{thirdAppAuthId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.admin.ThirdAppAuth">
+    UPDATE admin_third_app_auth
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.expireTime!=null">
+        expire_time=#{record.expireTime},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      modified_time=now(),
+      <if test="record.organizationId!=null">
+        organization_id=#{record.organizationId},
+      </if>
+      <if test="record.thirdAppId!=null">
+        third_app_id=#{record.thirdAppId},
+      </if>
+      <if test="record.token!=null">
+        token=#{record.token},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.expireTime!=null">
+      AND expire_time=#{example.expireTime}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.organizationId!=null">
+      AND organization_id=#{example.organizationId}
+      </if>
+      <if test="example.thirdAppAuthId!=null">
+      AND third_app_auth_id=#{example.thirdAppAuthId}
+      </if>
+      <if test="example.thirdAppId!=null">
+      AND third_app_id=#{example.thirdAppId}
+      </if>
+      <if test="example.token!=null">
+      AND token=#{example.token}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM admin_third_app_auth
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM admin_third_app_auth
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_third_app_auth
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_third_app_auth
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_third_app_auth
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_third_app_auth
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_third_app_auth
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_third_app_auth
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_third_app_auth
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.RegionMapper">
+  <sql id="onlyColumns">level,region_id,parent_id,region_name</sql>
+
+  <select id="listColumns" resultMap="resultMap">
+    SELECT
+    <include refid="onlyColumns"/>
+    FROM admin_region
+    <include refid="where"/>
+    ORDER BY region_id ASC
+  </select>
+  <select id="getTranslateRegionInfo" resultMap="resultMap">
+    select
+    <include refid="onlyColumns"/>
+    from admin_region
+    WHERE parent_id=#{parentId} AND level=#{level} AND (region_name=#{regionName} OR region_short_name=#{regionName})
+  </select>
+</mapper>

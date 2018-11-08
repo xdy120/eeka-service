@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.mappers.JdpJxTradeMapper">
+  <resultMap id="resultMap"
+    type="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpJxTrade">
+    <id column="dealer_order_id" property="dealerOrderId"/>
+    <result column="order_status" property="orderStatus"/>
+    <result column="supplier_nick" property="supplierNick"/>
+    <result column="applier_nick" property="applierNick"/>
+    <result column="applied_time" property="appliedTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="jdp_hashcode" property="jdpHashcode"/>
+    <result column="jdp_response" property="jdpResponse"/>
+    <result column="jdp_modified" property="jdpModified"/>
+    <result column="jdp_created" property="jdpCreated"/>
+  </resultMap>
+  <sql
+    id="columns">order_status,supplier_nick,applier_nick,applied_time,modified_time,jdp_hashcode,jdp_response,jdp_modified,jdp_created</sql>
+  <sql id="pkWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND dealer_order_id=#{dealerOrderId}
+    </trim>
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="dealerOrderId!=null">AND dealer_order_id=#{dealerOrderId}</if>
+      <if test="orderStatus!=null">AND order_status=#{orderStatus}</if>
+      <if test="supplierNick!=null">AND supplier_nick=#{supplierNick}</if>
+      <if test="applierNick!=null">AND applier_nick=#{applierNick}</if>
+      <if test="appliedTime!=null">AND applied_time=#{appliedTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpModified!=null">AND jdp_modified=#{jdpModified}</if>
+      <if test="jdpCreated!=null">AND jdp_created=#{jdpCreated}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="dealerOrderId!=null">AND dealer_order_id=#{dealerOrderId}</if>
+      <if test="orderStatus!=null">AND order_status=#{orderStatus}</if>
+      <if test="supplierNick!=null">AND supplier_nick=#{supplierNick}</if>
+      <if test="applierNick!=null">AND applier_nick=#{applierNick}</if>
+      <if test="appliedTimeBegin!=null"><![CDATA[AND applied_time>=#{appliedTimeBegin}]]></if>
+      <if test="appliedTimeEnd!=null"><![CDATA[AND applied_time<#{appliedTimeEnd}]]></if>
+      <if test="modifiedTimeBegin!=null"><![CDATA[AND modified_time>=#{modifiedTimeBegin}]]></if>
+      <if test="modifiedTimeEnd!=null"><![CDATA[AND modified_time<#{modifiedTimeEnd}]]></if>
+      <if test="jdpHashcode!=null">AND jdp_hashcode=#{jdpHashcode}</if>
+      <if test="jdpResponse!=null">AND jdp_response=#{jdpResponse}</if>
+      <if test="jdpModifiedBegin!=null"><![CDATA[AND jdp_modified>=#{jdpModifiedBegin}]]></if>
+      <if test="jdpModifiedEnd!=null"><![CDATA[AND jdp_modified<#{jdpModifiedEnd}]]></if>
+      <if test="jdpCreatedBegin!=null"><![CDATA[AND jdp_created>=#{jdpCreatedBegin}]]></if>
+      <if test="jdpCreatedEnd!=null"><![CDATA[AND jdp_created<#{jdpCreatedEnd}]]></if>
+    </trim>
+  </sql>
+  <insert id="insert"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpJxTrade">
+    INSERT INTO jdp_jx_trade(order_status,supplier_nick,applier_nick,applied_time,modified_time,jdp_hashcode,jdp_response,jdp_modified,jdp_created)
+    VALUES(#{dealer_order_id},#{order_status},#{supplier_nick},#{applier_nick},#{applied_time},#{modified_time},#{jdp_hashcode},#{jdp_response},#{jdp_modified},#{jdp_created})
+  </insert>
+  <update id="update"
+    parameterType="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.domain.JdpJxTrade">
+    UPDATE jdp_jx_trade
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="orderStatus!=null">order_status=#{orderStatus},</if>
+      <if test="supplierNick!=null">supplier_nick=#{supplierNick},</if>
+      <if test="applierNick!=null">applier_nick=#{applierNick},</if>
+      <if test="appliedTime!=null">applied_time=#{appliedTime},</if>
+      <if test="modifiedTime!=null">modified_time=#{modifiedTime},</if>
+      <if test="jdpHashcode!=null">jdp_hashcode=#{jdpHashcode},</if>
+      <if test="jdpResponse!=null">jdp_response=#{jdpResponse},</if>
+      <if test="jdpModified!=null">jdp_modified=#{jdpModified},</if>
+      <if test="jdpCreated!=null">jdp_created=#{jdpCreated}</if>
+    </trim>
+    <include refid="pkWhere"/>
+  </update>
+  <delete id="delete">
+    DELETE FROM jdp_jx_trade
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteExample">
+    DELETE FROM jdp_jx_trade
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_jx_trade
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_jx_trade
+    <include refid="where"/>
+    ORDER BY dealer_order_id
+  </select>
+  <select id="listExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM jdp_jx_trade
+    <include refid="equalWhere"/>
+    ORDER BY dealer_order_id
+  </select>
+  <select id="listField" parameterType="map" resultMap="resultMap">
+    SELECT ${PARAM_LIST_FIELD_KEY} FROM jdp_jx_trade
+    <include refid="where"/>
+    ORDER BY dealer_order_id
+  </select>
+</mapper>

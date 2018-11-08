@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.finance.AlipayRecordMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.finance.AlipayRecord">
+    <id column="alipay_record_id" property="alipayRecordId"/>
+    <result column="alipay_created_time" property="alipayCreatedTime"/>
+    <result column="alipay_order_no" property="alipayOrderNo"/>
+    <result column="balance" property="balance"/>
+    <result column="business_type_desc" property="businessTypeDesc"/>
+    <result column="business_type" property="businessType"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="in_amount" property="inAmount"/>
+    <result column="memo" property="memo"/>
+    <result column="merchant_order_no" property="merchantOrderNo"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="opt_user_id" property="optUserId"/>
+    <result column="out_amount" property="outAmount"/>
+    <result column="self_user_id" property="selfUserId"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="trade_id" property="tradeId"/>
+    <result column="type_desc" property="typeDesc"/>
+    <result column="type" property="type"/>
+  </resultMap>
+  <sql id="columns">alipay_created_time,alipay_order_no,alipay_record_id,balance,business_type_desc,business_type,created_time,in_amount,memo,merchant_order_no,modified_time,opt_user_id,out_amount,self_user_id,store_id,store_name,trade_id,type_desc,type</sql>
+  <sql id="pkWhere">
+    WHERE alipay_record_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="alipayCreatedTime!=null">AND alipay_created_time=#{alipayCreatedTime}</if>
+      <if test="alipayOrderNo!=null and alipayOrderNo!=''">
+        AND alipay_order_no=#{alipayOrderNo}
+      </if>
+      <if test="alipayRecordId!=null">AND alipay_record_id=#{alipayRecordId}</if>
+      <if test="balance!=null">AND balance=#{balance}</if>
+      <if test="businessTypeDesc!=null and businessTypeDesc!=''">
+        AND business_type_desc=#{businessTypeDesc}
+      </if>
+      <if test="businessType!=null and businessType!=''">
+        AND business_type=#{businessType}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="inAmount!=null">AND in_amount=#{inAmount}</if>
+      <if test="memo!=null and memo!=''">
+        AND memo=#{memo}
+      </if>
+      <if test="merchantOrderNo!=null and merchantOrderNo!=''">
+        AND merchant_order_no=#{merchantOrderNo}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="optUserId!=null and optUserId!=''">
+        AND opt_user_id=#{optUserId}
+      </if>
+      <if test="outAmount!=null">AND out_amount=#{outAmount}</if>
+      <if test="selfUserId!=null and selfUserId!=''">
+        AND self_user_id=#{selfUserId}
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="typeDesc!=null and typeDesc!=''">
+        AND type_desc=#{typeDesc}
+      </if>
+      <if test="type!=null">AND type=#{type}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="alipayCreatedTimeBegin!=null">
+        <![CDATA[AND alipay_created_time>=#{alipayCreatedTimeBegin}]]>
+      </if>
+      <if test="alipayCreatedTimeEnd!=null">
+        <![CDATA[AND alipay_created_time<#{alipayCreatedTimeEnd}]]>
+      </if>
+      <if test="alipayOrderNo!=null and alipayOrderNo!=''">
+        AND alipay_order_no=#{alipayOrderNo}
+      </if>
+      <if test="alipayRecordId!=null">AND alipay_record_id=#{alipayRecordId}</if>
+      <if test="balance!=null">AND balance=#{balance}</if>
+      <if test="businessTypeDesc!=null and businessTypeDesc!=''">
+        AND business_type_desc=#{businessTypeDesc}
+      </if>
+      <if test="businessType!=null and businessType!=''">
+        AND business_type=#{businessType}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="inAmount!=null">AND in_amount=#{inAmount}</if>
+      <if test="memo!=null and memo!=''">
+        AND memo=#{memo}
+      </if>
+      <if test="merchantOrderNo!=null and merchantOrderNo!=''">
+        AND merchant_order_no=#{merchantOrderNo}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="optUserId!=null and optUserId!=''">
+        AND opt_user_id=#{optUserId}
+      </if>
+      <if test="outAmount!=null">AND out_amount=#{outAmount}</if>
+      <if test="selfUserId!=null and selfUserId!=''">
+        AND self_user_id=#{selfUserId}
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="typeDesc!=null and typeDesc!=''">
+        AND type_desc=#{typeDesc}
+      </if>
+      <if test="type!=null">AND type=#{type}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY alipay_record_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.finance.AlipayRecord">
+    INSERT INTO oms_alipay_record(alipay_created_time,alipay_order_no,alipay_record_id,balance,business_type_desc,business_type,created_time,in_amount,memo,merchant_order_no,modified_time,opt_user_id,out_amount,self_user_id,store_id,store_name,trade_id,type_desc,type)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{alipayCreatedTime},
+      #{alipayOrderNo},
+      #{alipayRecordId},
+      #{balance},
+      #{businessTypeDesc},
+      #{businessType},
+      now(),
+      #{inAmount},
+      #{memo},
+      #{merchantOrderNo},
+      now(),
+      #{optUserId},
+      #{outAmount},
+      #{selfUserId},
+      #{storeId},
+      #{storeName},
+      #{tradeId},
+      #{typeDesc},
+      #{type},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.finance.AlipayRecord">
+    UPDATE oms_alipay_record
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="alipayCreatedTime!=null">alipay_created_time=#{alipayCreatedTime},</if>
+      <if test="alipayOrderNo!=null">alipay_order_no=#{alipayOrderNo},</if>
+      <if test="balance!=null">balance=#{balance},</if>
+      <if test="businessTypeDesc!=null">business_type_desc=#{businessTypeDesc},</if>
+      <if test="businessType!=null">business_type=#{businessType},</if>
+      <if test="inAmount!=null">in_amount=#{inAmount},</if>
+      <if test="memo!=null">memo=#{memo},</if>
+      <if test="merchantOrderNo!=null">merchant_order_no=#{merchantOrderNo},</if>
+      modified_time=now(),
+      <if test="optUserId!=null">opt_user_id=#{optUserId},</if>
+      <if test="outAmount!=null">out_amount=#{outAmount},</if>
+      <if test="selfUserId!=null">self_user_id=#{selfUserId},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+      <if test="typeDesc!=null">type_desc=#{typeDesc},</if>
+      <if test="type!=null">type=#{type},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND alipay_record_id=#{alipayRecordId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.finance.AlipayRecord">
+    UPDATE oms_alipay_record
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.alipayCreatedTime!=null">
+        alipay_created_time=#{record.alipayCreatedTime},
+      </if>
+      <if test="record.alipayOrderNo!=null">
+        alipay_order_no=#{record.alipayOrderNo},
+      </if>
+      <if test="record.balance!=null">
+        balance=#{record.balance},
+      </if>
+      <if test="record.businessTypeDesc!=null">
+        business_type_desc=#{record.businessTypeDesc},
+      </if>
+      <if test="record.businessType!=null">
+        business_type=#{record.businessType},
+      </if>
+      <if test="record.inAmount!=null">
+        in_amount=#{record.inAmount},
+      </if>
+      <if test="record.memo!=null">
+        memo=#{record.memo},
+      </if>
+      <if test="record.merchantOrderNo!=null">
+        merchant_order_no=#{record.merchantOrderNo},
+      </if>
+      modified_time=now(),
+      <if test="record.optUserId!=null">
+        opt_user_id=#{record.optUserId},
+      </if>
+      <if test="record.outAmount!=null">
+        out_amount=#{record.outAmount},
+      </if>
+      <if test="record.selfUserId!=null">
+        self_user_id=#{record.selfUserId},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+      <if test="record.typeDesc!=null">
+        type_desc=#{record.typeDesc},
+      </if>
+      <if test="record.type!=null">
+        type=#{record.type},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.alipayCreatedTime!=null">
+      AND alipay_created_time=#{example.alipayCreatedTime}
+      </if>
+      <if test="example.alipayOrderNo!=null">
+      AND alipay_order_no=#{example.alipayOrderNo}
+      </if>
+      <if test="example.alipayRecordId!=null">
+      AND alipay_record_id=#{example.alipayRecordId}
+      </if>
+      <if test="example.balance!=null">
+      AND balance=#{example.balance}
+      </if>
+      <if test="example.businessTypeDesc!=null">
+      AND business_type_desc=#{example.businessTypeDesc}
+      </if>
+      <if test="example.businessType!=null">
+      AND business_type=#{example.businessType}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.inAmount!=null">
+      AND in_amount=#{example.inAmount}
+      </if>
+      <if test="example.memo!=null">
+      AND memo=#{example.memo}
+      </if>
+      <if test="example.merchantOrderNo!=null">
+      AND merchant_order_no=#{example.merchantOrderNo}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.optUserId!=null">
+      AND opt_user_id=#{example.optUserId}
+      </if>
+      <if test="example.outAmount!=null">
+      AND out_amount=#{example.outAmount}
+      </if>
+      <if test="example.selfUserId!=null">
+      AND self_user_id=#{example.selfUserId}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+      <if test="example.typeDesc!=null">
+      AND type_desc=#{example.typeDesc}
+      </if>
+      <if test="example.type!=null">
+      AND type=#{example.type}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_alipay_record
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_alipay_record
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_alipay_record
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_alipay_record
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_alipay_record
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_alipay_record
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_alipay_record
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_alipay_record
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_alipay_record
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

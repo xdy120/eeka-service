@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.product.ProductSkuMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.product.ProductSku">
+    <id column="sku_id" property="skuId"/>
+    <result column="barcode" property="barcode"/>
+    <result column="color" property="color"/>
+    <result column="cost_price" property="costPrice"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="distribution_price" property="distributionPrice"/>
+    <result column="is_combination" property="combination"/>
+    <result column="is_enable" property="enable"/>
+    <result column="is_gift_box" property="giftBox"/>
+    <result column="is_lock_stock" property="lockStock"/>
+    <result column="is_prepackage" property="prepackage"/>
+    <result column="logistics_insurance" property="logisticsInsurance"/>
+    <result column="marked_price" property="markedPrice"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="purchase_price" property="purchasePrice"/>
+    <result column="quantity_of_box" property="quantityOfBox"/>
+    <result column="selling_price" property="sellingPrice"/>
+    <result column="size" property="size"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="vip_price" property="vipPrice"/>
+    <result column="volume" property="volume"/>
+    <result column="weight" property="weight"/>
+  </resultMap>
+  <sql id="columns">barcode,color,cost_price,created_time,distribution_price,is_combination,is_enable,is_gift_box,is_lock_stock,is_prepackage,logistics_insurance,marked_price,modified_time,product_code,product_id,product_name,purchase_price,quantity_of_box,selling_price,size,sku_code,sku_id,sku_name,vip_price,volume,weight</sql>
+  <sql id="pkWhere">
+    WHERE sku_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="barcode!=null and barcode!=''">
+        AND barcode=#{barcode}
+      </if>
+      <if test="color!=null and color!=''">
+        AND color=#{color}
+      </if>
+      <if test="costPrice!=null">AND cost_price=#{costPrice}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="distributionPrice!=null">AND distribution_price=#{distributionPrice}</if>
+      <if test="combination!=null">AND is_combination=#{combination}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="giftBox!=null">AND is_gift_box=#{giftBox}</if>
+      <if test="lockStock!=null">AND is_lock_stock=#{lockStock}</if>
+      <if test="prepackage!=null">AND is_prepackage=#{prepackage}</if>
+      <if test="logisticsInsurance!=null">AND logistics_insurance=#{logisticsInsurance}</if>
+      <if test="markedPrice!=null">AND marked_price=#{markedPrice}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="purchasePrice!=null">AND purchase_price=#{purchasePrice}</if>
+      <if test="quantityOfBox!=null">AND quantity_of_box=#{quantityOfBox}</if>
+      <if test="sellingPrice!=null">AND selling_price=#{sellingPrice}</if>
+      <if test="size!=null and size!=''">
+        AND size=#{size}
+      </if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="vipPrice!=null">AND vip_price=#{vipPrice}</if>
+      <if test="volume!=null">AND volume=#{volume}</if>
+      <if test="weight!=null">AND weight=#{weight}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="barcode!=null and barcode!=''">
+        AND barcode=#{barcode}
+      </if>
+      <if test="barcodes!=null and barcodes.size>0">
+        AND barcode IN
+        <foreach item="item" index="index" collection="barcodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="color!=null and color!=''">
+        AND color=#{color}
+      </if>
+      <if test="costPrice!=null">AND cost_price=#{costPrice}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="distributionPrice!=null">AND distribution_price=#{distributionPrice}</if>
+      <if test="combination!=null">AND is_combination=#{combination}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="giftBox!=null">AND is_gift_box=#{giftBox}</if>
+      <if test="lockStock!=null">AND is_lock_stock=#{lockStock}</if>
+      <if test="prepackage!=null">AND is_prepackage=#{prepackage}</if>
+      <if test="logisticsInsurance!=null">AND logistics_insurance=#{logisticsInsurance}</if>
+      <if test="markedPrice!=null">AND marked_price=#{markedPrice}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productIds!=null and productIds.size>0">
+        AND product_id IN
+        <foreach item="item" index="index" collection="productIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productName!=null and productName!=''">
+        <bind name="productName_like" value="_parameter.productName+'%'"/>
+        AND product_name like #{productName_like}
+      </if>
+      <if test="purchasePrice!=null">AND purchase_price=#{purchasePrice}</if>
+      <if test="quantityOfBox!=null">AND quantity_of_box=#{quantityOfBox}</if>
+      <if test="sellingPrice!=null">AND selling_price=#{sellingPrice}</if>
+      <if test="size!=null and size!=''">
+        AND size=#{size}
+      </if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuIds!=null and skuIds.size>0">
+        AND sku_id IN
+        <foreach item="item" index="index" collection="skuIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuName!=null and skuName!=''">
+        <bind name="skuName_like" value="_parameter.skuName+'%'"/>
+        AND sku_name like #{skuName_like}
+      </if>
+      <if test="vipPrice!=null">AND vip_price=#{vipPrice}</if>
+      <if test="volume!=null">AND volume=#{volume}</if>
+      <if test="weight!=null">AND weight=#{weight}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sku_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.product.ProductSku">
+    INSERT INTO oms_product_sku(barcode,color,cost_price,created_time,distribution_price,is_combination,is_enable,is_gift_box,is_lock_stock,is_prepackage,logistics_insurance,marked_price,modified_time,product_code,product_id,product_name,purchase_price,quantity_of_box,selling_price,size,sku_code,sku_id,sku_name,vip_price,volume,weight)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{barcode},
+      #{color},
+      #{costPrice},
+      now(),
+      #{distributionPrice},
+      #{combination},
+      #{enable},
+      #{giftBox},
+      #{lockStock},
+      #{prepackage},
+      #{logisticsInsurance},
+      #{markedPrice},
+      now(),
+      #{productCode},
+      #{productId},
+      #{productName},
+      #{purchasePrice},
+      #{quantityOfBox},
+      #{sellingPrice},
+      #{size},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+      #{vipPrice},
+      #{volume},
+      #{weight},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.product.ProductSku">
+    UPDATE oms_product_sku
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="barcode!=null">barcode=#{barcode},</if>
+      <if test="color!=null">color=#{color},</if>
+      <if test="costPrice!=null">cost_price=#{costPrice},</if>
+      <if test="distributionPrice!=null">distribution_price=#{distributionPrice},</if>
+      <if test="combination!=null">is_combination=#{combination},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="giftBox!=null">is_gift_box=#{giftBox},</if>
+      <if test="lockStock!=null">is_lock_stock=#{lockStock},</if>
+      <if test="prepackage!=null">is_prepackage=#{prepackage},</if>
+      <if test="logisticsInsurance!=null">logistics_insurance=#{logisticsInsurance},</if>
+      <if test="markedPrice!=null">marked_price=#{markedPrice},</if>
+      modified_time=now(),
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="purchasePrice!=null">purchase_price=#{purchasePrice},</if>
+      <if test="quantityOfBox!=null">quantity_of_box=#{quantityOfBox},</if>
+      <if test="sellingPrice!=null">selling_price=#{sellingPrice},</if>
+      <if test="size!=null">size=#{size},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="vipPrice!=null">vip_price=#{vipPrice},</if>
+      <if test="volume!=null">volume=#{volume},</if>
+      <if test="weight!=null">weight=#{weight},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sku_id=#{skuId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.product.ProductSku">
+    UPDATE oms_product_sku
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.barcode!=null">
+        barcode=#{record.barcode},
+      </if>
+      <if test="record.color!=null">
+        color=#{record.color},
+      </if>
+      <if test="record.costPrice!=null">
+        cost_price=#{record.costPrice},
+      </if>
+      <if test="record.distributionPrice!=null">
+        distribution_price=#{record.distributionPrice},
+      </if>
+      <if test="record.combination!=null">
+        is_combination=#{record.combination},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.giftBox!=null">
+        is_gift_box=#{record.giftBox},
+      </if>
+      <if test="record.lockStock!=null">
+        is_lock_stock=#{record.lockStock},
+      </if>
+      <if test="record.prepackage!=null">
+        is_prepackage=#{record.prepackage},
+      </if>
+      <if test="record.logisticsInsurance!=null">
+        logistics_insurance=#{record.logisticsInsurance},
+      </if>
+      <if test="record.markedPrice!=null">
+        marked_price=#{record.markedPrice},
+      </if>
+      modified_time=now(),
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.purchasePrice!=null">
+        purchase_price=#{record.purchasePrice},
+      </if>
+      <if test="record.quantityOfBox!=null">
+        quantity_of_box=#{record.quantityOfBox},
+      </if>
+      <if test="record.sellingPrice!=null">
+        selling_price=#{record.sellingPrice},
+      </if>
+      <if test="record.size!=null">
+        size=#{record.size},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+      <if test="record.vipPrice!=null">
+        vip_price=#{record.vipPrice},
+      </if>
+      <if test="record.volume!=null">
+        volume=#{record.volume},
+      </if>
+      <if test="record.weight!=null">
+        weight=#{record.weight},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.barcode!=null">
+      AND barcode=#{example.barcode}
+      </if>
+      <if test="example.barcodes!=null">
+      AND barcode=#{example.barcodes}
+      </if>
+      <if test="example.color!=null">
+      AND color=#{example.color}
+      </if>
+      <if test="example.costPrice!=null">
+      AND cost_price=#{example.costPrice}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.distributionPrice!=null">
+      AND distribution_price=#{example.distributionPrice}
+      </if>
+      <if test="example.combination!=null">
+      AND is_combination=#{example.combination}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.giftBox!=null">
+      AND is_gift_box=#{example.giftBox}
+      </if>
+      <if test="example.lockStock!=null">
+      AND is_lock_stock=#{example.lockStock}
+      </if>
+      <if test="example.prepackage!=null">
+      AND is_prepackage=#{example.prepackage}
+      </if>
+      <if test="example.logisticsInsurance!=null">
+      AND logistics_insurance=#{example.logisticsInsurance}
+      </if>
+      <if test="example.markedPrice!=null">
+      AND marked_price=#{example.markedPrice}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productCodes!=null">
+      AND product_code=#{example.productCodes}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productIds!=null">
+      AND product_id=#{example.productIds}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.purchasePrice!=null">
+      AND purchase_price=#{example.purchasePrice}
+      </if>
+      <if test="example.quantityOfBox!=null">
+      AND quantity_of_box=#{example.quantityOfBox}
+      </if>
+      <if test="example.sellingPrice!=null">
+      AND selling_price=#{example.sellingPrice}
+      </if>
+      <if test="example.size!=null">
+      AND size=#{example.size}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuCodes!=null">
+      AND sku_code=#{example.skuCodes}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuIds!=null">
+      AND sku_id=#{example.skuIds}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+      <if test="example.vipPrice!=null">
+      AND vip_price=#{example.vipPrice}
+      </if>
+      <if test="example.volume!=null">
+      AND volume=#{example.volume}
+      </if>
+      <if test="example.weight!=null">
+      AND weight=#{example.weight}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_product_sku
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_product_sku
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_sku
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_sku
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_sku
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_sku
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_sku
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_product_sku
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_product_sku
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockVirtualAllotMapper">
+  <update id="updateQuantity" parameterType="com.greatonce.oms.domain.stock.StockVirtualAllot">
+    UPDATE oms_stock_virtual_allot
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="inVirtualWarehouseId!=null">in_virtual_warehouse_id=#{inVirtualWarehouseId},</if>
+      <if test="inVirtualWarehouseName!=null">in_virtual_warehouse_name=#{inVirtualWarehouseName},
+      </if>
+      modified_time=now(),
+      <if test="outVirtualWarehouseId!=null">out_virtual_warehouse_id=#{outVirtualWarehouseId},</if>
+      <if test="outVirtualWarehouseName!=null">
+        out_virtual_warehouse_name=#{outVirtualWarehouseName},
+      </if>
+      <if test="planQuantity!=null">plan_quantity=#{planQuantity},</if>
+      <if test="quantity!=null">quantity = quantity + #{quantity},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="stockVirtualAllotCode!=null">stock_virtual_allot_code=#{stockVirtualAllotCode},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_virtual_allot_id=#{stockVirtualAllotId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <select id="listPageCustom" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_virtual_allot
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="inVirtualWarehouseId!=null">AND in_virtual_warehouse_id=#{inVirtualWarehouseId}</if>
+      <if test="inVirtualWarehouseIds!=null and inVirtualWarehouseIds.size>0">
+        AND in_virtual_warehouse_id IN
+        <foreach item="item" index="index" collection="inVirtualWarehouseIds" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outVirtualWarehouseId!=null">AND out_virtual_warehouse_id=#{outVirtualWarehouseId}
+      </if>
+      <if test="outVirtualWarehouseIds!=null and outVirtualWarehouseIds.size>0">
+        AND out_virtual_warehouse_id IN
+        <foreach item="item" index="index" collection="outVirtualWarehouseIds" open="("
+          separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockVirtualAllotCode!=null and stockVirtualAllotCode!=''">
+        AND stock_virtual_allot_code=#{stockVirtualAllotCode}
+      </if>
+      <if test="stockVirtualAllotCodes!=null and stockVirtualAllotCodes.size>0">
+        AND stock_virtual_allot_code IN
+        <foreach item="item" index="index" collection="stockVirtualAllotCodes" open="("
+          separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productCodes!=null and productCodes.size()>0">
+        AND EXISTS(SELECT 1 FROM oms_stock_virtual_allot_detail WHERE
+        oms_stock_virtual_allot.stock_virtual_allot_id=oms_stock_virtual_allot_detail.stock_virtual_allot_id
+        AND
+        oms_stock_virtual_allot_detail.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+        )
+      </if>
+      <if test="skuCodes!=null and skuCodes.size()>0">
+        AND EXISTS(SELECT 1 FROM oms_stock_virtual_allot_detail WHERE
+        oms_stock_virtual_allot.stock_virtual_allot_id=oms_stock_virtual_allot_detail.stock_virtual_allot_id
+        AND
+        oms_stock_virtual_allot_detail.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+        )
+      </if>
+      <if test="stockVirtualAllotId!=null">AND stock_virtual_allot_id=#{stockVirtualAllotId}</if>
+    </trim>
+    order by oms_stock_virtual_allot.created_time desc
+  </select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.product.ProductCombinationMapper">
+  <select id="exists" resultType="integer">
+    SELECT 1
+    FROM oms_product_combination
+    WHERE sku_code = #{_parameter}
+    limit 1
+  </select>
+
+  <!--查找组合商品-->
+  <select id="listMainDetail" resultMap="resultMap">
+
+    SELECT
+      opc.combination_detail_id,
+      opc.combination_id,
+      opc.created_time,
+      opc.modified_time,
+      opc.product_code,
+      opc.product_id,
+      opc.product_name,
+      opc.quantity,
+      opc.sku_code,
+      opc.sku_id,
+      opc.sku_name,
+      opc.is_main_sku
+    FROM oms_product_combination opc
+      JOIN oms_product_sku ops
+        ON opc.combination_id = ops.sku_id
+    WHERE ops.is_enable = 1 and opc.is_main_sku = 1
+  </select>
+
+</mapper>

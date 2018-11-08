@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockLoanOutMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.stock.StockLoanOut">
+    <id column="stock_loan_out_id" property="stockLoanOutId"/>
+    <result column="address" property="address"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="brand_code" property="brandCode"/>
+    <result column="brand_name" property="brandName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="expect_return_date" property="expectReturnDate"/>
+    <result column="is_need_return" property="needReturn"/>
+    <result column="loan_type" property="loanType"/>
+    <result column="loan_user" property="loanUser"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="out_status" property="outStatus"/>
+    <result column="outer_code" property="outerCode"/>
+    <result column="remark" property="remark"/>
+    <result column="status" property="status"/>
+    <result column="stock_loan_out_code" property="stockLoanOutCode"/>
+    <result column="telephone" property="telephone"/>
+    <result column="version" property="version"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+    <result column="warehouse_id" property="warehouseId"/>
+    <result column="warehouse_name" property="warehouseName"/>
+  </resultMap>
+  <sql id="columns">address,audited_time,auditor,brand_code,brand_name,created_time,creator,expect_return_date,is_need_return,loan_type,loan_user,modified_time,out_status,outer_code,remark,status,stock_loan_out_code,stock_loan_out_id,telephone,version,virtual_warehouse_id,virtual_warehouse_name,warehouse_id,warehouse_name</sql>
+  <sql id="pkWhere">
+    WHERE stock_loan_out_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="auditedTime!=null">AND audited_time=#{auditedTime}</if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="brandCode!=null and brandCode!=''">
+        AND brand_code=#{brandCode}
+      </if>
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="expectReturnDate!=null">AND expect_return_date=#{expectReturnDate}</if>
+      <if test="needReturn!=null">AND is_need_return=#{needReturn}</if>
+      <if test="loanType!=null and loanType!=''">
+        AND loan_type=#{loanType}
+      </if>
+      <if test="loanUser!=null and loanUser!=''">
+        AND loan_user=#{loanUser}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outStatus!=null">AND out_status=#{outStatus}</if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="stockLoanOutCode!=null and stockLoanOutCode!=''">
+        AND stock_loan_out_code=#{stockLoanOutCode}
+      </if>
+      <if test="stockLoanOutId!=null">AND stock_loan_out_id=#{stockLoanOutId}</if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND warehouse_name=#{warehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="brandCode!=null and brandCode!=''">
+        AND brand_code=#{brandCode}
+      </if>
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="expectReturnDateBegin!=null">
+        <![CDATA[AND expect_return_date>=#{expectReturnDateBegin}]]>
+      </if>
+      <if test="expectReturnDateEnd!=null">
+        <![CDATA[AND expect_return_date<#{expectReturnDateEnd}]]>
+      </if>
+      <if test="needReturn!=null">AND is_need_return=#{needReturn}</if>
+      <if test="loanType!=null and loanType!=''">
+        AND loan_type=#{loanType}
+      </if>
+      <if test="loanUser!=null and loanUser!=''">
+        AND loan_user=#{loanUser}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outStatus!=null">AND out_status=#{outStatus}</if>
+      <if test="outStatuses!=null and outStatuses.size>0">
+        AND out_status IN
+        <foreach item="item" index="index" collection="outStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockLoanOutCode!=null and stockLoanOutCode!=''">
+        AND stock_loan_out_code=#{stockLoanOutCode}
+      </if>
+      <if test="stockLoanOutCodes!=null and stockLoanOutCodes.size>0">
+        AND stock_loan_out_code IN
+        <foreach item="item" index="index" collection="stockLoanOutCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockLoanOutId!=null">AND stock_loan_out_id=#{stockLoanOutId}</if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND warehouse_name=#{warehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_loan_out_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.stock.StockLoanOut">
+    INSERT INTO oms_stock_loan_out(address,audited_time,auditor,brand_code,brand_name,created_time,creator,expect_return_date,is_need_return,loan_type,loan_user,modified_time,out_status,outer_code,remark,status,stock_loan_out_code,stock_loan_out_id,telephone,version,virtual_warehouse_id,virtual_warehouse_name,warehouse_id,warehouse_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{address},
+      #{auditedTime},
+      #{auditor},
+      #{brandCode},
+      #{brandName},
+      now(),
+      #{creator},
+      #{expectReturnDate},
+      #{needReturn},
+      #{loanType},
+      #{loanUser},
+      now(),
+      #{outStatus},
+      #{outerCode},
+      #{remark},
+      #{status},
+      #{stockLoanOutCode},
+      #{stockLoanOutId},
+      #{telephone},
+      1,
+      #{virtualWarehouseId},
+      #{virtualWarehouseName},
+      #{warehouseId},
+      #{warehouseName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.stock.StockLoanOut">
+    UPDATE oms_stock_loan_out
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="address!=null">address=#{address},</if>
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="brandCode!=null">brand_code=#{brandCode},</if>
+      <if test="brandName!=null">brand_name=#{brandName},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="expectReturnDate!=null">expect_return_date=#{expectReturnDate},</if>
+      <if test="needReturn!=null">is_need_return=#{needReturn},</if>
+      <if test="loanType!=null">loan_type=#{loanType},</if>
+      <if test="loanUser!=null">loan_user=#{loanUser},</if>
+      modified_time=now(),
+      <if test="outStatus!=null">out_status=#{outStatus},</if>
+      <if test="outerCode!=null">outer_code=#{outerCode},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="stockLoanOutCode!=null">stock_loan_out_code=#{stockLoanOutCode},</if>
+      <if test="telephone!=null">telephone=#{telephone},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+      <if test="virtualWarehouseId!=null">virtual_warehouse_id=#{virtualWarehouseId},</if>
+      <if test="virtualWarehouseName!=null">virtual_warehouse_name=#{virtualWarehouseName},</if>
+      <if test="warehouseId!=null">warehouse_id=#{warehouseId},</if>
+      <if test="warehouseName!=null">warehouse_name=#{warehouseName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_loan_out_id=#{stockLoanOutId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.stock.StockLoanOut">
+    UPDATE oms_stock_loan_out
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.address!=null">
+        address=#{record.address},
+      </if>
+      <if test="record.auditedTime!=null">
+        audited_time=#{record.auditedTime},
+      </if>
+      <if test="record.auditor!=null">
+        auditor=#{record.auditor},
+      </if>
+      <if test="record.brandCode!=null">
+        brand_code=#{record.brandCode},
+      </if>
+      <if test="record.brandName!=null">
+        brand_name=#{record.brandName},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.expectReturnDate!=null">
+        expect_return_date=#{record.expectReturnDate},
+      </if>
+      <if test="record.needReturn!=null">
+        is_need_return=#{record.needReturn},
+      </if>
+      <if test="record.loanType!=null">
+        loan_type=#{record.loanType},
+      </if>
+      <if test="record.loanUser!=null">
+        loan_user=#{record.loanUser},
+      </if>
+      modified_time=now(),
+      <if test="record.outStatus!=null">
+        out_status=#{record.outStatus},
+      </if>
+      <if test="record.outerCode!=null">
+        outer_code=#{record.outerCode},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.stockLoanOutCode!=null">
+        stock_loan_out_code=#{record.stockLoanOutCode},
+      </if>
+      <if test="record.telephone!=null">
+        telephone=#{record.telephone},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+      <if test="record.virtualWarehouseId!=null">
+        virtual_warehouse_id=#{record.virtualWarehouseId},
+      </if>
+      <if test="record.virtualWarehouseName!=null">
+        virtual_warehouse_name=#{record.virtualWarehouseName},
+      </if>
+      <if test="record.warehouseId!=null">
+        warehouse_id=#{record.warehouseId},
+      </if>
+      <if test="record.warehouseName!=null">
+        warehouse_name=#{record.warehouseName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.address!=null">
+      AND address=#{example.address}
+      </if>
+      <if test="example.auditedTime!=null">
+      AND audited_time=#{example.auditedTime}
+      </if>
+      <if test="example.auditor!=null">
+      AND auditor=#{example.auditor}
+      </if>
+      <if test="example.brandCode!=null">
+      AND brand_code=#{example.brandCode}
+      </if>
+      <if test="example.brandName!=null">
+      AND brand_name=#{example.brandName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.expectReturnDate!=null">
+      AND expect_return_date=#{example.expectReturnDate}
+      </if>
+      <if test="example.needReturn!=null">
+      AND is_need_return=#{example.needReturn}
+      </if>
+      <if test="example.loanType!=null">
+      AND loan_type=#{example.loanType}
+      </if>
+      <if test="example.loanUser!=null">
+      AND loan_user=#{example.loanUser}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outStatus!=null">
+      AND out_status=#{example.outStatus}
+      </if>
+      <if test="example.outStatuses!=null">
+      AND out_status=#{example.outStatuses}
+      </if>
+      <if test="example.outerCode!=null">
+      AND outer_code=#{example.outerCode}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.stockLoanOutCode!=null">
+      AND stock_loan_out_code=#{example.stockLoanOutCode}
+      </if>
+      <if test="example.stockLoanOutCodes!=null">
+      AND stock_loan_out_code=#{example.stockLoanOutCodes}
+      </if>
+      <if test="example.stockLoanOutId!=null">
+      AND stock_loan_out_id=#{example.stockLoanOutId}
+      </if>
+      <if test="example.telephone!=null">
+      AND telephone=#{example.telephone}
+      </if>
+      AND version=#{example.version}
+      <if test="example.virtualWarehouseId!=null">
+      AND virtual_warehouse_id=#{example.virtualWarehouseId}
+      </if>
+      <if test="example.virtualWarehouseName!=null">
+      AND virtual_warehouse_name=#{example.virtualWarehouseName}
+      </if>
+      <if test="example.warehouseId!=null">
+      AND warehouse_id=#{example.warehouseId}
+      </if>
+      <if test="example.warehouseName!=null">
+      AND warehouse_name=#{example.warehouseName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_loan_out
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_loan_out
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_loan_out
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_loan_out
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

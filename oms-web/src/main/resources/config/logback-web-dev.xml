@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+  <property name="log_file" value="log/web.log"/>
+  <property name="log_file_pattern" value="log/web.%d{yyyy-MM-dd}.%i.log"/>
+  <property name="es_url" value="http://114.55.15.205:30002/_bulk"/>
+  <include resource="com/greatonce/oms/util/logging/base.xml"/>
+  <logger name="com.greatonce.oms" level="info" additivity="true">
+    <appender-ref ref="oms_sys"/>
+    <appender-ref ref="file_out"/>
+  </logger>
+  <logger name="com.greatonce.oms.bridge.mall.impl.taobao.cloudpush.mappers" level="debug"
+    additivity="true">
+    <appender-ref ref="sql_file_out"/>
+  </logger>
+  <logger name="com.greatonce.oms.dao" level="debug" additivity="true">
+    <appender-ref ref="sql_file_out"/>
+  </logger>
+</configuration>

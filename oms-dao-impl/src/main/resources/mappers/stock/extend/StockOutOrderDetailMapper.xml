@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockOutOrderDetailMapper">
+  <select id="listAvailable" resultMap="resultMap">
+    SELECT
+           out_order_detail.stock_out_order_detail_id,
+           out_order_detail.sku_id,
+           out_order_detail.sku_code,
+           out_order_detail.plan_quantity,
+           IFNULL( stock.quantity, 0 ) - SUM( IFNULL( stock_occupancy.quantity, 0 ) ) notice_quantity
+    FROM
+         oms_stock_out_order out_order
+           JOIN oms_stock_out_order_detail out_order_detail ON out_order.stock_out_order_id = out_order_detail.stock_out_order_id
+           LEFT JOIN oms_stock stock ON out_order_detail.sku_id = stock.sku_id
+                                          AND out_order.virtual_warehouse_id = stock.virtual_warehouse_id
+           LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+                                                              AND stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+                                                              AND stock_occupancy.STATUS =3
+    WHERE
+      out_order.stock_out_order_id = #{_parameter}
+    GROUP BY
+             out_order_detail.sku_id,
+             out_order_detail.sku_code,
+             out_order_detail.plan_quantity
+  </select>
+
+  <select id="listSaleable" resultMap="resultMap">
+    SELECT
+           out_order_detail.stock_out_order_detail_id,
+           out_order_detail.sku_id,
+           out_order_detail.sku_code,
+           out_order_detail.plan_quantity,
+           IFNULL( stock.quantity, 0 ) - SUM( IFNULL( stock_occupancy.quantity, 0 ) ) notice_quantity
+    FROM
+         oms_stock_out_order out_order
+           JOIN oms_stock_out_order_detail out_order_detail ON out_order.stock_out_order_id = out_order_detail.stock_out_order_id
+           LEFT JOIN oms_stock stock ON out_order_detail.sku_id = stock.sku_id
+                                          AND out_order.virtual_warehouse_id = stock.virtual_warehouse_id
+           LEFT JOIN oms_stock_occupancy stock_occupancy ON stock.sku_id = stock_occupancy.sku_id
+                                                              AND stock.virtual_warehouse_id = stock_occupancy.virtual_warehouse_id
+                                                              AND stock_occupancy.STATUS IN ( 2, 3 )
+    WHERE
+      out_order.stock_out_order_id = #{_parameter}
+    GROUP BY
+             out_order_detail.sku_id,
+             out_order_detail.sku_code,
+             out_order_detail.plan_quantity
+  </select>
+</mapper>

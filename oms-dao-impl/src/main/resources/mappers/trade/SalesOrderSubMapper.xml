@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderSubMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.SalesOrderSub">
+    <id column="sales_order_id" property="salesOrderId"/>
+    <result column="buyer_email" property="buyerEmail"/>
+    <result column="buyer_memo" property="buyerMemo"/>
+    <result column="create_type" property="createType"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="currency_code" property="currencyCode"/>
+    <result column="express_fee" property="expressFee"/>
+    <result column="freight_risk_fee" property="freightRiskFee"/>
+    <result column="is_blacklist" property="blacklist"/>
+    <result column="is_cod" property="cod"/>
+    <result column="is_has_invoice" property="hasInvoice"/>
+    <result column="is_new_member" property="newMember"/>
+    <result column="is_prepay" property="prepay"/>
+    <result column="is_third_delivery" property="thirdDelivery"/>
+    <result column="mall_created_time" property="mallCreatedTime"/>
+    <result column="mall_finished_time" property="mallFinishedTime"/>
+    <result column="mall_modified_time" property="mallModifiedTime"/>
+    <result column="mall_paid_time" property="mallPaidTime"/>
+    <result column="mall_prepay_time" property="mallPrepayTime"/>
+    <result column="mall_type" property="mallType"/>
+    <result column="member_id" property="memberId"/>
+    <result column="member_name" property="memberName"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="package_no" property="packageNo"/>
+    <result column="presell_delivery_date" property="presellDeliveryDate"/>
+    <result column="presell_type" property="presellType"/>
+    <result column="sales_order_type" property="salesOrderType"/>
+    <result column="seller_memo" property="sellerMemo"/>
+    <result column="shopping_guide" property="shoppingGuide"/>
+    <result column="source_type" property="sourceType"/>
+    <result column="weight" property="weight"/>
+    <result column="zipcode" property="zipcode"/>
+  </resultMap>
+  <sql id="columns">buyer_email,buyer_memo,create_type,created_time,currency_code,express_fee,freight_risk_fee,is_blacklist,is_cod,is_has_invoice,is_new_member,is_prepay,is_third_delivery,mall_created_time,mall_finished_time,mall_modified_time,mall_paid_time,mall_prepay_time,mall_type,member_id,member_name,modified_time,package_no,presell_delivery_date,presell_type,sales_order_id,sales_order_type,seller_memo,shopping_guide,source_type,weight,zipcode</sql>
+  <sql id="pkWhere">
+    WHERE sales_order_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="buyerEmail!=null and buyerEmail!=''">
+        AND buyer_email=#{buyerEmail}
+      </if>
+      <if test="buyerMemo!=null and buyerMemo!=''">
+        AND buyer_memo=#{buyerMemo}
+      </if>
+      <if test="createType!=null">AND create_type=#{createType}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="currencyCode!=null and currencyCode!=''">
+        AND currency_code=#{currencyCode}
+      </if>
+      <if test="expressFee!=null">AND express_fee=#{expressFee}</if>
+      <if test="freightRiskFee!=null">AND freight_risk_fee=#{freightRiskFee}</if>
+      <if test="blacklist!=null">AND is_blacklist=#{blacklist}</if>
+      <if test="cod!=null">AND is_cod=#{cod}</if>
+      <if test="hasInvoice!=null">AND is_has_invoice=#{hasInvoice}</if>
+      <if test="newMember!=null">AND is_new_member=#{newMember}</if>
+      <if test="prepay!=null">AND is_prepay=#{prepay}</if>
+      <if test="thirdDelivery!=null">AND is_third_delivery=#{thirdDelivery}</if>
+      <if test="mallCreatedTime!=null">AND mall_created_time=#{mallCreatedTime}</if>
+      <if test="mallFinishedTime!=null">AND mall_finished_time=#{mallFinishedTime}</if>
+      <if test="mallModifiedTime!=null">AND mall_modified_time=#{mallModifiedTime}</if>
+      <if test="mallPaidTime!=null">AND mall_paid_time=#{mallPaidTime}</if>
+      <if test="mallPrepayTime!=null">AND mall_prepay_time=#{mallPrepayTime}</if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        AND member_name=#{memberName}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="packageNo!=null and packageNo!=''">
+        AND package_no=#{packageNo}
+      </if>
+      <if test="presellDeliveryDate!=null">AND presell_delivery_date=#{presellDeliveryDate}</if>
+      <if test="presellType!=null">AND presell_type=#{presellType}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="salesOrderType!=null">AND sales_order_type=#{salesOrderType}</if>
+      <if test="sellerMemo!=null and sellerMemo!=''">
+        AND seller_memo=#{sellerMemo}
+      </if>
+      <if test="shoppingGuide!=null and shoppingGuide!=''">
+        AND shopping_guide=#{shoppingGuide}
+      </if>
+      <if test="sourceType!=null">AND source_type=#{sourceType}</if>
+      <if test="weight!=null">AND weight=#{weight}</if>
+      <if test="zipcode!=null and zipcode!=''">
+        AND zipcode=#{zipcode}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="buyerEmail!=null and buyerEmail!=''">
+        AND buyer_email=#{buyerEmail}
+      </if>
+      <if test="buyerMemo!=null and buyerMemo!=''">
+        AND buyer_memo=#{buyerMemo}
+      </if>
+      <if test="createType!=null">AND create_type=#{createType}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="currencyCode!=null and currencyCode!=''">
+        AND currency_code=#{currencyCode}
+      </if>
+      <if test="expressFee!=null">AND express_fee=#{expressFee}</if>
+      <if test="freightRiskFee!=null">AND freight_risk_fee=#{freightRiskFee}</if>
+      <if test="blacklist!=null">AND is_blacklist=#{blacklist}</if>
+      <if test="cod!=null">AND is_cod=#{cod}</if>
+      <if test="hasInvoice!=null">AND is_has_invoice=#{hasInvoice}</if>
+      <if test="newMember!=null">AND is_new_member=#{newMember}</if>
+      <if test="prepay!=null">AND is_prepay=#{prepay}</if>
+      <if test="thirdDelivery!=null">AND is_third_delivery=#{thirdDelivery}</if>
+      <if test="mallCreatedTimeBegin!=null">
+        <![CDATA[AND mall_created_time>=#{mallCreatedTimeBegin}]]>
+      </if>
+      <if test="mallCreatedTimeEnd!=null">
+        <![CDATA[AND mall_created_time<#{mallCreatedTimeEnd}]]>
+      </if>
+      <if test="mallFinishedTimeBegin!=null">
+        <![CDATA[AND mall_finished_time>=#{mallFinishedTimeBegin}]]>
+      </if>
+      <if test="mallFinishedTimeEnd!=null">
+        <![CDATA[AND mall_finished_time<#{mallFinishedTimeEnd}]]>
+      </if>
+      <if test="mallModifiedTimeBegin!=null">
+        <![CDATA[AND mall_modified_time>=#{mallModifiedTimeBegin}]]>
+      </if>
+      <if test="mallModifiedTimeEnd!=null">
+        <![CDATA[AND mall_modified_time<#{mallModifiedTimeEnd}]]>
+      </if>
+      <if test="mallPaidTimeBegin!=null">
+        <![CDATA[AND mall_paid_time>=#{mallPaidTimeBegin}]]>
+      </if>
+      <if test="mallPaidTimeEnd!=null">
+        <![CDATA[AND mall_paid_time<#{mallPaidTimeEnd}]]>
+      </if>
+      <if test="mallPrepayTimeBegin!=null">
+        <![CDATA[AND mall_prepay_time>=#{mallPrepayTimeBegin}]]>
+      </if>
+      <if test="mallPrepayTimeEnd!=null">
+        <![CDATA[AND mall_prepay_time<#{mallPrepayTimeEnd}]]>
+      </if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        AND member_name=#{memberName}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="packageNo!=null and packageNo!=''">
+        AND package_no=#{packageNo}
+      </if>
+      <if test="presellDeliveryDateBegin!=null">
+        <![CDATA[AND presell_delivery_date>=#{presellDeliveryDateBegin}]]>
+      </if>
+      <if test="presellDeliveryDateEnd!=null">
+        <![CDATA[AND presell_delivery_date<#{presellDeliveryDateEnd}]]>
+      </if>
+      <if test="presellType!=null">AND presell_type=#{presellType}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="salesOrderType!=null">AND sales_order_type=#{salesOrderType}</if>
+      <if test="sellerMemo!=null and sellerMemo!=''">
+        AND seller_memo=#{sellerMemo}
+      </if>
+      <if test="shoppingGuide!=null and shoppingGuide!=''">
+        AND shopping_guide=#{shoppingGuide}
+      </if>
+      <if test="sourceType!=null">AND source_type=#{sourceType}</if>
+      <if test="weight!=null">AND weight=#{weight}</if>
+      <if test="zipcode!=null and zipcode!=''">
+        AND zipcode=#{zipcode}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sales_order_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.SalesOrderSub">
+    INSERT INTO oms_sales_order_sub(buyer_email,buyer_memo,create_type,created_time,currency_code,express_fee,freight_risk_fee,is_blacklist,is_cod,is_has_invoice,is_new_member,is_prepay,is_third_delivery,mall_created_time,mall_finished_time,mall_modified_time,mall_paid_time,mall_prepay_time,mall_type,member_id,member_name,modified_time,package_no,presell_delivery_date,presell_type,sales_order_id,sales_order_type,seller_memo,shopping_guide,source_type,weight,zipcode)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{buyerEmail},
+      #{buyerMemo},
+      #{createType},
+      now(),
+      #{currencyCode},
+      #{expressFee},
+      #{freightRiskFee},
+      #{blacklist},
+      #{cod},
+      #{hasInvoice},
+      #{newMember},
+      #{prepay},
+      #{thirdDelivery},
+      #{mallCreatedTime},
+      #{mallFinishedTime},
+      #{mallModifiedTime},
+      #{mallPaidTime},
+      #{mallPrepayTime},
+      #{mallType},
+      #{memberId},
+      #{memberName},
+      now(),
+      #{packageNo},
+      #{presellDeliveryDate},
+      #{presellType},
+      #{salesOrderId},
+      #{salesOrderType},
+      #{sellerMemo},
+      #{shoppingGuide},
+      #{sourceType},
+      #{weight},
+      #{zipcode},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.SalesOrderSub">
+    UPDATE oms_sales_order_sub
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="buyerEmail!=null">buyer_email=#{buyerEmail},</if>
+      <if test="buyerMemo!=null">buyer_memo=#{buyerMemo},</if>
+      <if test="createType!=null">create_type=#{createType},</if>
+      <if test="currencyCode!=null">currency_code=#{currencyCode},</if>
+      <if test="expressFee!=null">express_fee=#{expressFee},</if>
+      <if test="freightRiskFee!=null">freight_risk_fee=#{freightRiskFee},</if>
+      <if test="blacklist!=null">is_blacklist=#{blacklist},</if>
+      <if test="cod!=null">is_cod=#{cod},</if>
+      <if test="hasInvoice!=null">is_has_invoice=#{hasInvoice},</if>
+      <if test="newMember!=null">is_new_member=#{newMember},</if>
+      <if test="prepay!=null">is_prepay=#{prepay},</if>
+      <if test="thirdDelivery!=null">is_third_delivery=#{thirdDelivery},</if>
+      <if test="mallCreatedTime!=null">mall_created_time=#{mallCreatedTime},</if>
+      <if test="mallFinishedTime!=null">mall_finished_time=#{mallFinishedTime},</if>
+      <if test="mallModifiedTime!=null">mall_modified_time=#{mallModifiedTime},</if>
+      <if test="mallPaidTime!=null">mall_paid_time=#{mallPaidTime},</if>
+      <if test="mallPrepayTime!=null">mall_prepay_time=#{mallPrepayTime},</if>
+      <if test="mallType!=null">mall_type=#{mallType},</if>
+      <if test="memberId!=null">member_id=#{memberId},</if>
+      <if test="memberName!=null">member_name=#{memberName},</if>
+      modified_time=now(),
+      <if test="packageNo!=null">package_no=#{packageNo},</if>
+      <if test="presellDeliveryDate!=null">presell_delivery_date=#{presellDeliveryDate},</if>
+      <if test="presellType!=null">presell_type=#{presellType},</if>
+      <if test="salesOrderType!=null">sales_order_type=#{salesOrderType},</if>
+      <if test="sellerMemo!=null">seller_memo=#{sellerMemo},</if>
+      <if test="shoppingGuide!=null">shopping_guide=#{shoppingGuide},</if>
+      <if test="sourceType!=null">source_type=#{sourceType},</if>
+      <if test="weight!=null">weight=#{weight},</if>
+      <if test="zipcode!=null">zipcode=#{zipcode},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sales_order_id=#{salesOrderId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.SalesOrderSub">
+    UPDATE oms_sales_order_sub
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.buyerEmail!=null">
+        buyer_email=#{record.buyerEmail},
+      </if>
+      <if test="record.buyerMemo!=null">
+        buyer_memo=#{record.buyerMemo},
+      </if>
+      <if test="record.createType!=null">
+        create_type=#{record.createType},
+      </if>
+      <if test="record.currencyCode!=null">
+        currency_code=#{record.currencyCode},
+      </if>
+      <if test="record.expressFee!=null">
+        express_fee=#{record.expressFee},
+      </if>
+      <if test="record.freightRiskFee!=null">
+        freight_risk_fee=#{record.freightRiskFee},
+      </if>
+      <if test="record.blacklist!=null">
+        is_blacklist=#{record.blacklist},
+      </if>
+      <if test="record.cod!=null">
+        is_cod=#{record.cod},
+      </if>
+      <if test="record.hasInvoice!=null">
+        is_has_invoice=#{record.hasInvoice},
+      </if>
+      <if test="record.newMember!=null">
+        is_new_member=#{record.newMember},
+      </if>
+      <if test="record.prepay!=null">
+        is_prepay=#{record.prepay},
+      </if>
+      <if test="record.thirdDelivery!=null">
+        is_third_delivery=#{record.thirdDelivery},
+      </if>
+      <if test="record.mallCreatedTime!=null">
+        mall_created_time=#{record.mallCreatedTime},
+      </if>
+      <if test="record.mallFinishedTime!=null">
+        mall_finished_time=#{record.mallFinishedTime},
+      </if>
+      <if test="record.mallModifiedTime!=null">
+        mall_modified_time=#{record.mallModifiedTime},
+      </if>
+      <if test="record.mallPaidTime!=null">
+        mall_paid_time=#{record.mallPaidTime},
+      </if>
+      <if test="record.mallPrepayTime!=null">
+        mall_prepay_time=#{record.mallPrepayTime},
+      </if>
+      <if test="record.mallType!=null">
+        mall_type=#{record.mallType},
+      </if>
+      <if test="record.memberId!=null">
+        member_id=#{record.memberId},
+      </if>
+      <if test="record.memberName!=null">
+        member_name=#{record.memberName},
+      </if>
+      modified_time=now(),
+      <if test="record.packageNo!=null">
+        package_no=#{record.packageNo},
+      </if>
+      <if test="record.presellDeliveryDate!=null">
+        presell_delivery_date=#{record.presellDeliveryDate},
+      </if>
+      <if test="record.presellType!=null">
+        presell_type=#{record.presellType},
+      </if>
+      <if test="record.salesOrderType!=null">
+        sales_order_type=#{record.salesOrderType},
+      </if>
+      <if test="record.sellerMemo!=null">
+        seller_memo=#{record.sellerMemo},
+      </if>
+      <if test="record.shoppingGuide!=null">
+        shopping_guide=#{record.shoppingGuide},
+      </if>
+      <if test="record.sourceType!=null">
+        source_type=#{record.sourceType},
+      </if>
+      <if test="record.weight!=null">
+        weight=#{record.weight},
+      </if>
+      <if test="record.zipcode!=null">
+        zipcode=#{record.zipcode},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.buyerEmail!=null">
+      AND buyer_email=#{example.buyerEmail}
+      </if>
+      <if test="example.buyerMemo!=null">
+      AND buyer_memo=#{example.buyerMemo}
+      </if>
+      <if test="example.createType!=null">
+      AND create_type=#{example.createType}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.currencyCode!=null">
+      AND currency_code=#{example.currencyCode}
+      </if>
+      <if test="example.expressFee!=null">
+      AND express_fee=#{example.expressFee}
+      </if>
+      <if test="example.freightRiskFee!=null">
+      AND freight_risk_fee=#{example.freightRiskFee}
+      </if>
+      <if test="example.blacklist!=null">
+      AND is_blacklist=#{example.blacklist}
+      </if>
+      <if test="example.cod!=null">
+      AND is_cod=#{example.cod}
+      </if>
+      <if test="example.hasInvoice!=null">
+      AND is_has_invoice=#{example.hasInvoice}
+      </if>
+      <if test="example.newMember!=null">
+      AND is_new_member=#{example.newMember}
+      </if>
+      <if test="example.prepay!=null">
+      AND is_prepay=#{example.prepay}
+      </if>
+      <if test="example.thirdDelivery!=null">
+      AND is_third_delivery=#{example.thirdDelivery}
+      </if>
+      <if test="example.mallCreatedTime!=null">
+      AND mall_created_time=#{example.mallCreatedTime}
+      </if>
+      <if test="example.mallFinishedTime!=null">
+      AND mall_finished_time=#{example.mallFinishedTime}
+      </if>
+      <if test="example.mallModifiedTime!=null">
+      AND mall_modified_time=#{example.mallModifiedTime}
+      </if>
+      <if test="example.mallPaidTime!=null">
+      AND mall_paid_time=#{example.mallPaidTime}
+      </if>
+      <if test="example.mallPrepayTime!=null">
+      AND mall_prepay_time=#{example.mallPrepayTime}
+      </if>
+      <if test="example.mallType!=null">
+      AND mall_type=#{example.mallType}
+      </if>
+      <if test="example.memberId!=null">
+      AND member_id=#{example.memberId}
+      </if>
+      <if test="example.memberName!=null">
+      AND member_name=#{example.memberName}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.packageNo!=null">
+      AND package_no=#{example.packageNo}
+      </if>
+      <if test="example.presellDeliveryDate!=null">
+      AND presell_delivery_date=#{example.presellDeliveryDate}
+      </if>
+      <if test="example.presellType!=null">
+      AND presell_type=#{example.presellType}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.salesOrderType!=null">
+      AND sales_order_type=#{example.salesOrderType}
+      </if>
+      <if test="example.sellerMemo!=null">
+      AND seller_memo=#{example.sellerMemo}
+      </if>
+      <if test="example.shoppingGuide!=null">
+      AND shopping_guide=#{example.shoppingGuide}
+      </if>
+      <if test="example.sourceType!=null">
+      AND source_type=#{example.sourceType}
+      </if>
+      <if test="example.weight!=null">
+      AND weight=#{example.weight}
+      </if>
+      <if test="example.zipcode!=null">
+      AND zipcode=#{example.zipcode}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_sales_order_sub
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_sales_order_sub
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_sub
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_sub
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_sub
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_sub
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_sub
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_sub
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_sub
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

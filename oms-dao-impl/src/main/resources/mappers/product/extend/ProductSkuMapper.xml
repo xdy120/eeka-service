@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.product.ProductSkuMapper">
+  <resultMap id="fullInfo" extends="resultMap" type="com.greatonce.oms.domain.product.ProductSku">
+    <association property="product"
+      resultMap="com.greatonce.oms.dao.product.ProductMapper.resultMap"/>
+  </resultMap>
+  <sql id="listFullInfoSql">SELECT
+    product.product_id,
+    product.brand_code,
+    product.brand_name,
+    product.is_enable,
+    product.is_gift,
+    product.is_single_delivery,
+    product.is_system,
+    product.product_category_id,
+    product.product_type,
+    product.image_url,
+    sku.barcode,
+    sku.color,
+    sku.cost_price,
+    sku.created_time,
+    sku.is_combination,
+    sku.is_enable,
+    sku.is_gift_box,
+    sku.is_lock_stock,
+    sku.logistics_insurance,
+    sku.marked_price,
+    sku.modified_time,
+    sku.product_code,
+    sku.product_id,
+    sku.product_name,
+    sku.purchase_price,
+    sku.quantity_of_box,
+    sku.selling_price,
+    sku.vip_price,
+    sku.size,
+    sku.sku_code,
+    sku.sku_id,
+    sku.sku_name,
+    sku.distribution_price,
+    sku.volume,
+    sku.weight,
+    sku.is_prepackage
+    FROM oms_product_sku sku
+    JOIN oms_product product ON sku.product_id=product.product_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="barcode!=null and barcode!=''">AND sku.barcode=#{barcode}</if>
+      <if test="barcodes!=null and barcodes.size>0">
+        AND sku.barcode IN
+        <foreach item="item" index="index" collection="barcodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="combination!=null">AND sku.is_combination=#{combination}</if>
+      <if test="enable!=null">AND sku.is_enable=#{enable}</if>
+      <if test="giftBox!=null">AND sku.is_gift_box=#{giftBox}</if>
+      <if test="lockStock!=null">AND sku.is_lock_stock=#{lockStock}</if>
+      <if test="productCode!=null and productCode!=''">AND sku.product_code=#{productCode}</if>
+      <if test="productName!=null and productName!=''">AND sku.product_name=#{productName}</if>
+      <if test="skuName!=null and skuName!=''">AND sku.sku_name=#{skuName}</if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND sku.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="productId!=null">AND sku.product_id=#{productId}</if>
+      <if test="productIds!=null and productIds.size>0">
+        AND sku.product_id IN
+        <foreach item="item" index="index" collection="productIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuCode!=null and skuCode!=''">AND sku.sku_code=#{skuCode}</if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND sku.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuId!=null">AND sku.sku_id=#{skuId}</if>
+      <if test="skuIds!=null and skuIds.size>0">
+        AND sku.sku_id IN
+        <foreach item="item" index="index" collection="skuIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="listPageFullInfo" resultMap="fullInfo">
+    <include refid="listFullInfoSql"/>
+    ORDER BY sku_id
+  </select>
+  <select id="listFullInfo" resultMap="fullInfo">
+    <include refid="listFullInfoSql"/>
+  </select>
+  <select id="exists" resultType="integer">
+    SELECT 1
+    FROM oms_product_sku
+    WHERE sku_code = #{_parameter} AND is_enable = 1
+    LIMIT 1
+  </select>
+  <update id="updateByCode" parameterType="com.greatonce.oms.domain.product.ProductSku">
+    UPDATE oms_product_sku
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="barcode!=null">barcode=#{barcode},</if>
+      <if test="color!=null">color=#{color},</if>
+      <if test="costPrice!=null">cost_price=#{costPrice},</if>
+      <if test="distributionPrice!=null">distribution_price=#{distributionPrice},</if>
+      <if test="combination!=null">is_combination=#{combination},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="giftBox!=null">is_gift_box=#{giftBox},</if>
+      <if test="lockStock!=null">is_lock_stock=#{lockStock},</if>
+      <if test="prepackage!=null">is_prepackage=#{prepackage},</if>
+      <if test="logisticsInsurance!=null">logistics_insurance=#{logisticsInsurance},</if>
+      <if test="markedPrice!=null">marked_price=#{markedPrice},</if>
+      modified_time=now(),
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="purchasePrice!=null">purchase_price=#{purchasePrice},</if>
+      <if test="quantityOfBox!=null">quantity_of_box=#{quantityOfBox},</if>
+      <if test="sellingPrice!=null">selling_price=#{sellingPrice},</if>
+      <if test="size!=null">size=#{size},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="vipPrice!=null">vip_price=#{vipPrice},</if>
+      <if test="volume!=null">volume=#{volume},</if>
+      <if test="weight!=null">weight=#{weight},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="skuCode!=null">AND sku_code=#{skuCode}</if>
+      <if test="productCode!=null">AND product_code=#{productCode}</if>
+    </trim>
+  </update>
+
+  <select id="listSkuIdsByProductId" resultType="long">
+    SELECT sku_id FROM oms_product_sku WHERE product_id = #{productId}
+  </select>
+
+</mapper>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.UserMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.User">
+    <id column="user_id" property="userId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="department_id" property="departmentId"/>
+    <result column="department_name" property="departmentName"/>
+    <result column="email" property="email"/>
+    <result column="head_url" property="headUrl"/>
+    <result column="is_enable" property="enable"/>
+    <result column="is_system" property="system"/>
+    <result column="login_name" property="loginName"/>
+    <result column="login_password" property="loginPassword"/>
+    <result column="mobile" property="mobile"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="nickname" property="nickname"/>
+    <result column="remark" property="remark"/>
+    <result column="telephone" property="telephone"/>
+    <result column="user_name" property="userName"/>
+  </resultMap>
+  <sql id="columns">created_time,department_id,department_name,email,head_url,is_enable,is_system,login_name,login_password,mobile,modified_time,nickname,remark,telephone,user_id,user_name</sql>
+  <sql id="pkWhere">
+    WHERE user_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="departmentId!=null">AND department_id=#{departmentId}</if>
+      <if test="departmentName!=null and departmentName!=''">
+        AND department_name=#{departmentName}
+      </if>
+      <if test="email!=null and email!=''">
+        AND email=#{email}
+      </if>
+      <if test="headUrl!=null and headUrl!=''">
+        AND head_url=#{headUrl}
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="loginName!=null and loginName!=''">
+        AND login_name=#{loginName}
+      </if>
+      <if test="loginPassword!=null and loginPassword!=''">
+        AND login_password=#{loginPassword}
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="nickname!=null and nickname!=''">
+        AND nickname=#{nickname}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="userId!=null">AND user_id=#{userId}</if>
+      <if test="userName!=null and userName!=''">
+        AND user_name=#{userName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="departmentId!=null">AND department_id=#{departmentId}</if>
+      <if test="departmentName!=null and departmentName!=''">
+        AND department_name=#{departmentName}
+      </if>
+      <if test="email!=null and email!=''">
+        AND email=#{email}
+      </if>
+      <if test="headUrl!=null and headUrl!=''">
+        AND head_url=#{headUrl}
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="loginName!=null and loginName!=''">
+        <bind name="loginName_like" value="_parameter.loginName+'%'"/>
+        AND login_name like #{loginName_like}
+      </if>
+      <if test="loginPassword!=null and loginPassword!=''">
+        AND login_password=#{loginPassword}
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="nickname!=null and nickname!=''">
+        <bind name="nickname_like" value="_parameter.nickname+'%'"/>
+        AND nickname like #{nickname_like}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="userId!=null">AND user_id=#{userId}</if>
+      <if test="userName!=null and userName!=''">
+        <bind name="userName_like" value="_parameter.userName+'%'"/>
+        AND user_name like #{userName_like}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY user_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.User">
+    INSERT INTO oms_user(created_time,department_id,department_name,email,head_url,is_enable,is_system,login_name,login_password,mobile,modified_time,nickname,remark,telephone,user_id,user_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{departmentId},
+      #{departmentName},
+      #{email},
+      #{headUrl},
+      #{enable},
+      #{system},
+      #{loginName},
+      #{loginPassword},
+      #{mobile},
+      now(),
+      #{nickname},
+      #{remark},
+      #{telephone},
+      #{userId},
+      #{userName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.User">
+    UPDATE oms_user
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="departmentId!=null">department_id=#{departmentId},</if>
+      <if test="departmentName!=null">department_name=#{departmentName},</if>
+      <if test="email!=null">email=#{email},</if>
+      <if test="headUrl!=null">head_url=#{headUrl},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="system!=null">is_system=#{system},</if>
+      <if test="loginName!=null">login_name=#{loginName},</if>
+      <if test="loginPassword!=null">login_password=#{loginPassword},</if>
+      <if test="mobile!=null">mobile=#{mobile},</if>
+      modified_time=now(),
+      <if test="nickname!=null">nickname=#{nickname},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="telephone!=null">telephone=#{telephone},</if>
+      <if test="userName!=null">user_name=#{userName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND user_id=#{userId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.User">
+    UPDATE oms_user
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.departmentId!=null">
+        department_id=#{record.departmentId},
+      </if>
+      <if test="record.departmentName!=null">
+        department_name=#{record.departmentName},
+      </if>
+      <if test="record.email!=null">
+        email=#{record.email},
+      </if>
+      <if test="record.headUrl!=null">
+        head_url=#{record.headUrl},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.system!=null">
+        is_system=#{record.system},
+      </if>
+      <if test="record.loginName!=null">
+        login_name=#{record.loginName},
+      </if>
+      <if test="record.loginPassword!=null">
+        login_password=#{record.loginPassword},
+      </if>
+      <if test="record.mobile!=null">
+        mobile=#{record.mobile},
+      </if>
+      modified_time=now(),
+      <if test="record.nickname!=null">
+        nickname=#{record.nickname},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.telephone!=null">
+        telephone=#{record.telephone},
+      </if>
+      <if test="record.userName!=null">
+        user_name=#{record.userName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.departmentId!=null">
+      AND department_id=#{example.departmentId}
+      </if>
+      <if test="example.departmentName!=null">
+      AND department_name=#{example.departmentName}
+      </if>
+      <if test="example.email!=null">
+      AND email=#{example.email}
+      </if>
+      <if test="example.headUrl!=null">
+      AND head_url=#{example.headUrl}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.system!=null">
+      AND is_system=#{example.system}
+      </if>
+      <if test="example.loginName!=null">
+      AND login_name=#{example.loginName}
+      </if>
+      <if test="example.loginPassword!=null">
+      AND login_password=#{example.loginPassword}
+      </if>
+      <if test="example.mobile!=null">
+      AND mobile=#{example.mobile}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.nickname!=null">
+      AND nickname=#{example.nickname}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.telephone!=null">
+      AND telephone=#{example.telephone}
+      </if>
+      <if test="example.userId!=null">
+      AND user_id=#{example.userId}
+      </if>
+      <if test="example.userName!=null">
+      AND user_name=#{example.userName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_user
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_user
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_user
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_user
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_user
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_user
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_user
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_user
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_user
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

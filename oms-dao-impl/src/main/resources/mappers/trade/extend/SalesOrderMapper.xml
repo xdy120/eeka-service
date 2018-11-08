@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderMapper">
+  <sql
+    id="sub_columns">sub.buyer_email AS sub_buyer_email, sub.buyer_memo AS sub_buyer_memo, sub.create_type AS sub_create_type, sub.created_time AS sub_created_time, sub.currency_code AS sub_currency_code, sub.express_fee AS sub_express_fee, sub.freight_risk_fee AS sub_freight_risk_fee, sub.is_blacklist AS sub_is_blacklist, sub.is_cod AS sub_is_cod, sub.is_has_invoice AS sub_is_has_invoice, sub.is_new_member AS sub_is_new_member, sub.is_prepay AS sub_is_prepay, sub.is_third_delivery AS sub_is_third_delivery, sub.mall_created_time AS sub_mall_created_time, sub.mall_finished_time AS sub_mall_finished_time, sub.mall_modified_time AS sub_mall_modified_time, sub.mall_paid_time AS sub_mall_paid_time, sub.mall_prepay_time AS sub_mall_prepay_time, sub.member_id AS sub_member_id, sub.member_name AS sub_member_name, sub.modified_time AS sub_modified_time, sub.package_no AS sub_package_no, sub.presell_delivery_date AS sub_presell_delivery_date, sub.presell_type AS sub_presell_type, sub.sales_order_id AS sub_sales_order_id, sub.sales_order_type AS sub_sales_order_type, sub.seller_memo AS sub_seller_memo, sub.shopping_guide AS sub_shopping_guide, sub.source_type AS sub_source_type, sub.weight AS sub_weight, sub.zipcode AS sub_zipcode, sub.mall_type as sub_mall_type</sql>
+  <sql
+    id="detail_columns">details.activity_id AS detail_activity_id, details.actual_amount AS detail_actual_amount, details.cost_price AS detail_cost_price, details.created_time AS detail_created_time, details.discount_amount AS detail_discount_amount, details.distribution_amount AS detail_distribution_amount, details.distribution_price AS detail_distribution_price, details.exchange_id AS detail_exchange_id, details.gift_strategy_id AS detail_gift_strategy_id, details.gift_strategy_name AS detail_gift_strategy_name, details.is_combination AS detail_is_combination, details.is_gift AS detail_is_gift, details.is_lock_stock AS detail_is_lock_stock, details.is_manual_add AS detail_is_manual_add, details.is_oos AS detail_is_oos, details.is_refund AS detail_is_refund, details.is_separate AS detail_is_separate, details.mall_order_detail_status AS detail_mall_order_detail_status, details.mall_product_id AS detail_mall_product_id, details.mall_product_name AS detail_mall_product_name, details.mall_product_out_code AS detail_mall_product_out_code, details.mall_sku_id AS detail_mall_sku_id, details.mall_sku_name AS detail_mall_sku_name, details.mall_sku_out_code AS detail_mall_sku_out_code, details.modified_time AS detail_modified_time, details.original_detailid AS detail_original_detailid, details.presell_delivery_date AS detail_presell_delivery_date, details.presell_id AS detail_presell_id, details.product_code AS detail_product_code, details.product_id AS detail_product_id, details.product_name AS detail_product_name, details.product_type AS detail_product_type, details.quantity AS detail_quantity, details.sales_order_detail_id AS detail_sales_order_detail_id, details.sales_order_detail_type AS detail_sales_order_detail_type, details.sales_order_id AS detail_sales_order_id, details.selling_amount AS detail_selling_amount, details.selling_price AS detail_selling_price, details.settlement_amount AS detail_settlement_amount, details.settlement_price AS detail_settlement_price, details.sku_code AS detail_sku_code, details.sku_id AS detail_sku_id, details.sku_name AS detail_sku_name, details.status AS detail_status, details.suggest_virtual_warehouse_id AS detail_suggest_virtual_warehouse_id, details.weight AS detail_weight</sql>
+  <sql id="mustUpdateSql">modified_time = #{modifiedTime}, version = version + 1,</sql>
+  <resultMap id="subInfo" extends="resultMap" type="com.greatonce.oms.domain.trade.SalesOrder">
+    <association property="sub"
+      resultMap="com.greatonce.oms.dao.trade.SalesOrderSubMapper.resultMap" columnPrefix="sub_"/>
+  </resultMap>
+  <resultMap id="detailInfo" extends="subInfo" type="com.greatonce.oms.domain.trade.SalesOrder">
+    <collection property="details"
+      resultMap="com.greatonce.oms.dao.trade.SalesOrderDetailMapper.resultMap"
+      columnPrefix="detail_"/>
+  </resultMap>
+
+  <sql id="advancedWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="manualUser!=null and manualUser!=''">
+        <![CDATA[AND so.manual_user=#{manualUser}]]>
+      </if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND so.audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND so.audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">AND so.auditor=#{auditor}</if>
+      <if test="cityId!=null">AND so.city_id=#{cityId}</if>
+      <if test="contact!=null and contact!=''">AND so.contact=#{contact}</if>
+      <if test="contacts!=null and contacts.size>0">
+        AND so.contact IN
+        <foreach item="item" index="index" collection="contacts" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="countryId!=null">AND so.country_id=#{countryId}</if>
+      <if test="districtId!=null">AND so.district_id=#{districtId}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND so.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND so.created_time<=#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">AND so.creator=#{creator}</if>
+      <if test="deliveryStatus!=null">AND so.delivery_status=#{deliveryStatus}</if>
+      <if test="dispatchStatus!=null">AND so.dispatch_status=#{dispatchStatus}</if>
+      <if test="distributionTradeId!=null and distributionTradeId!=''">AND
+        so.distribution_trade_id=#{distributionTradeId}
+      </if>
+      <if test="distributionTradeIds!=null and distributionTradeIds.size>0">
+        AND so.distribution_trade_id IN
+        <foreach item="item" index="index" collection="distributionTradeIds" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="holdDateBegin!=null">
+        <![CDATA[AND so.hold_date>=#{holdDateBegin}]]>
+      </if>
+      <if test="holdDateEnd!=null">
+        <![CDATA[AND so.hold_date<=#{holdDateEnd}]]>
+      </if>
+      <if test="forceSplit!=null">AND so.is_force_split=#{forceSplit}</if>
+      <if test="hold!=null">AND so.is_hold=#{hold}</if>
+      <if test="manual!=null">AND so.is_manual=#{manual}</if>
+      <if test="oos!=null">AND so.is_oos=#{oos}</if>
+      <if test="urgent!=null">AND so.is_urgent=#{urgent}</if>
+      <if test="lastExpressNo!=null and lastExpressNo!=''">AND so.last_express_no=#{lastExpressNo}
+      </if>
+      <if test="mergeFlag!=null and mergeFlag!=''">AND so.merge_flag=#{mergeFlag}</if>
+      <if test="mobile!=null and mobile!=''">AND so.mobile=#{mobile}</if>
+      <if test="mobiles!=null and mobiles.size>0">
+        AND so.mobile IN
+        <foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND so.modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND so.modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="payStatus!=null">AND so.pay_status=#{payStatus}</if>
+      <if test="provinceId!=null">AND so.province_id=#{provinceId}</if>
+      <if test="refundStatus!=null">AND so.refund_status=#{refundStatus}</if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">AND
+        so.sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderCodes!=null and salesOrderCodes.size>0">
+        AND so.sales_order_code IN
+        <foreach item="item" index="index" collection="salesOrderCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="dispatchOrderCodes!=null and dispatchOrderCodes.size>0">
+        AND so.sales_order_id IN (SELECT sales_order_id FROM oms_dispatch_order_detail WHERE
+        dispatch_order_id
+        IN
+        (SELECT dispatch_order_id from oms_dispatch_order where dispatch_order_code IN
+        <foreach item="item" index="index" collection="dispatchOrderCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+        ))
+      </if>
+      <if test="salesOrderDetailRefundStatus != null">
+        AND so.sales_order_id IN (SELECT DISTINCT sales_order_id FROM oms_sales_order_detail
+        WHERE sales_order_detail_refund_status = #{salesOrderDetailRefundStatus} AND is_deleted=0)
+      </if>
+      <if test="detailQuantityBegin!=null and detailQuantityEnd==null">
+        <![CDATA[AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_detail WHERE product_id != 1 AND is_deleted=0 GROUP BY sales_order_id HAVING SUM(quantity) >= #{detailQuantityBegin})]]>
+      </if>
+      <if test="detailQuantityEnd!=null and detailQuantityBegin==null">
+        <![CDATA[AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_detail WHERE product_id != 1 AND is_deleted=0 GROUP BY sales_order_id HAVING SUM(quantity) < #{detailQuantityEnd})]]>
+      </if>
+      <if test="detailQuantityBegin!=null and detailQuantityEnd!=null">
+        <![CDATA[AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_detail WHERE product_id != 1 AND is_deleted=0 GROUP BY sales_order_id HAVING SUM(quantity) >= #{detailQuantityBegin} AND SUM(quantity) < #{detailQuantityEnd})]]>
+      </if>
+      <if test="salesOrderId!=null">AND so.sales_order_id=#{salesOrderId}</if>
+      <if test="salesOrderIds!=null and salesOrderIds.size>0">
+        AND so.sales_order_id IN
+        <foreach item="item" index="index" collection="salesOrderIds" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="status!=null">AND so.status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND so.store_id=#{storeId}</if>
+      <if test="telephone!=null and telephone!=''">AND so.telephone=#{telephone}</if>
+      <if test="telephones!=null and telephones.size>0">
+        AND so.telephone IN
+        <foreach item="item" index="index" collection="telephones" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="tradeId!=null and tradeId!=''">AND so.trade_id=#{tradeId}</if>
+      <if test="tradeIds!=null and tradeIds.size>0">
+        AND so.trade_id IN
+        <foreach item="item" index="index" collection="tradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND so.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="sub!=null">
+        <if test="sub.createType!=null">AND sub.create_type=#{sub.createType}</if>
+        <if test="sub.blacklist!=null">AND sub.is_blacklist=#{sub.blacklist}</if>
+        <if test="sub.cod!=null">AND sub.is_cod=#{sub.cod}</if>
+        <if test="sub.hasInvoice!=null">AND sub.is_has_invoice=#{sub.hasInvoice}</if>
+        <if test="sub.newMember!=null">AND sub.is_new_member=#{sub.newMember}</if>
+        <if test="sub.prepay!=null">AND sub.is_prepay=#{sub.prepay}</if>
+        <if test="sub.thirdDelivery!=null">AND sub.is_third_delivery=#{sub.thirdDelivery}</if>
+        <if test="sub.mallCreatedTimeBegin!=null">
+          <![CDATA[AND sub.mall_created_time>=#{sub.mallCreatedTimeBegin}]]>
+        </if>
+        <if test="sub.mallCreatedTimeEnd!=null">
+          <![CDATA[AND sub.mall_created_time<#{sub.mallCreatedTimeEnd}]]>
+        </if>
+        <if test="sub.mallFinishedTimeBegin!=null">
+          <![CDATA[AND sub.mall_finished_time>=#{sub.mallFinishedTimeBegin}]]>
+        </if>
+        <if test="sub.mallFinishedTimeEnd!=null">
+          <![CDATA[AND sub.mall_finished_time<#{sub.mallFinishedTimeEnd}]]>
+        </if>
+        <if test="sub.mallModifiedTimeBegin!=null">
+          <![CDATA[AND sub.mall_modified_time>=#{sub.mallModifiedTimeBegin}]]>
+        </if>
+        <if test="sub.mallModifiedTimeEnd!=null">
+          <![CDATA[AND sub.mall_modified_time<#{sub.mallModifiedTimeEnd}]]>
+        </if>
+        <if test="sub.mallPaidTimeBegin!=null">
+          <![CDATA[AND sub.mall_paid_time>=#{sub.mallPaidTimeBegin}]]>
+        </if>
+        <if test="sub.mallPaidTimeEnd!=null">
+          <![CDATA[AND sub.mall_paid_time<#{sub.mallPaidTimeEnd}]]>
+        </if>
+        <if test="sub.mallPrepayTimeBegin!=null">
+          <![CDATA[AND sub.mall_prepay_time>=#{sub.mallPrepayTimeBegin}]]>
+        </if>
+        <if test="sub.mallPrepayTimeEnd!=null">
+          <![CDATA[AND sub.mall_prepay_time<#{sub.mallPrepayTimeEnd}]]>
+        </if>
+        <if test="sub.memberId!=null">AND sub.member_id=#{sub.memberId}</if>
+        <if test="sub.memberName!=null and sub.memberName!=''">AND
+          sub.member_name=#{sub.memberName}
+        </if>
+        <if test="sub.presellType!=null">AND sub.presell_type=#{sub.presellType}</if>
+        <if test="sub.presellDeliveryDateBegin!=null">
+          <![CDATA[AND sub.presell_delivery_date>=#{sub.presellDeliveryDateBegin}]]>
+        </if>
+        <if test="sub.presellDeliveryDateEnd!=null">
+          <![CDATA[AND sub.presell_delivery_date<#{sub.presellDeliveryDateEnd}]]>
+        </if>
+        <if test="sub.salesOrderType!=null">AND sub.sales_order_type=#{sub.salesOrderType}</if>
+      </if>
+      <if test="productCode!=null and productCode!=''">
+        AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_detail WHERE
+        product_code=#{productCode} AND is_deleted=0)
+      </if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_detail WHERE
+        sku_code=#{skuCode} AND is_deleted=0)
+      </if>
+      <if test="marketingCode!=null and marketingCode!=''">
+        AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_marketing WHERE
+        marketing_code=#{marketingCode})
+      </if>
+      <if test="dropShipping!=null">
+        <choose>
+          <when test="dropShipping==true">
+            AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_detail WHERE
+            is_drop_shipping=1 AND is_deleted=0)
+          </when>
+          <otherwise>
+            AND so.sales_order_id IN (SELECT sales_order_id FROM oms_sales_order_detail WHERE
+            is_drop_shipping=0 AND is_deleted=0)
+          </otherwise>
+        </choose>
+      </if>
+      <if test="expressNo!=null and expressNo!=''">
+        AND so.sales_order_id IN (SELECT sales_order_id FROM oms_dispatch_order_delivery WHERE
+        express_no=#{expressNo})
+      </if>
+      <if test="productAbnormal!=null">AND is_product_abnormal=#{productAbnormal}</if>
+      <if test="deliveryStatuses!=null and deliveryStatuses.size>0">
+        AND delivery_status IN
+        <foreach item="item" index="index" collection="deliveryStatuses" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="dispatchStatuses!=null and dispatchStatuses.size>0">
+        AND dispatch_status IN
+        <foreach item="item" index="index" collection="dispatchStatuses" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="listSubInfo" resultMap="subInfo">
+    SELECT so.*,
+    <include refid="sub_columns"/>
+    FROM oms_sales_order so JOIN oms_sales_order_sub sub ON so.sales_order_id=sub.sales_order_id
+    <include refid="advancedWhere"/>
+    ORDER BY so.sales_order_id DESC
+  </select>
+  <select id="listSubInfoPage" resultMap="subInfo">
+    SELECT so.*,
+    <include refid="sub_columns"/>
+    FROM oms_sales_order so JOIN oms_sales_order_sub sub ON so.sales_order_id=sub.sales_order_id
+    <include refid="advancedWhere"/>
+    ORDER BY so.sales_order_id DESC
+  </select>
+  <select id="getSubInfo" resultMap="subInfo">
+    SELECT so.*,
+    <include refid="sub_columns"/>
+    FROM oms_sales_order so
+    JOIN oms_sales_order_sub sub ON so.sales_order_id = sub.sales_order_id
+    WHERE so.sales_order_id = #{_parameter}
+  </select>
+  <select id="getSimpleInfo" resultMap="subInfo">
+    SELECT so.sales_order_id,
+           so.sales_order_code,
+           so.trade_id,
+           so.distribution_trade_id,
+           so.status,
+           so.dispatch_status,
+           so.delivery_status,
+           so.refund_status,
+           so.pay_status,
+           so.actual_amount,
+           so.settlement_amount,
+           so.distribution_amount,
+           so.quantity,
+           so.contact,
+           so.mobile,
+           so.telephone,
+           so.country_name,
+           so.province_name,
+           so.city_name,
+           so.district_name,
+           so.address,
+           so.is_oos,
+           so.is_hold,
+           so.is_urgent,
+           so.is_manual,
+           so.is_force_split,
+           so.store_id,
+           so.suggest_warehouse_id,
+           so.suggest_warehouse_name,
+           so.suggest_virtual_warehouse_id,
+           so.suggest_virtual_warehouse_name,
+           so.version,
+           sub.is_cod           AS sub_is_cod,
+           sub.is_has_invoice   AS sub_is_has_invoice,
+           sub.is_prepay        AS sub_is_prepay,
+           sub.is_new_member    AS sub_is_new_member,
+           sub.is_blacklist     AS sub_is_blacklist,
+           sub.sales_order_type as sub_sales_order_type
+    FROM oms_sales_order so
+           JOIN oms_sales_order_sub sub ON so.sales_order_id = sub.sales_order_id
+    WHERE so.sales_order_id = #{_parameter}
+  </select>
+  <select id="getDispatchInfo" resultMap="subInfo">
+    SELECT so.sales_order_id,
+           so.trade_id,
+           so.distribution_trade_id,
+           so.status,
+           so.dispatch_status,
+           so.delivery_status,
+           so.is_oos,
+           so.is_hold,
+           so.is_urgent,
+           so.is_manual,
+           so.is_force_split,
+           so.store_id,
+           so.store_name,
+           so.cod_amount,
+           so.suggest_virtual_warehouse_id,
+           so.version,
+           sub.member_id        AS sub_member_id,
+           sub.member_name      AS sub_member_name,
+           sub.is_cod           AS sub_is_cod,
+           sub.is_has_invoice   AS sub_is_has_invoice,
+           sub.is_prepay        AS sub_is_prepay,
+           sub.is_new_member    AS sub_is_new_member,
+           sub.is_blacklist     AS sub_is_blacklist,
+           sub.seller_memo      AS sub_seller_memo,
+           sub.buyer_memo       AS sub_buyer_memo,
+           sub.mall_paid_time   AS sub_mall_paid_time,
+           sub.sales_order_type AS sub_sales_order_type
+    FROM oms_sales_order so
+           JOIN oms_sales_order_sub sub ON so.sales_order_id = sub.sales_order_id
+    WHERE so.sales_order_id = #{_parameter}
+  </select>
+  <update id="updateVersion">
+    UPDATE oms_sales_order
+    <trim prefix="SET" prefixOverrides="," suffixOverrides=",">
+      <include refid="mustUpdateSql"></include>
+    </trim>
+    WHERE sales_order_id = #{salesOrderId} AND version = #{version}
+  </update>
+  <update id="updateHold">
+    UPDATE oms_sales_order
+    <trim prefix="SET" prefixOverrides="," suffixOverrides=",">
+      <include refid="mustUpdateSql"/>
+      is_hold = #{hold}, hold_date = #{holdDate}
+    </trim>
+    WHERE sales_order_id = #{salesOrderId} AND version = #{version}
+  </update>
+  <update id="updateManual">
+    UPDATE oms_sales_order
+    <trim prefix="SET" prefixOverrides="," suffixOverrides=",">
+      <include refid="mustUpdateSql"/>
+      is_manual = #{manual},
+      manual_user = #{manualUser}
+    </trim>
+    WHERE sales_order_id = #{salesOrderId} AND version = #{version}
+  </update>
+  <update id="updateUrgent">
+    UPDATE oms_sales_order
+    <trim prefix="SET" prefixOverrides="," suffixOverrides=",">
+      <include refid="mustUpdateSql"/>
+      is_urgent = #{urgent}
+    </trim>
+    WHERE sales_order_id = #{salesOrderId} AND version = #{version}
+  </update>
+  <select id="listWaitingDispatchByMD5" resultMap="detailInfo">
+    <![CDATA[
+    SELECT so.actual_amount,
+           so.address,
+           so.city_id,
+           so.cod_amount,
+           so.contact,
+           so.country_id,
+           so.district_id,
+           so.hold_date,
+           so.is_hold,
+           so.is_manual,
+           so.is_oos,
+           so.is_urgent,
+           so.merge_flag,
+           so.mobile,
+           so.province_id,
+           so.quantity,
+           so.country_name,
+           so.province_name,
+           so.city_name,
+           so.district_name,
+           so.sales_order_code,
+           so.sales_order_id,
+           so.selling_amount,
+           so.settlement_amount,
+           so.status,
+           so.store_id,
+           so.store_name,
+           so.suggest_express_id,
+           so.suggest_express_name,
+           so.suggest_express_no,
+           so.suggest_virtual_warehouse_id,
+           so.suggest_virtual_warehouse_name,
+           so.telephone,
+           so.trade_id,
+           so.version,
+           sub.buyer_memo                           AS sub_buyer_memo,
+           sub.currency_code                        AS sub_currency_code,
+           sub.express_fee                          AS sub_express_fee,
+           sub.freight_risk_fee                     AS sub_freight_risk_fee,
+           sub.is_blacklist                         AS sub_is_blacklist,
+           sub.is_cod                               AS sub_is_cod,
+           sub.is_has_invoice                       AS sub_is_has_invoice,
+           sub.is_new_member                        AS sub_is_new_member,
+           sub.is_prepay                            AS sub_is_prepay,
+           sub.member_id                            AS sub_member_id,
+           sub.member_name                          AS sub_member_name,
+           sub.package_no                           AS sub_package_no,
+           sub.seller_memo                          AS sub_seller_memo,
+           sub.weight                               AS sub_weight,
+           sub.zipcode                              AS sub_zipcode,
+           sub.mall_paid_time                       AS sub_mall_paid_time,
+           details.product_id                       AS detail_product_id,
+           details.product_code                     AS detail_product_code,
+           details.product_name                     AS detail_product_name,
+           details.sku_id                           AS detail_sku_id,
+           details.sku_code                         AS detail_sku_code,
+           details.sku_name                         AS detail_sku_name,
+           details.cost_price                       AS detail_cost_price,
+           details.selling_price                    AS detail_selling_price,
+           details.settlement_price                 AS detail_settlement_price,
+           details.distribution_price               AS detail_distribution_price,
+           details.discount_amount                  AS detail_discount_amount,
+           details.selling_amount                   AS detail_selling_amount,
+           details.settlement_amount                AS detail_settlement_amount,
+           details.actual_amount                    AS detail_actual_amount,
+           details.distribution_amount              AS detail_distribution_amount,
+           details.is_combination                   AS detail_is_combination,
+           details.is_lock_stock                    AS detail_is_lock_stock,
+           details.is_gift                          AS detail_is_gift,
+           details.is_manual_add                    AS detail_is_manual_add,
+           details.is_oos                           AS detail_is_oos,
+           details.sales_order_detail_refund_status AS detail_sales_order_detail_refund_status,
+           details.quantity                         AS detail_quantity,
+           details.sales_order_detail_id            AS detail_sales_order_detail_id,
+           details.product_id                       AS detail_product_id,
+           details.sku_id                           AS detail_sku_id,
+           details.sales_order_detail_type          AS detail_sales_order_detail_type,
+           details.sales_order_id                   AS detail_sales_order_id,
+           details.status                           AS detail_status
+    FROM oms_sales_order so
+           JOIN oms_sales_order_sub sub ON so.sales_order_id = sub.sales_order_id
+           JOIN oms_sales_order_detail details ON so.sales_order_id = details.sales_order_id
+    WHERE so.merge_flag = #{_parameter}
+      AND so.status < 100
+      AND so.is_product_abnormal = 0
+      AND so.dispatch_status IN (1, 2)
+      AND so.pay_status = 3
+      AND so.is_prerefund = 0
+      AND details.sales_order_detail_type = 2
+      AND details.status = 2
+      AND details.sales_order_detail_refund_status = 1
+      AND details.is_product_abnormal = 0
+      AND details.is_deleted=0
+    ]]>
+  </select>
+  <select id="listDetail" resultMap="detailInfo">
+    SELECT so.actual_amount, so.address, so.city_id, so.cod_amount, so.contact, so.country_id,
+    so.district_id,
+    so.hold_date, so.is_hold, so.is_manual, so.is_oos, so.is_urgent, so.merge_flag,
+    so.mobile, so.province_id, so.quantity,
+    so.country_name,so.province_name,so.city_name,so.district_name,
+    so.sales_order_code, so.sales_order_id, so.selling_amount, so.settlement_amount,
+    so.status,so.delivery_status,
+    so.store_id,
+    so.store_name,
+    so.suggest_express_id, so.suggest_express_name, so.suggest_express_no,
+    so.suggest_virtual_warehouse_id,
+    so.suggest_virtual_warehouse_name, so.telephone, so.trade_id, so.version,
+    sub.buyer_memo AS sub_buyer_memo, sub.currency_code AS sub_currency_code, sub.express_fee AS
+    sub_express_fee,
+    sub.freight_risk_fee AS sub_freight_risk_fee,
+    sub.is_blacklist AS sub_is_blacklist, sub.is_cod AS sub_is_cod, sub.is_has_invoice AS
+    sub_is_has_invoice,
+    sub.is_new_member AS sub_is_new_member, sub.is_prepay AS sub_is_prepay,
+    sub.member_id AS sub_member_id, sub.member_name AS sub_member_name, sub.package_no AS
+    sub_package_no,
+    sub.seller_memo AS sub_seller_memo, sub.weight AS sub_weight,
+    sub.zipcode AS sub_zipcode, sub.mall_paid_time AS sub_mall_paid_time, details.product_id AS
+    detail_product_id,
+    details.product_code AS detail_product_code,details.product_type AS detail_product_type,
+    details.product_name AS detail_product_name, details.sku_id AS detail_sku_id, details.sku_code
+    AS
+    detail_sku_code,
+    details.sku_name AS detail_sku_name, details.cost_price AS detail_cost_price,
+    details.selling_price AS detail_selling_price, details.settlement_price AS
+    detail_settlement_price,
+    details.distribution_price AS detail_distribution_price,
+    details.discount_amount AS detail_discount_amount, details.selling_amount AS
+    detail_selling_amount,
+    details.settlement_amount AS detail_settlement_amount,
+    details.actual_amount AS detail_actual_amount, details.distribution_amount AS
+    detail_distribution_amount,
+    details.is_combination AS detail_is_combination,
+    details.is_lock_stock AS detail_is_lock_stock, details.is_gift AS detail_is_gift,
+    details.is_manual_add AS
+    detail_is_manual_add, details.is_oos AS detail_is_oos,
+    details.sales_order_detail_refund_status AS detail_sales_order_detail_refund_status,
+    details.quantity AS
+    detail_quantity, details.sales_order_detail_id AS detail_sales_order_detail_id,
+    details.product_id
+    AS
+    detail_product_id,
+    details.sku_id AS detail_sku_id, details.sales_order_detail_type AS
+    detail_sales_order_detail_type,
+    details.sales_order_id AS detail_sales_order_id, details.status AS detail_status
+    FROM oms_sales_order so
+    JOIN oms_sales_order_sub sub ON so.sales_order_id = sub.sales_order_id
+    JOIN oms_sales_order_detail details ON so.sales_order_id = details.sales_order_id
+    <include refid="advancedWhere"/>
+  </select>
+  <select id="listMergeOrderId" resultType="Long">
+    <![CDATA[
+    SELECT sales_order_id
+    FROM oms_sales_order
+    WHERE merge_flag = #{mergeFlag}
+      AND status > 10
+      AND status < 100
+      AND dispatch_status in (1, 2)
+      AND pay_status = 3
+    ]]>
+  </select>
+
+  <resultMap id="salesOrderInfoMap" type="com.greatonce.oms.domain.trade.SalesOrder">
+    <id column="sales_order_id" property="salesOrderId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="quantity" property="quantity"/>
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="status" property="status"/>
+  </resultMap>
+  <select id="stockOccupancyDetail" resultMap="salesOrderInfoMap">
+    SELECT s.sales_order_id, s.sales_order_code, s.`status`, o.quantity, s.created_time
+    FROM oms_sales_order s,
+         (SELECT quantity, created_time, main_id
+          FROM oms_stock_occupancy
+          WHERE stock_occupancy_type = 2
+            AND STATUS IN (2, 3)
+            AND sku_code = #{skuCode}
+            AND virtual_warehouse_id = ${virtualWarehouseId}) o
+    WHERE s.sales_order_id = o.main_id
+  </select>
+  <select id="listOOSRedispatchIds" resultType="Long">
+    SELECT sales_order_id
+    FROM oms_sales_order
+    WHERE is_oos = 1
+      and status not in (1, 10, 100)
+      and is_manual = 0
+  </select>
+  <select id="clearOos">
+    UPDATE oms_sales_order
+    set is_oos = 0
+    WHERE is_oos = 1
+  </select>
+
+  <select id="listMallDeliveryAbnormalOrders" resultMap="resultMap">
+    SELECT
+      a.sales_order_id, a.trade_id, a.modified_time, a.store_name
+    FROM oms_sales_order a
+      JOIN oms_dispatch_order_detail b ON a.sales_order_id = b.sales_order_id
+      JOIN oms_sales_order_sub c ON a.sales_order_id = c.sales_order_id
+    WHERE
+      a.mall_sales_order_status = 20
+      AND a.refund_status != 3
+      AND c.sales_order_type NOT IN (5,6)
+      AND b.`status` = 2
+      AND b.is_deleted = 0
+  </select>
+
+  <select id="listForBatch" resultMap="subInfo">
+    SELECT so.sales_order_id, so.is_oos, so.is_hold, so.is_urgent, so.is_manual, so.is_force_split,
+    so.trade_id, so.status, so.dispatch_status, so.delivery_status, so.refund_status, so.store_id,
+    so.store_name, so.contact, so.country_name, so.province_name, so.city_name, so.district_name,
+    so.address, so.created_time, so.modified_time, so.version, so.suggest_virtual_warehouse_id,
+    so.store_id, so.suggest_express_name, so.sales_order_code,
+    sub.is_cod AS sub_is_cod, sub.is_new_member AS sub_is_new_member, sub.is_prepay AS
+    sub_is_prepay, sub.member_name AS sub_member_name,
+    sub.is_has_invoice AS sub_is_has_invoice, sub.sales_order_type AS sub_sales_order_type,
+    sub.buyer_memo AS sub_buyer_memo, sub.seller_memo AS sub_seller_memo
+    FROM oms_sales_order so JOIN oms_sales_order_sub sub ON so.sales_order_id = sub.sales_order_id
+    WHERE so.sales_order_id IN
+    <foreach item="item" index="index" collection="salesOrderIds" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    ORDER BY so.sales_order_id DESC
+  </select>
+
+  <select id="getSalesOrderIdByStoreIdAndTradeId" parameterType="map" resultType="Long">
+    <![CDATA[
+    SELECT sales_order_id
+    FROM oms_sales_order
+    WHERE store_id = #{storeId}
+      AND trade_id = #{tradeId}
+    ORDER BY sales_order_id
+    limit 0,1
+    ]]>
+  </select>
+
+  <update id="updateSuggestExpress" parameterType="com.greatonce.oms.domain.trade.SalesOrder">
+    UPDATE oms_sales_order
+    <trim prefix="SET" suffixOverrides=",">
+      suggest_express_id=#{suggestExpressId},
+      suggest_express_name=#{suggestExpressName},
+      suggest_express_no=#{suggestExpressNo},
+      version=#{version}+1,
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sales_order_id=#{salesOrderId}
+      AND version=#{version}
+    </trim>
+  </update>
+</mapper>

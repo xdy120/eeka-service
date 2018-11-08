@@ -1,0 +1,46 @@
+{
+  "mappings": {
+    "sku": {
+      "properties": {
+        "skuId": {
+          "type": "long"
+        },
+        "skuCode": {
+          "type": "keyword"
+        },
+        "skuName": {
+          "type": "text",
+          "analyzer": "ik_max_word"
+        },
+        "productId": {
+          "type": "long"
+        },
+        "productCode": {
+          "type": "keyword"
+        },
+        "productName": {
+          "type": "text",
+          "analyzer": "ik_max_word"
+        },
+        "skuBarcode": {
+          "type": "keyword"
+        },
+        "spuBarcode": {
+          "type": "keyword"
+        },
+        "brandCode": {
+          "type": "keyword"
+        },
+        "waveband": {
+          "type": "keyword"
+        },
+        "listingYear": {
+          "type": "keyword"
+        },
+        "prepackage": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

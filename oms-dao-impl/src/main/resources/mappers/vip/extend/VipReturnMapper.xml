@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipReturnMapper">
+
+  <resultMap id="exportList" type="com.greatonce.oms.bo.vip.VipReturnExportBO">
+    <result column="vip_return_code" property="vipReturnCode"/>
+    <result column="outer_code" property="outerCode"/>
+    <result column="status" property="status"/>
+    <result column="vip_sign_status" property="vipSignStatus"/>
+    <result column="vip_return_type" property="vipReturnType"/>
+    <result column="store_name" property="storeName"/>
+    <result column="vip_warehouse_name" property="vipWarehouseName"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+    <result column="box_quantity" property="boxQuantity"/>
+    <result column="box_number" property="boxNumber"/>
+    <result column="po_code" property="poCode"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="vip_price" property="vipPrice"/>
+    <result column="return_quantity" property="returnQuantity"/>
+    <result column="scan_quantity" property="scanQuantity"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="vip_amount" property="vipAmount"/>
+    <result column="creator" property="creator"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="signer" property="signer"/>
+    <result column="sign_time" property="signTime"/>
+  </resultMap>
+  <select id="exportListVipReturn" resultMap="exportList">
+    SELECT
+      main.vip_return_code,
+      main.outer_code,
+      main.status,
+      main.vip_sign_status,
+      main.vip_return_type,
+      main.store_name,
+      main.vip_warehouse_name,
+      main.virtual_warehouse_name,
+      main.box_quantity,
+      detail.box_number,
+      detail.po_code,
+      detail.sku_code,
+      detail.sku_name,
+      detail.vip_price,
+      detail.return_quantity,
+      detail.scan_quantity,
+      detail.notice_quantity,
+      detail.vip_amount,
+      main.creator,
+      detail.created_time,
+      main.signer,
+      main.sign_time
+    FROM oms_vip_return main
+    JOIN oms_vip_return_detail detail ON main.vip_return_id=detail.vip_return_id
+    <include refid="where"/>
+  </select>
+</mapper>

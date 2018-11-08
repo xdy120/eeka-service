@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockInBatchMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.stock.StockInBatch">
+    <id column="stock_in_batch_id" property="stockInBatchId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="in_time" property="inTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="notice_order_code" property="noticeOrderCode"/>
+    <result column="notice_order_id" property="noticeOrderId"/>
+    <result column="notice_order_type" property="noticeOrderType"/>
+    <result column="post_status" property="postStatus"/>
+    <result column="wms_order_code" property="wmsOrderCode"/>
+  </resultMap>
+  <sql id="columns">created_time,in_time,modified_time,notice_order_code,notice_order_id,notice_order_type,post_status,stock_in_batch_id,wms_order_code</sql>
+  <sql id="pkWhere">
+    WHERE stock_in_batch_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="inTime!=null">AND in_time=#{inTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="noticeOrderCode!=null and noticeOrderCode!=''">
+        AND notice_order_code=#{noticeOrderCode}
+      </if>
+      <if test="noticeOrderId!=null">AND notice_order_id=#{noticeOrderId}</if>
+      <if test="noticeOrderType!=null">AND notice_order_type=#{noticeOrderType}</if>
+      <if test="postStatus!=null">AND post_status=#{postStatus}</if>
+      <if test="stockInBatchId!=null">AND stock_in_batch_id=#{stockInBatchId}</if>
+      <if test="wmsOrderCode!=null and wmsOrderCode!=''">
+        AND wms_order_code=#{wmsOrderCode}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="inTimeBegin!=null">
+        <![CDATA[AND in_time>=#{inTimeBegin}]]>
+      </if>
+      <if test="inTimeEnd!=null">
+        <![CDATA[AND in_time<#{inTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="noticeOrderCode!=null and noticeOrderCode!=''">
+        AND notice_order_code=#{noticeOrderCode}
+      </if>
+      <if test="noticeOrderId!=null">AND notice_order_id=#{noticeOrderId}</if>
+      <if test="noticeOrderType!=null">AND notice_order_type=#{noticeOrderType}</if>
+      <if test="postStatus!=null">AND post_status=#{postStatus}</if>
+      <if test="stockInBatchId!=null">AND stock_in_batch_id=#{stockInBatchId}</if>
+      <if test="wmsOrderCode!=null and wmsOrderCode!=''">
+        AND wms_order_code=#{wmsOrderCode}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_in_batch_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.stock.StockInBatch">
+    INSERT INTO oms_stock_in_batch(created_time,in_time,modified_time,notice_order_code,notice_order_id,notice_order_type,post_status,stock_in_batch_id,wms_order_code)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{inTime},
+      now(),
+      #{noticeOrderCode},
+      #{noticeOrderId},
+      #{noticeOrderType},
+      #{postStatus},
+      #{stockInBatchId},
+      #{wmsOrderCode},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.stock.StockInBatch">
+    UPDATE oms_stock_in_batch
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="inTime!=null">in_time=#{inTime},</if>
+      modified_time=now(),
+      <if test="noticeOrderCode!=null">notice_order_code=#{noticeOrderCode},</if>
+      <if test="noticeOrderId!=null">notice_order_id=#{noticeOrderId},</if>
+      <if test="noticeOrderType!=null">notice_order_type=#{noticeOrderType},</if>
+      <if test="postStatus!=null">post_status=#{postStatus},</if>
+      <if test="wmsOrderCode!=null">wms_order_code=#{wmsOrderCode},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_in_batch_id=#{stockInBatchId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.stock.StockInBatch">
+    UPDATE oms_stock_in_batch
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.inTime!=null">
+        in_time=#{record.inTime},
+      </if>
+      modified_time=now(),
+      <if test="record.noticeOrderCode!=null">
+        notice_order_code=#{record.noticeOrderCode},
+      </if>
+      <if test="record.noticeOrderId!=null">
+        notice_order_id=#{record.noticeOrderId},
+      </if>
+      <if test="record.noticeOrderType!=null">
+        notice_order_type=#{record.noticeOrderType},
+      </if>
+      <if test="record.postStatus!=null">
+        post_status=#{record.postStatus},
+      </if>
+      <if test="record.wmsOrderCode!=null">
+        wms_order_code=#{record.wmsOrderCode},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.inTime!=null">
+      AND in_time=#{example.inTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.noticeOrderCode!=null">
+      AND notice_order_code=#{example.noticeOrderCode}
+      </if>
+      <if test="example.noticeOrderId!=null">
+      AND notice_order_id=#{example.noticeOrderId}
+      </if>
+      <if test="example.noticeOrderType!=null">
+      AND notice_order_type=#{example.noticeOrderType}
+      </if>
+      <if test="example.postStatus!=null">
+      AND post_status=#{example.postStatus}
+      </if>
+      <if test="example.stockInBatchId!=null">
+      AND stock_in_batch_id=#{example.stockInBatchId}
+      </if>
+      <if test="example.wmsOrderCode!=null">
+      AND wms_order_code=#{example.wmsOrderCode}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_in_batch
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_in_batch
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_in_batch
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_in_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_in_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_in_batch
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_in_batch
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_in_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_in_batch
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

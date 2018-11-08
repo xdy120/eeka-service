@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.StockDispatchStrategyMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.StockDispatchStrategy">
+    <id column="stock_dispatch_strategy_id" property="stockDispatchStrategyId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="default_cod_express_id" property="defaultCodExpressId"/>
+    <result column="default_cod_express_name" property="defaultCodExpressName"/>
+    <result column="default_express_id" property="defaultExpressId"/>
+    <result column="default_express_name" property="defaultExpressName"/>
+    <result column="is_enable" property="enable"/>
+    <result column="mall_warehouse" property="mallWarehouse"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="setting_json" property="settingJson"/>
+    <result column="stock_dispatch_strategy_name" property="stockDispatchStrategyName"/>
+  </resultMap>
+  <sql id="columns">created_time,default_cod_express_id,default_cod_express_name,default_express_id,default_express_name,is_enable,mall_warehouse,modified_time,setting_json,stock_dispatch_strategy_id,stock_dispatch_strategy_name</sql>
+  <sql id="pkWhere">
+    WHERE stock_dispatch_strategy_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="defaultCodExpressId!=null">AND default_cod_express_id=#{defaultCodExpressId}</if>
+      <if test="defaultCodExpressName!=null and defaultCodExpressName!=''">
+        AND default_cod_express_name=#{defaultCodExpressName}
+      </if>
+      <if test="defaultExpressId!=null">AND default_express_id=#{defaultExpressId}</if>
+      <if test="defaultExpressName!=null and defaultExpressName!=''">
+        AND default_express_name=#{defaultExpressName}
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="mallWarehouse!=null and mallWarehouse!=''">
+        AND mall_warehouse=#{mallWarehouse}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="settingJson!=null and settingJson!=''">
+        AND setting_json=#{settingJson}
+      </if>
+      <if test="stockDispatchStrategyId!=null">AND stock_dispatch_strategy_id=#{stockDispatchStrategyId}</if>
+      <if test="stockDispatchStrategyName!=null and stockDispatchStrategyName!=''">
+        AND stock_dispatch_strategy_name=#{stockDispatchStrategyName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="defaultCodExpressId!=null">AND default_cod_express_id=#{defaultCodExpressId}</if>
+      <if test="defaultCodExpressName!=null and defaultCodExpressName!=''">
+        AND default_cod_express_name=#{defaultCodExpressName}
+      </if>
+      <if test="defaultExpressId!=null">AND default_express_id=#{defaultExpressId}</if>
+      <if test="defaultExpressName!=null and defaultExpressName!=''">
+        AND default_express_name=#{defaultExpressName}
+      </if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="mallWarehouse!=null and mallWarehouse!=''">
+        AND mall_warehouse=#{mallWarehouse}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="settingJson!=null and settingJson!=''">
+        AND setting_json=#{settingJson}
+      </if>
+      <if test="stockDispatchStrategyId!=null">AND stock_dispatch_strategy_id=#{stockDispatchStrategyId}</if>
+      <if test="stockDispatchStrategyName!=null and stockDispatchStrategyName!=''">
+        AND stock_dispatch_strategy_name=#{stockDispatchStrategyName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_dispatch_strategy_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.StockDispatchStrategy">
+    INSERT INTO oms_stock_dispatch_strategy(created_time,default_cod_express_id,default_cod_express_name,default_express_id,default_express_name,is_enable,mall_warehouse,modified_time,setting_json,stock_dispatch_strategy_id,stock_dispatch_strategy_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{defaultCodExpressId},
+      #{defaultCodExpressName},
+      #{defaultExpressId},
+      #{defaultExpressName},
+      #{enable},
+      #{mallWarehouse},
+      now(),
+      #{settingJson},
+      #{stockDispatchStrategyId},
+      #{stockDispatchStrategyName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.StockDispatchStrategy">
+    UPDATE oms_stock_dispatch_strategy
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="defaultCodExpressId!=null">default_cod_express_id=#{defaultCodExpressId},</if>
+      <if test="defaultCodExpressName!=null">default_cod_express_name=#{defaultCodExpressName},</if>
+      <if test="defaultExpressId!=null">default_express_id=#{defaultExpressId},</if>
+      <if test="defaultExpressName!=null">default_express_name=#{defaultExpressName},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      <if test="mallWarehouse!=null">mall_warehouse=#{mallWarehouse},</if>
+      modified_time=now(),
+      <if test="settingJson!=null">setting_json=#{settingJson},</if>
+      <if test="stockDispatchStrategyName!=null">stock_dispatch_strategy_name=#{stockDispatchStrategyName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_dispatch_strategy_id=#{stockDispatchStrategyId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.StockDispatchStrategy">
+    UPDATE oms_stock_dispatch_strategy
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.defaultCodExpressId!=null">
+        default_cod_express_id=#{record.defaultCodExpressId},
+      </if>
+      <if test="record.defaultCodExpressName!=null">
+        default_cod_express_name=#{record.defaultCodExpressName},
+      </if>
+      <if test="record.defaultExpressId!=null">
+        default_express_id=#{record.defaultExpressId},
+      </if>
+      <if test="record.defaultExpressName!=null">
+        default_express_name=#{record.defaultExpressName},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      <if test="record.mallWarehouse!=null">
+        mall_warehouse=#{record.mallWarehouse},
+      </if>
+      modified_time=now(),
+      <if test="record.settingJson!=null">
+        setting_json=#{record.settingJson},
+      </if>
+      <if test="record.stockDispatchStrategyName!=null">
+        stock_dispatch_strategy_name=#{record.stockDispatchStrategyName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.defaultCodExpressId!=null">
+      AND default_cod_express_id=#{example.defaultCodExpressId}
+      </if>
+      <if test="example.defaultCodExpressName!=null">
+      AND default_cod_express_name=#{example.defaultCodExpressName}
+      </if>
+      <if test="example.defaultExpressId!=null">
+      AND default_express_id=#{example.defaultExpressId}
+      </if>
+      <if test="example.defaultExpressName!=null">
+      AND default_express_name=#{example.defaultExpressName}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.mallWarehouse!=null">
+      AND mall_warehouse=#{example.mallWarehouse}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.settingJson!=null">
+      AND setting_json=#{example.settingJson}
+      </if>
+      <if test="example.stockDispatchStrategyId!=null">
+      AND stock_dispatch_strategy_id=#{example.stockDispatchStrategyId}
+      </if>
+      <if test="example.stockDispatchStrategyName!=null">
+      AND stock_dispatch_strategy_name=#{example.stockDispatchStrategyName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_dispatch_strategy
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_dispatch_strategy
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_dispatch_strategy
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_dispatch_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_dispatch_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_dispatch_strategy
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_dispatch_strategy
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_dispatch_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_dispatch_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

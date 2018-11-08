@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.marketing.PresellMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.marketing.Presell">
+    <id column="presell_id" property="presellId"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="begin_time" property="beginTime"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="delivery_date" property="deliveryDate"/>
+    <result column="end_time" property="endTime"/>
+    <result column="is_dynamic" property="dynamic"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="presell_code" property="presellCode"/>
+    <result column="presell_name" property="presellName"/>
+    <result column="remark" property="remark"/>
+    <result column="status" property="status"/>
+    <result column="version" property="version"/>
+  </resultMap>
+  <sql id="columns">audited_time,auditor,begin_time,created_time,creator,delivery_date,end_time,is_dynamic,modified_time,presell_code,presell_id,presell_name,remark,status,version</sql>
+  <sql id="pkWhere">
+    WHERE presell_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTime!=null">AND audited_time=#{auditedTime}</if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="beginTime!=null">AND begin_time=#{beginTime}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="deliveryDate!=null">AND delivery_date=#{deliveryDate}</if>
+      <if test="endTime!=null">AND end_time=#{endTime}</if>
+      <if test="dynamic!=null">AND is_dynamic=#{dynamic}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="presellCode!=null and presellCode!=''">
+        AND presell_code=#{presellCode}
+      </if>
+      <if test="presellId!=null">AND presell_id=#{presellId}</if>
+      <if test="presellName!=null and presellName!=''">
+        AND presell_name=#{presellName}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="beginTimeBegin!=null">
+        <![CDATA[AND begin_time>=#{beginTimeBegin}]]>
+      </if>
+      <if test="beginTimeEnd!=null">
+        <![CDATA[AND begin_time<#{beginTimeEnd}]]>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="deliveryDateBegin!=null">
+        <![CDATA[AND delivery_date>=#{deliveryDateBegin}]]>
+      </if>
+      <if test="deliveryDateEnd!=null">
+        <![CDATA[AND delivery_date<#{deliveryDateEnd}]]>
+      </if>
+      <if test="endTimeBegin!=null">
+        <![CDATA[AND end_time>=#{endTimeBegin}]]>
+      </if>
+      <if test="endTimeEnd!=null">
+        <![CDATA[AND end_time<#{endTimeEnd}]]>
+      </if>
+      <if test="dynamic!=null">AND is_dynamic=#{dynamic}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="presellCode!=null and presellCode!=''">
+        AND presell_code=#{presellCode}
+      </if>
+      <if test="presellCodes!=null and presellCodes.size>0">
+        AND presell_code IN
+        <foreach item="item" index="index" collection="presellCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="presellId!=null">AND presell_id=#{presellId}</if>
+      <if test="presellName!=null and presellName!=''">
+        AND presell_name=#{presellName}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY presell_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.marketing.Presell">
+    INSERT INTO oms_presell(audited_time,auditor,begin_time,created_time,creator,delivery_date,end_time,is_dynamic,modified_time,presell_code,presell_id,presell_name,remark,status,version)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{auditedTime},
+      #{auditor},
+      #{beginTime},
+      now(),
+      #{creator},
+      #{deliveryDate},
+      #{endTime},
+      #{dynamic},
+      now(),
+      #{presellCode},
+      #{presellId},
+      #{presellName},
+      #{remark},
+      #{status},
+      1,
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.marketing.Presell">
+    UPDATE oms_presell
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="beginTime!=null">begin_time=#{beginTime},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="deliveryDate!=null">delivery_date=#{deliveryDate},</if>
+      <if test="endTime!=null">end_time=#{endTime},</if>
+      <if test="dynamic!=null">is_dynamic=#{dynamic},</if>
+      modified_time=now(),
+      <if test="presellCode!=null">presell_code=#{presellCode},</if>
+      <if test="presellName!=null">presell_name=#{presellName},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND presell_id=#{presellId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.marketing.Presell">
+    UPDATE oms_presell
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.auditedTime!=null">
+        audited_time=#{record.auditedTime},
+      </if>
+      <if test="record.auditor!=null">
+        auditor=#{record.auditor},
+      </if>
+      <if test="record.beginTime!=null">
+        begin_time=#{record.beginTime},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.deliveryDate!=null">
+        delivery_date=#{record.deliveryDate},
+      </if>
+      <if test="record.endTime!=null">
+        end_time=#{record.endTime},
+      </if>
+      <if test="record.dynamic!=null">
+        is_dynamic=#{record.dynamic},
+      </if>
+      modified_time=now(),
+      <if test="record.presellCode!=null">
+        presell_code=#{record.presellCode},
+      </if>
+      <if test="record.presellName!=null">
+        presell_name=#{record.presellName},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.auditedTime!=null">
+      AND audited_time=#{example.auditedTime}
+      </if>
+      <if test="example.auditor!=null">
+      AND auditor=#{example.auditor}
+      </if>
+      <if test="example.beginTime!=null">
+      AND begin_time=#{example.beginTime}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.deliveryDate!=null">
+      AND delivery_date=#{example.deliveryDate}
+      </if>
+      <if test="example.endTime!=null">
+      AND end_time=#{example.endTime}
+      </if>
+      <if test="example.dynamic!=null">
+      AND is_dynamic=#{example.dynamic}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.presellCode!=null">
+      AND presell_code=#{example.presellCode}
+      </if>
+      <if test="example.presellCodes!=null">
+      AND presell_code=#{example.presellCodes}
+      </if>
+      <if test="example.presellId!=null">
+      AND presell_id=#{example.presellId}
+      </if>
+      <if test="example.presellName!=null">
+      AND presell_name=#{example.presellName}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      AND version=#{example.version}
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_presell
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_presell
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_presell
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_presell
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

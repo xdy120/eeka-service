@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockOutBatchDetailMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.stock.StockOutBatchDetail">
+    <id column="stock_out_batch_detail_id" property="stockOutBatchDetailId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="out_amount" property="outAmount"/>
+    <result column="out_quantity" property="outQuantity"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="stock_out_batch_id" property="stockOutBatchId"/>
+  </resultMap>
+  <sql id="columns">created_time,modified_time,out_amount,out_quantity,product_code,product_id,sku_code,sku_id,stock_out_batch_detail_id,stock_out_batch_id</sql>
+  <sql id="pkWhere">
+    WHERE stock_out_batch_detail_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outAmount!=null">AND out_amount=#{outAmount}</if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="stockOutBatchDetailId!=null">AND stock_out_batch_detail_id=#{stockOutBatchDetailId}</if>
+      <if test="stockOutBatchId!=null">AND stock_out_batch_id=#{stockOutBatchId}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outAmount!=null">AND out_amount=#{outAmount}</if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="stockOutBatchDetailId!=null">AND stock_out_batch_detail_id=#{stockOutBatchDetailId}</if>
+      <if test="stockOutBatchId!=null">AND stock_out_batch_id=#{stockOutBatchId}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY stock_out_batch_detail_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.stock.StockOutBatchDetail">
+    INSERT INTO oms_stock_out_batch_detail(created_time,modified_time,out_amount,out_quantity,product_code,product_id,sku_code,sku_id,stock_out_batch_detail_id,stock_out_batch_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      now(),
+      #{outAmount},
+      #{outQuantity},
+      #{productCode},
+      #{productId},
+      #{skuCode},
+      #{skuId},
+      #{stockOutBatchDetailId},
+      #{stockOutBatchId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.stock.StockOutBatchDetail">
+    UPDATE oms_stock_out_batch_detail
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="outAmount!=null">out_amount=#{outAmount},</if>
+      <if test="outQuantity!=null">out_quantity=#{outQuantity},</if>
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="stockOutBatchId!=null">stock_out_batch_id=#{stockOutBatchId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND stock_out_batch_detail_id=#{stockOutBatchDetailId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.stock.StockOutBatchDetail">
+    UPDATE oms_stock_out_batch_detail
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="record.outAmount!=null">
+        out_amount=#{record.outAmount},
+      </if>
+      <if test="record.outQuantity!=null">
+        out_quantity=#{record.outQuantity},
+      </if>
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.stockOutBatchId!=null">
+        stock_out_batch_id=#{record.stockOutBatchId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outAmount!=null">
+      AND out_amount=#{example.outAmount}
+      </if>
+      <if test="example.outQuantity!=null">
+      AND out_quantity=#{example.outQuantity}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.stockOutBatchDetailId!=null">
+      AND stock_out_batch_detail_id=#{example.stockOutBatchDetailId}
+      </if>
+      <if test="example.stockOutBatchId!=null">
+      AND stock_out_batch_id=#{example.stockOutBatchId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_stock_out_batch_detail
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_stock_out_batch_detail
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch_detail
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_out_batch_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_out_batch_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_stock_out_batch_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

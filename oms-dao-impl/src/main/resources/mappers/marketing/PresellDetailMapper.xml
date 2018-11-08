@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.marketing.PresellDetailMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.marketing.PresellDetail">
+    <id column="presell_detail_id" property="presellDetailId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="mall_product_id" property="mallProductId"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="presell_id" property="presellId"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_name" property="skuName"/>
+  </resultMap>
+  <sql id="columns">created_time,mall_product_id,modified_time,presell_detail_id,presell_id,product_code,product_id,product_name,quantity,sku_code,sku_id,sku_name</sql>
+  <sql id="pkWhere">
+    WHERE presell_detail_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="mallProductId!=null and mallProductId!=''">
+        AND mall_product_id=#{mallProductId}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="presellDetailId!=null">AND presell_detail_id=#{presellDetailId}</if>
+      <if test="presellId!=null">AND presell_id=#{presellId}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="mallProductId!=null and mallProductId!=''">
+        AND mall_product_id=#{mallProductId}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="presellDetailId!=null">AND presell_detail_id=#{presellDetailId}</if>
+      <if test="presellId!=null">AND presell_id=#{presellId}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY presell_detail_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.marketing.PresellDetail">
+    INSERT INTO oms_presell_detail(created_time,mall_product_id,modified_time,presell_detail_id,presell_id,product_code,product_id,product_name,quantity,sku_code,sku_id,sku_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{mallProductId},
+      now(),
+      #{presellDetailId},
+      #{presellId},
+      #{productCode},
+      #{productId},
+      #{productName},
+      #{quantity},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.marketing.PresellDetail">
+    UPDATE oms_presell_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="mallProductId!=null">mall_product_id=#{mallProductId},</if>
+      modified_time=now(),
+      <if test="presellId!=null">presell_id=#{presellId},</if>
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND presell_detail_id=#{presellDetailId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.marketing.PresellDetail">
+    UPDATE oms_presell_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.mallProductId!=null">
+        mall_product_id=#{record.mallProductId},
+      </if>
+      modified_time=now(),
+      <if test="record.presellId!=null">
+        presell_id=#{record.presellId},
+      </if>
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.mallProductId!=null">
+      AND mall_product_id=#{example.mallProductId}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.presellDetailId!=null">
+      AND presell_detail_id=#{example.presellDetailId}
+      </if>
+      <if test="example.presellId!=null">
+      AND presell_id=#{example.presellId}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productCodes!=null">
+      AND product_code=#{example.productCodes}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuCodes!=null">
+      AND sku_code=#{example.skuCodes}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_presell_detail
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_presell_detail
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell_detail
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_presell_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_presell_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

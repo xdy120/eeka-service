@@ -1,0 +1,26 @@
+PUT sales_order_v1
+{
+  "settings": {
+    "index": {
+      "analysis.analyzer.default.type": "ik_max_word"
+    }
+  },
+  "aliases": {
+    "sales_order": {}
+  },
+  "mappings": {
+    "doc": {
+      "properties": {
+        "doc_join": {
+          "type": "join",
+          "relations": {
+            "order": [
+              "sub",
+              "detail"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

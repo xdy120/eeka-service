@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.SettingMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.Setting">
+    <id column="setting_id" property="settingId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="setting_json" property="settingJson"/>
+    <result column="setting_type" property="settingType"/>
+  </resultMap>
+  <sql id="columns">created_time,modified_time,setting_id,setting_json,setting_type</sql>
+  <sql id="pkWhere">
+    WHERE setting_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="settingId!=null">AND setting_id=#{settingId}</if>
+      <if test="settingJson!=null and settingJson!=''">
+        AND setting_json=#{settingJson}
+      </if>
+      <if test="settingType!=null">AND setting_type=#{settingType}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="settingId!=null">AND setting_id=#{settingId}</if>
+      <if test="settingJson!=null and settingJson!=''">
+        AND setting_json=#{settingJson}
+      </if>
+      <if test="settingType!=null">AND setting_type=#{settingType}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY setting_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.Setting">
+    INSERT INTO oms_setting(created_time,modified_time,setting_id,setting_json,setting_type)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      now(),
+      #{settingId},
+      #{settingJson},
+      #{settingType},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.Setting">
+    UPDATE oms_setting
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="settingJson!=null">setting_json=#{settingJson},</if>
+      <if test="settingType!=null">setting_type=#{settingType},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND setting_id=#{settingId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.Setting">
+    UPDATE oms_setting
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="record.settingJson!=null">
+        setting_json=#{record.settingJson},
+      </if>
+      <if test="record.settingType!=null">
+        setting_type=#{record.settingType},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.settingId!=null">
+      AND setting_id=#{example.settingId}
+      </if>
+      <if test="example.settingJson!=null">
+      AND setting_json=#{example.settingJson}
+      </if>
+      <if test="example.settingType!=null">
+      AND setting_type=#{example.settingType}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_setting
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_setting
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_setting
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_setting
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_setting
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_setting
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

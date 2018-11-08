@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.RefundOrderMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.RefundOrder">
+    <id column="refund_order_id" property="refundOrderId"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="is_cod" property="cod"/>
+    <result column="is_quick_refund" property="quickRefund"/>
+    <result column="is_refunded" property="refunded"/>
+    <result column="mall_type" property="mallType"/>
+    <result column="member_id" property="memberId"/>
+    <result column="member_name" property="memberName"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="payee_name" property="payeeName"/>
+    <result column="payee_no" property="payeeNo"/>
+    <result column="payee_organization" property="payeeOrganization"/>
+    <result column="refund_method" property="refundMethod"/>
+    <result column="refund_order_code" property="refundOrderCode"/>
+    <result column="refund_type" property="refundType"/>
+    <result column="refundable_amount" property="refundableAmount"/>
+    <result column="remark" property="remark"/>
+    <result column="return_order_code" property="returnOrderCode"/>
+    <result column="return_order_id" property="returnOrderId"/>
+    <result column="return_reason_type" property="returnReasonType"/>
+    <result column="review_time" property="reviewTime"/>
+    <result column="reviewer" property="reviewer"/>
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+    <result column="status" property="status"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="trade_id" property="tradeId"/>
+    <result column="version" property="version"/>
+  </resultMap>
+  <sql id="columns">actual_amount,audited_time,auditor,created_time,creator,is_cod,is_quick_refund,is_refunded,mall_type,member_id,member_name,modified_time,payee_name,payee_no,payee_organization,refund_method,refund_order_code,refund_order_id,refund_type,refundable_amount,remark,return_order_code,return_order_id,return_reason_type,review_time,reviewer,sales_order_code,sales_order_id,status,store_id,store_name,trade_id,version</sql>
+  <sql id="pkWhere">
+    WHERE refund_order_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="auditedTime!=null">AND audited_time=#{auditedTime}</if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="cod!=null">AND is_cod=#{cod}</if>
+      <if test="quickRefund!=null">AND is_quick_refund=#{quickRefund}</if>
+      <if test="refunded!=null">AND is_refunded=#{refunded}</if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        AND member_name=#{memberName}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="payeeName!=null and payeeName!=''">
+        AND payee_name=#{payeeName}
+      </if>
+      <if test="payeeNo!=null and payeeNo!=''">
+        AND payee_no=#{payeeNo}
+      </if>
+      <if test="payeeOrganization!=null and payeeOrganization!=''">
+        AND payee_organization=#{payeeOrganization}
+      </if>
+      <if test="refundMethod!=null and refundMethod!=''">
+        AND refund_method=#{refundMethod}
+      </if>
+      <if test="refundOrderCode!=null and refundOrderCode!=''">
+        AND refund_order_code=#{refundOrderCode}
+      </if>
+      <if test="refundOrderId!=null">AND refund_order_id=#{refundOrderId}</if>
+      <if test="refundType!=null">AND refund_type=#{refundType}</if>
+      <if test="refundableAmount!=null">AND refundable_amount=#{refundableAmount}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="returnOrderCode!=null and returnOrderCode!=''">
+        AND return_order_code=#{returnOrderCode}
+      </if>
+      <if test="returnOrderId!=null">AND return_order_id=#{returnOrderId}</if>
+      <if test="returnReasonType!=null and returnReasonType!=''">
+        AND return_reason_type=#{returnReasonType}
+      </if>
+      <if test="reviewTime!=null">AND review_time=#{reviewTime}</if>
+      <if test="reviewer!=null and reviewer!=''">
+        AND reviewer=#{reviewer}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="cod!=null">AND is_cod=#{cod}</if>
+      <if test="quickRefund!=null">AND is_quick_refund=#{quickRefund}</if>
+      <if test="refunded!=null">AND is_refunded=#{refunded}</if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="memberId!=null">AND member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        AND member_name=#{memberName}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="payeeName!=null and payeeName!=''">
+        AND payee_name=#{payeeName}
+      </if>
+      <if test="payeeNo!=null and payeeNo!=''">
+        AND payee_no=#{payeeNo}
+      </if>
+      <if test="payeeOrganization!=null and payeeOrganization!=''">
+        AND payee_organization=#{payeeOrganization}
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="refundMethod!=null and refundMethod!=''">
+        AND refund_method=#{refundMethod}
+      </if>
+      <if test="refundOrderCode!=null and refundOrderCode!=''">
+        AND refund_order_code=#{refundOrderCode}
+      </if>
+      <if test="refundOrderCodes!=null and refundOrderCodes.size>0">
+        AND refund_order_code IN
+        <foreach item="item" index="index" collection="refundOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="refundOrderId!=null">AND refund_order_id=#{refundOrderId}</if>
+      <if test="refundType!=null">AND refund_type=#{refundType}</if>
+      <if test="refundableAmount!=null">AND refundable_amount=#{refundableAmount}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="returnOrderCode!=null and returnOrderCode!=''">
+        AND return_order_code=#{returnOrderCode}
+      </if>
+      <if test="returnOrderCodes!=null and returnOrderCodes.size>0">
+        AND return_order_code IN
+        <foreach item="item" index="index" collection="returnOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="returnOrderId!=null">AND return_order_id=#{returnOrderId}</if>
+      <if test="returnReasonType!=null and returnReasonType!=''">
+        AND return_reason_type=#{returnReasonType}
+      </if>
+      <if test="reviewTimeBegin!=null">
+        <![CDATA[AND review_time>=#{reviewTimeBegin}]]>
+      </if>
+      <if test="reviewTimeEnd!=null">
+        <![CDATA[AND review_time<#{reviewTimeEnd}]]>
+      </if>
+      <if test="reviewer!=null and reviewer!=''">
+        AND reviewer=#{reviewer}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderCodes!=null and salesOrderCodes.size>0">
+        AND sales_order_code IN
+        <foreach item="item" index="index" collection="salesOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="tradeIds!=null and tradeIds.size>0">
+        AND trade_id IN
+        <foreach item="item" index="index" collection="tradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY refund_order_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.RefundOrder">
+    INSERT INTO oms_refund_order(actual_amount,audited_time,auditor,created_time,creator,is_cod,is_quick_refund,is_refunded,mall_type,member_id,member_name,modified_time,payee_name,payee_no,payee_organization,refund_method,refund_order_code,refund_order_id,refund_type,refundable_amount,remark,return_order_code,return_order_id,return_reason_type,review_time,reviewer,sales_order_code,sales_order_id,status,store_id,store_name,trade_id,version)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{actualAmount},
+      #{auditedTime},
+      #{auditor},
+      now(),
+      #{creator},
+      #{cod},
+      #{quickRefund},
+      #{refunded},
+      #{mallType},
+      #{memberId},
+      #{memberName},
+      now(),
+      #{payeeName},
+      #{payeeNo},
+      #{payeeOrganization},
+      #{refundMethod},
+      #{refundOrderCode},
+      #{refundOrderId},
+      #{refundType},
+      #{refundableAmount},
+      #{remark},
+      #{returnOrderCode},
+      #{returnOrderId},
+      #{returnReasonType},
+      #{reviewTime},
+      #{reviewer},
+      #{salesOrderCode},
+      #{salesOrderId},
+      #{status},
+      #{storeId},
+      #{storeName},
+      #{tradeId},
+      1,
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.RefundOrder">
+    UPDATE oms_refund_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="actualAmount!=null">actual_amount=#{actualAmount},</if>
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="cod!=null">is_cod=#{cod},</if>
+      <if test="quickRefund!=null">is_quick_refund=#{quickRefund},</if>
+      <if test="refunded!=null">is_refunded=#{refunded},</if>
+      <if test="mallType!=null">mall_type=#{mallType},</if>
+      <if test="memberId!=null">member_id=#{memberId},</if>
+      <if test="memberName!=null">member_name=#{memberName},</if>
+      modified_time=now(),
+      <if test="payeeName!=null">payee_name=#{payeeName},</if>
+      <if test="payeeNo!=null">payee_no=#{payeeNo},</if>
+      <if test="payeeOrganization!=null">payee_organization=#{payeeOrganization},</if>
+      <if test="refundMethod!=null">refund_method=#{refundMethod},</if>
+      <if test="refundOrderCode!=null">refund_order_code=#{refundOrderCode},</if>
+      <if test="refundType!=null">refund_type=#{refundType},</if>
+      <if test="refundableAmount!=null">refundable_amount=#{refundableAmount},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="returnOrderCode!=null">return_order_code=#{returnOrderCode},</if>
+      <if test="returnOrderId!=null">return_order_id=#{returnOrderId},</if>
+      <if test="returnReasonType!=null">return_reason_type=#{returnReasonType},</if>
+      <if test="reviewTime!=null">review_time=#{reviewTime},</if>
+      <if test="reviewer!=null">reviewer=#{reviewer},</if>
+      <if test="salesOrderCode!=null">sales_order_code=#{salesOrderCode},</if>
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND refund_order_id=#{refundOrderId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.RefundOrder">
+    UPDATE oms_refund_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.actualAmount!=null">
+        actual_amount=#{record.actualAmount},
+      </if>
+      <if test="record.auditedTime!=null">
+        audited_time=#{record.auditedTime},
+      </if>
+      <if test="record.auditor!=null">
+        auditor=#{record.auditor},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.cod!=null">
+        is_cod=#{record.cod},
+      </if>
+      <if test="record.quickRefund!=null">
+        is_quick_refund=#{record.quickRefund},
+      </if>
+      <if test="record.refunded!=null">
+        is_refunded=#{record.refunded},
+      </if>
+      <if test="record.mallType!=null">
+        mall_type=#{record.mallType},
+      </if>
+      <if test="record.memberId!=null">
+        member_id=#{record.memberId},
+      </if>
+      <if test="record.memberName!=null">
+        member_name=#{record.memberName},
+      </if>
+      modified_time=now(),
+      <if test="record.payeeName!=null">
+        payee_name=#{record.payeeName},
+      </if>
+      <if test="record.payeeNo!=null">
+        payee_no=#{record.payeeNo},
+      </if>
+      <if test="record.payeeOrganization!=null">
+        payee_organization=#{record.payeeOrganization},
+      </if>
+      <if test="record.refundMethod!=null">
+        refund_method=#{record.refundMethod},
+      </if>
+      <if test="record.refundOrderCode!=null">
+        refund_order_code=#{record.refundOrderCode},
+      </if>
+      <if test="record.refundType!=null">
+        refund_type=#{record.refundType},
+      </if>
+      <if test="record.refundableAmount!=null">
+        refundable_amount=#{record.refundableAmount},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.returnOrderCode!=null">
+        return_order_code=#{record.returnOrderCode},
+      </if>
+      <if test="record.returnOrderId!=null">
+        return_order_id=#{record.returnOrderId},
+      </if>
+      <if test="record.returnReasonType!=null">
+        return_reason_type=#{record.returnReasonType},
+      </if>
+      <if test="record.reviewTime!=null">
+        review_time=#{record.reviewTime},
+      </if>
+      <if test="record.reviewer!=null">
+        reviewer=#{record.reviewer},
+      </if>
+      <if test="record.salesOrderCode!=null">
+        sales_order_code=#{record.salesOrderCode},
+      </if>
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.actualAmount!=null">
+      AND actual_amount=#{example.actualAmount}
+      </if>
+      <if test="example.auditedTime!=null">
+      AND audited_time=#{example.auditedTime}
+      </if>
+      <if test="example.auditor!=null">
+      AND auditor=#{example.auditor}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.cod!=null">
+      AND is_cod=#{example.cod}
+      </if>
+      <if test="example.quickRefund!=null">
+      AND is_quick_refund=#{example.quickRefund}
+      </if>
+      <if test="example.refunded!=null">
+      AND is_refunded=#{example.refunded}
+      </if>
+      <if test="example.mallType!=null">
+      AND mall_type=#{example.mallType}
+      </if>
+      <if test="example.memberId!=null">
+      AND member_id=#{example.memberId}
+      </if>
+      <if test="example.memberName!=null">
+      AND member_name=#{example.memberName}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.payeeName!=null">
+      AND payee_name=#{example.payeeName}
+      </if>
+      <if test="example.payeeNo!=null">
+      AND payee_no=#{example.payeeNo}
+      </if>
+      <if test="example.payeeOrganization!=null">
+      AND payee_organization=#{example.payeeOrganization}
+      </if>
+      <if test="example.productCodes!=null">
+      AND product_code=#{example.productCodes}
+      </if>
+      <if test="example.refundMethod!=null">
+      AND refund_method=#{example.refundMethod}
+      </if>
+      <if test="example.refundOrderCode!=null">
+      AND refund_order_code=#{example.refundOrderCode}
+      </if>
+      <if test="example.refundOrderCodes!=null">
+      AND refund_order_code=#{example.refundOrderCodes}
+      </if>
+      <if test="example.refundOrderId!=null">
+      AND refund_order_id=#{example.refundOrderId}
+      </if>
+      <if test="example.refundType!=null">
+      AND refund_type=#{example.refundType}
+      </if>
+      <if test="example.refundableAmount!=null">
+      AND refundable_amount=#{example.refundableAmount}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.returnOrderCode!=null">
+      AND return_order_code=#{example.returnOrderCode}
+      </if>
+      <if test="example.returnOrderCodes!=null">
+      AND return_order_code=#{example.returnOrderCodes}
+      </if>
+      <if test="example.returnOrderId!=null">
+      AND return_order_id=#{example.returnOrderId}
+      </if>
+      <if test="example.returnReasonType!=null">
+      AND return_reason_type=#{example.returnReasonType}
+      </if>
+      <if test="example.reviewTime!=null">
+      AND review_time=#{example.reviewTime}
+      </if>
+      <if test="example.reviewer!=null">
+      AND reviewer=#{example.reviewer}
+      </if>
+      <if test="example.salesOrderCode!=null">
+      AND sales_order_code=#{example.salesOrderCode}
+      </if>
+      <if test="example.salesOrderCodes!=null">
+      AND sales_order_code=#{example.salesOrderCodes}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.skuCodes!=null">
+      AND sku_code=#{example.skuCodes}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+      <if test="example.tradeIds!=null">
+      AND trade_id=#{example.tradeIds}
+      </if>
+      AND version=#{example.version}
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_refund_order
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_refund_order
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_order
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_refund_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

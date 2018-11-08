@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.DispatchOrderDetailMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.DispatchOrderDetail">
+    <id column="dispatch_order_detail_id" property="dispatchOrderDetailId"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="discount_amount" property="discountAmount"/>
+    <result column="dispatch_order_id" property="dispatchOrderId"/>
+    <result column="distribution_amount" property="distributionAmount"/>
+    <result column="distribution_price" property="distributionPrice"/>
+    <result column="is_has_invoice" property="hasInvoice"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="out_quantity" property="outQuantity"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="sales_order_detail_id" property="salesOrderDetailId"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+    <result column="selling_amount" property="sellingAmount"/>
+    <result column="selling_price" property="sellingPrice"/>
+    <result column="settlement_amount" property="settlementAmount"/>
+    <result column="settlement_price" property="settlementPrice"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="status" property="status"/>
+    <result column="trade_id" property="tradeId"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+    <result column="virtual_warehouse_name" property="virtualWarehouseName"/>
+  </resultMap>
+  <sql id="columns">actual_amount,created_time,discount_amount,dispatch_order_detail_id,dispatch_order_id,distribution_amount,distribution_price,is_has_invoice,modified_time,notice_quantity,out_quantity,product_code,product_id,product_name,sales_order_code,sales_order_detail_id,sales_order_id,selling_amount,selling_price,settlement_amount,settlement_price,sku_code,sku_id,sku_name,status,trade_id,virtual_warehouse_id,virtual_warehouse_name</sql>
+  <sql id="pkWhere">
+    WHERE dispatch_order_detail_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="dispatchOrderDetailId!=null">AND dispatch_order_detail_id=#{dispatchOrderDetailId}</if>
+      <if test="dispatchOrderId!=null">AND dispatch_order_id=#{dispatchOrderId}</if>
+      <if test="distributionAmount!=null">AND distribution_amount=#{distributionAmount}</if>
+      <if test="distributionPrice!=null">AND distribution_price=#{distributionPrice}</if>
+      <if test="hasInvoice!=null">AND is_has_invoice=#{hasInvoice}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="noticeQuantity!=null">AND notice_quantity=#{noticeQuantity}</if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderDetailId!=null">AND sales_order_detail_id=#{salesOrderDetailId}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="sellingAmount!=null">AND selling_amount=#{sellingAmount}</if>
+      <if test="sellingPrice!=null">AND selling_price=#{sellingPrice}</if>
+      <if test="settlementAmount!=null">AND settlement_amount=#{settlementAmount}</if>
+      <if test="settlementPrice!=null">AND settlement_price=#{settlementPrice}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="dispatchOrderDetailId!=null">AND dispatch_order_detail_id=#{dispatchOrderDetailId}</if>
+      <if test="dispatchOrderId!=null">AND dispatch_order_id=#{dispatchOrderId}</if>
+      <if test="distributionAmount!=null">AND distribution_amount=#{distributionAmount}</if>
+      <if test="distributionPrice!=null">AND distribution_price=#{distributionPrice}</if>
+      <if test="hasInvoice!=null">AND is_has_invoice=#{hasInvoice}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="noticeQuantity!=null">AND notice_quantity=#{noticeQuantity}</if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderDetailId!=null">AND sales_order_detail_id=#{salesOrderDetailId}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="sellingAmount!=null">AND selling_amount=#{sellingAmount}</if>
+      <if test="sellingPrice!=null">AND selling_price=#{sellingPrice}</if>
+      <if test="settlementAmount!=null">AND settlement_amount=#{settlementAmount}</if>
+      <if test="settlementPrice!=null">AND settlement_price=#{settlementPrice}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY dispatch_order_detail_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.DispatchOrderDetail">
+    INSERT INTO oms_dispatch_order_detail(actual_amount,created_time,discount_amount,dispatch_order_detail_id,dispatch_order_id,distribution_amount,distribution_price,is_has_invoice,modified_time,notice_quantity,out_quantity,product_code,product_id,product_name,sales_order_code,sales_order_detail_id,sales_order_id,selling_amount,selling_price,settlement_amount,settlement_price,sku_code,sku_id,sku_name,status,trade_id,virtual_warehouse_id,virtual_warehouse_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{actualAmount},
+      now(),
+      #{discountAmount},
+      #{dispatchOrderDetailId},
+      #{dispatchOrderId},
+      #{distributionAmount},
+      #{distributionPrice},
+      #{hasInvoice},
+      now(),
+      #{noticeQuantity},
+      #{outQuantity},
+      #{productCode},
+      #{productId},
+      #{productName},
+      #{salesOrderCode},
+      #{salesOrderDetailId},
+      #{salesOrderId},
+      #{sellingAmount},
+      #{sellingPrice},
+      #{settlementAmount},
+      #{settlementPrice},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+      #{status},
+      #{tradeId},
+      #{virtualWarehouseId},
+      #{virtualWarehouseName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.DispatchOrderDetail">
+    UPDATE oms_dispatch_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="actualAmount!=null">actual_amount=#{actualAmount},</if>
+      <if test="discountAmount!=null">discount_amount=#{discountAmount},</if>
+      <if test="dispatchOrderId!=null">dispatch_order_id=#{dispatchOrderId},</if>
+      <if test="distributionAmount!=null">distribution_amount=#{distributionAmount},</if>
+      <if test="distributionPrice!=null">distribution_price=#{distributionPrice},</if>
+      <if test="hasInvoice!=null">is_has_invoice=#{hasInvoice},</if>
+      modified_time=now(),
+      <if test="noticeQuantity!=null">notice_quantity=#{noticeQuantity},</if>
+      <if test="outQuantity!=null">out_quantity=#{outQuantity},</if>
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="salesOrderCode!=null">sales_order_code=#{salesOrderCode},</if>
+      <if test="salesOrderDetailId!=null">sales_order_detail_id=#{salesOrderDetailId},</if>
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+      <if test="sellingAmount!=null">selling_amount=#{sellingAmount},</if>
+      <if test="sellingPrice!=null">selling_price=#{sellingPrice},</if>
+      <if test="settlementAmount!=null">settlement_amount=#{settlementAmount},</if>
+      <if test="settlementPrice!=null">settlement_price=#{settlementPrice},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+      <if test="virtualWarehouseId!=null">virtual_warehouse_id=#{virtualWarehouseId},</if>
+      <if test="virtualWarehouseName!=null">virtual_warehouse_name=#{virtualWarehouseName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND dispatch_order_detail_id=#{dispatchOrderDetailId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.DispatchOrderDetail">
+    UPDATE oms_dispatch_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.actualAmount!=null">
+        actual_amount=#{record.actualAmount},
+      </if>
+      <if test="record.discountAmount!=null">
+        discount_amount=#{record.discountAmount},
+      </if>
+      <if test="record.dispatchOrderId!=null">
+        dispatch_order_id=#{record.dispatchOrderId},
+      </if>
+      <if test="record.distributionAmount!=null">
+        distribution_amount=#{record.distributionAmount},
+      </if>
+      <if test="record.distributionPrice!=null">
+        distribution_price=#{record.distributionPrice},
+      </if>
+      <if test="record.hasInvoice!=null">
+        is_has_invoice=#{record.hasInvoice},
+      </if>
+      modified_time=now(),
+      <if test="record.noticeQuantity!=null">
+        notice_quantity=#{record.noticeQuantity},
+      </if>
+      <if test="record.outQuantity!=null">
+        out_quantity=#{record.outQuantity},
+      </if>
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.salesOrderCode!=null">
+        sales_order_code=#{record.salesOrderCode},
+      </if>
+      <if test="record.salesOrderDetailId!=null">
+        sales_order_detail_id=#{record.salesOrderDetailId},
+      </if>
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+      <if test="record.sellingAmount!=null">
+        selling_amount=#{record.sellingAmount},
+      </if>
+      <if test="record.sellingPrice!=null">
+        selling_price=#{record.sellingPrice},
+      </if>
+      <if test="record.settlementAmount!=null">
+        settlement_amount=#{record.settlementAmount},
+      </if>
+      <if test="record.settlementPrice!=null">
+        settlement_price=#{record.settlementPrice},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+      <if test="record.virtualWarehouseId!=null">
+        virtual_warehouse_id=#{record.virtualWarehouseId},
+      </if>
+      <if test="record.virtualWarehouseName!=null">
+        virtual_warehouse_name=#{record.virtualWarehouseName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.actualAmount!=null">
+      AND actual_amount=#{example.actualAmount}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.discountAmount!=null">
+      AND discount_amount=#{example.discountAmount}
+      </if>
+      <if test="example.dispatchOrderDetailId!=null">
+      AND dispatch_order_detail_id=#{example.dispatchOrderDetailId}
+      </if>
+      <if test="example.dispatchOrderId!=null">
+      AND dispatch_order_id=#{example.dispatchOrderId}
+      </if>
+      <if test="example.distributionAmount!=null">
+      AND distribution_amount=#{example.distributionAmount}
+      </if>
+      <if test="example.distributionPrice!=null">
+      AND distribution_price=#{example.distributionPrice}
+      </if>
+      <if test="example.hasInvoice!=null">
+      AND is_has_invoice=#{example.hasInvoice}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.noticeQuantity!=null">
+      AND notice_quantity=#{example.noticeQuantity}
+      </if>
+      <if test="example.outQuantity!=null">
+      AND out_quantity=#{example.outQuantity}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.salesOrderCode!=null">
+      AND sales_order_code=#{example.salesOrderCode}
+      </if>
+      <if test="example.salesOrderDetailId!=null">
+      AND sales_order_detail_id=#{example.salesOrderDetailId}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.sellingAmount!=null">
+      AND selling_amount=#{example.sellingAmount}
+      </if>
+      <if test="example.sellingPrice!=null">
+      AND selling_price=#{example.sellingPrice}
+      </if>
+      <if test="example.settlementAmount!=null">
+      AND settlement_amount=#{example.settlementAmount}
+      </if>
+      <if test="example.settlementPrice!=null">
+      AND settlement_price=#{example.settlementPrice}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+      <if test="example.virtualWarehouseId!=null">
+      AND virtual_warehouse_id=#{example.virtualWarehouseId}
+      </if>
+      <if test="example.virtualWarehouseName!=null">
+      AND virtual_warehouse_name=#{example.virtualWarehouseName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_dispatch_order_detail
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_dispatch_order_detail
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order_detail
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_dispatch_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_dispatch_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_dispatch_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

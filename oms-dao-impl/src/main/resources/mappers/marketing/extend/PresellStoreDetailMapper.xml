@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.marketing.PresellStoreDetailMapper">
+    <resultMap id="detailResultMap" type="com.greatonce.oms.domain.marketing.PresellStoreDetail" extends="resultMap">
+        <association property="presellStore" resultMap="com.greatonce.oms.dao.marketing.PresellStoreMapper.resultMap"/>
+        <association property="presellDetail" resultMap="com.greatonce.oms.dao.marketing.PresellDetailMapper.resultMap"/>
+    </resultMap>
+
+    <sql id="joinWhere">
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="presellId!=null">AND store_detail.presell_id=#{presellId}</if>
+            <if test="storeId!=null">AND store_detail.store_id=#{storeId}</if>
+            <if test="status!=null">AND store_detail.status=#{status}</if>
+            <if test="productCodes!=null and productCodes.size>0">
+                AND detail.product_code IN
+                <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="skuCodes!=null and skuCodes.size>0">
+                AND detail.sku_code IN
+                <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+        </trim>
+    </sql>
+    <select id="listDetails" parameterType="com.greatonce.oms.query.marketing.PresellStoreDetailQuery" resultMap="detailResultMap">
+        SELECT
+        store_detail.presell_store_detail_id,
+        store_detail.begin_time,
+        store_detail.created_time,
+        store_detail.end_time,
+        store_detail.modified_time,
+        store_detail.presell_detail_id,
+        store_detail.presell_id,
+        store_detail.status,
+        store_detail.remark,
+        store.presell_store_id,
+        store.store_id,
+        store.store_name,
+        store.rate,
+        detail.presell_detail_id,
+        detail.mall_product_id,
+        detail.product_id,
+        detail.product_code,
+        detail.product_name,
+        detail.sku_id,
+        detail.sku_code,
+        detail.sku_name,
+        detail.quantity
+        FROM oms_presell_store_detail store_detail
+        LEFT JOIN oms_presell_store store ON store_detail.store_id=store.store_id AND store_detail.presell_id=store.presell_id
+        LEFT JOIN oms_presell_detail detail ON store_detail.presell_detail_id=detail.presell_detail_id
+        <include refid="joinWhere"/>
+    </select>
+    <select id="listPageDetails" parameterType="com.greatonce.oms.query.marketing.PresellStoreDetailQuery" resultMap="detailResultMap">
+        SELECT
+        store_detail.presell_store_detail_id,
+        store_detail.begin_time,
+        store_detail.created_time,
+        store_detail.end_time,
+        store_detail.modified_time,
+        store_detail.presell_detail_id,
+        store_detail.presell_id,
+        store_detail.status,
+        store_detail.remark,
+        store.presell_store_id,
+        store.store_id,
+        store.store_name,
+        store.rate,
+        detail.presell_detail_id,
+        detail.mall_product_id,
+        detail.product_id,
+        detail.product_code,
+        detail.product_name,
+        detail.sku_id,
+        detail.sku_code,
+        detail.sku_name,
+        detail.quantity
+        FROM oms_presell_store_detail store_detail
+        LEFT JOIN oms_presell_store store ON store_detail.store_id=store.store_id AND store_detail.presell_id=store.presell_id
+        LEFT JOIN oms_presell_detail detail ON store_detail.presell_detail_id=detail.presell_detail_id
+        <include refid="joinWhere"/>
+    </select>
+</mapper>

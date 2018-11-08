@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.CompanyMapper">
+    <resultMap id="companyAndDeparmentResultMap" type="com.greatonce.oms.domain.base.Company" extends="resultMap">
+        <collection property="departments" ofType="com.greatonce.oms.domain.base.Department">
+            <id column="department_id" property="departmentId"/>
+            <result column="department_code" property="departmentCode"/>
+            <result column="department_name" property="departmentName"/>
+        </collection>
+    </resultMap>
+
+    <select id="listCompanyAndDepartment" resultMap="companyAndDeparmentResultMap">
+        select a.company_id,a.company_code,a.company_name,a.telephone,d.department_id,d.department_code,d.department_name
+        from oms_company a left join oms_department d on a.company_id=d.company_id
+    </select>
+
+</mapper>

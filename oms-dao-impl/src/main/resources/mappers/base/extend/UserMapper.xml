@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.UserMapper">
+  <select id="countUsers" resultType="int">
+    SELECT count(*) FROM oms_user where department_id=#{departmentId}
+  </select>
+  <select id="checkExists" resultType="int">
+    SELECT 1 FROM oms_user where (login_name=#{loginName} or nickname=#{nickname})
+    <if test="userId!=null">
+      and user_id != #{userId}
+    </if>
+  </select>
+</mapper>

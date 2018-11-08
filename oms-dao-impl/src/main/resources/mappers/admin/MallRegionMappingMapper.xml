@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.MallRegionMappingMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.admin.MallRegionMapping">
+    <id column="mall_region_mapping_id" property="mallRegionMappingId"/>
+    <result column="city_id" property="cityId"/>
+    <result column="city_name" property="cityName"/>
+    <result column="country_id" property="countryId"/>
+    <result column="country_name" property="countryName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="district_id" property="districtId"/>
+    <result column="district_name" property="districtName"/>
+    <result column="mall_region_alias" property="mallRegionAlias"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="province_id" property="provinceId"/>
+    <result column="province_name" property="provinceName"/>
+  </resultMap>
+  <sql id="columns">city_id,city_name,country_id,country_name,created_time,district_id,district_name,mall_region_alias,mall_region_mapping_id,modified_time,province_id,province_name</sql>
+  <sql id="pkWhere">
+    WHERE mall_region_mapping_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="mallRegionAlias!=null and mallRegionAlias!=''">
+        AND mall_region_alias=#{mallRegionAlias}
+      </if>
+      <if test="mallRegionMappingId!=null">AND mall_region_mapping_id=#{mallRegionMappingId}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="mallRegionAlias!=null and mallRegionAlias!=''">
+        AND mall_region_alias=#{mallRegionAlias}
+      </if>
+      <if test="mallRegionMappingId!=null">AND mall_region_mapping_id=#{mallRegionMappingId}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY mall_region_mapping_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.admin.MallRegionMapping">
+    INSERT INTO admin_mall_region_mapping(city_id,city_name,country_id,country_name,created_time,district_id,district_name,mall_region_alias,mall_region_mapping_id,modified_time,province_id,province_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{cityId},
+      #{cityName},
+      #{countryId},
+      #{countryName},
+      now(),
+      #{districtId},
+      #{districtName},
+      #{mallRegionAlias},
+      #{mallRegionMappingId},
+      now(),
+      #{provinceId},
+      #{provinceName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.admin.MallRegionMapping">
+    UPDATE admin_mall_region_mapping
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="cityId!=null">city_id=#{cityId},</if>
+      <if test="cityName!=null">city_name=#{cityName},</if>
+      <if test="countryId!=null">country_id=#{countryId},</if>
+      <if test="countryName!=null">country_name=#{countryName},</if>
+      <if test="districtId!=null">district_id=#{districtId},</if>
+      <if test="districtName!=null">district_name=#{districtName},</if>
+      <if test="mallRegionAlias!=null">mall_region_alias=#{mallRegionAlias},</if>
+      modified_time=now(),
+      <if test="provinceId!=null">province_id=#{provinceId},</if>
+      <if test="provinceName!=null">province_name=#{provinceName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND mall_region_mapping_id=#{mallRegionMappingId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.admin.MallRegionMapping">
+    UPDATE admin_mall_region_mapping
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.cityId!=null">
+        city_id=#{record.cityId},
+      </if>
+      <if test="record.cityName!=null">
+        city_name=#{record.cityName},
+      </if>
+      <if test="record.countryId!=null">
+        country_id=#{record.countryId},
+      </if>
+      <if test="record.countryName!=null">
+        country_name=#{record.countryName},
+      </if>
+      <if test="record.districtId!=null">
+        district_id=#{record.districtId},
+      </if>
+      <if test="record.districtName!=null">
+        district_name=#{record.districtName},
+      </if>
+      <if test="record.mallRegionAlias!=null">
+        mall_region_alias=#{record.mallRegionAlias},
+      </if>
+      modified_time=now(),
+      <if test="record.provinceId!=null">
+        province_id=#{record.provinceId},
+      </if>
+      <if test="record.provinceName!=null">
+        province_name=#{record.provinceName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.cityId!=null">
+      AND city_id=#{example.cityId}
+      </if>
+      <if test="example.cityName!=null">
+      AND city_name=#{example.cityName}
+      </if>
+      <if test="example.countryId!=null">
+      AND country_id=#{example.countryId}
+      </if>
+      <if test="example.countryName!=null">
+      AND country_name=#{example.countryName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.districtId!=null">
+      AND district_id=#{example.districtId}
+      </if>
+      <if test="example.districtName!=null">
+      AND district_name=#{example.districtName}
+      </if>
+      <if test="example.mallRegionAlias!=null">
+      AND mall_region_alias=#{example.mallRegionAlias}
+      </if>
+      <if test="example.mallRegionMappingId!=null">
+      AND mall_region_mapping_id=#{example.mallRegionMappingId}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.provinceId!=null">
+      AND province_id=#{example.provinceId}
+      </if>
+      <if test="example.provinceName!=null">
+      AND province_name=#{example.provinceName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM admin_mall_region_mapping
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM admin_mall_region_mapping
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_region_mapping
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_region_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_region_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_region_mapping
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_mall_region_mapping
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_mall_region_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_mall_region_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

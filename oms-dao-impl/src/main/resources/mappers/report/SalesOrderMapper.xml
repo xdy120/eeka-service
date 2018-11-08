@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.report.SalesOrderMapper">
+  <sql id="equalWhere">
+    <if test="storeIds!=null and storeIds.size>0">
+      AND m.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="mallPaidTimeBegin!=null">
+      <![CDATA[AND s.mall_paid_time>=#{mallPaidTimeBegin}]]>
+    </if>
+    <if test="mallPaidTimeEnd!=null">
+      <![CDATA[AND s.mall_paid_time<#{mallPaidTimeEnd}]]>
+    </if>
+  </sql>
+
+  <resultMap id="querySalesMap" type="com.greatonce.oms.bo.report.SalesBO">
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="trade_id" property="tradeId"/>
+    <result column="mall_paid_time" property="paidTime"/>
+    <result column="delivery_status" property="deliveryStatus"/>
+    <result column="dispatch_status" property="dispatchStatus"/>
+    <result column="store_name" property="storeName"/>
+    <result column="province_name" property="provinceName"/>
+    <result column="city_name" property="cityName"/>
+    <result column="district_name" property="districtName"/>
+    <result column="contact" property="contact"/>
+    <result column="address" property="address"/>
+    <result column="member_name" property="memberName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="presell_type" property="presellType"/>
+    <result column="mall_created_time" property="mallCreatedTime"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="selling_amount" property="sellingAmount"/>
+    <result column="settlement_amount" property="settlementAmount"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="discount_amount" property="discountAmount"/>
+    <result column="distribution_amount" property="distributionAmount"/>
+    <result column="distribution_price" property="distributionPrice"/>
+    <result column="selling_price" property="sellingPrice"/>
+    <result column="settlement_price" property="settlementPrice"/>
+    <result column="warehouse_name" property="warehouseName"/>
+    <result column="cost_price" property="costPrice"/>
+    <result column="express_name" property="expressName"/>
+    <result column="express_no" property="expressNo"/>
+    <result column="last_express_name" property="lastExpressName"/>
+    <result column="last_express_no" property="lastExpressNo"/>
+    <result column="sales_order_type" property="salesOrderType"/>
+    <result column="is_drop_shipping" property="dropShipping"/>
+    <result column="delivery_time" property="deliveryTime"/>
+    <result column="reissue_reason" property="reissueReason"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="sales_order_detail_refund_status" property="salesOrderDetailRefundStatus"/>
+  </resultMap>
+  <select id="exportSalesList" resultMap="querySalesMap">
+    SELECT
+    m.sales_order_code,
+    m.trade_id,
+    s.mall_paid_time,
+    m.delivery_status,
+    m.dispatch_status,
+    m.store_name,
+    m.store_id,
+    m.actual_amount,
+    m.settlement_amount,
+    m.province_name,
+    m.city_name,
+    m.district_name,
+    m.contact,
+    m.address,
+    s.member_name,
+    sum(d.quantity) as quantity,
+    s.presell_type,
+    s.mall_created_time,
+    m.reissue_reason,
+    m.created_time,
+    m.last_express_name,
+    m.last_express_no
+    FROM
+    oms_sales_order m
+    LEFT JOIN oms_sales_order_sub s ON m.sales_order_id = s.sales_order_id
+    LEFT JOIN oms_sales_order_detail d ON m.sales_order_id = d.sales_order_id
+    <where>
+      <include refid="equalWhere"/>
+      AND m.`status` != 100 AND d.is_deleted = 0
+      <if test="dispatchStatus!=null">AND m.dispatch_status = #{dispatchStatus}</if>
+      <if test="deliveryStatus!=null">AND m.delivery_status = #{deliveryStatus}</if>
+      <if test="presellType!=null">AND s.presell_type = #{presellType}</if>
+      <if test="oos!=null">AND m.is_oos = #{oos}</if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND d.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND d.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="salesOrderType!=null">
+        AND s.sales_order_type=#{salesOrderType}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND m.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND m.created_time<#{createdTimeEnd}]]>
+      </if>
+      GROUP BY m.sales_order_id
+    </where>
+  </select>
+
+
+  <select id="exportSalesDetailList" resultMap="querySalesMap">
+    SELECT
+    m.sales_order_code,
+    m.trade_id,
+    s.mall_paid_time,
+    m.delivery_status,
+    m.dispatch_status,
+    m.store_name,
+    m.store_id,
+    m.province_name,
+    m.city_name,
+    m.district_name,
+    s.member_name,
+    s.presell_type,
+    s.mall_created_time,
+    d.sku_code,
+    d.sku_name,
+    d.product_code,
+    d.product_name,
+    d.quantity,
+    d.selling_price,
+    d.selling_amount,
+    d.settlement_amount,
+    d.actual_amount,
+    d.distribution_amount,
+    d.discount_amount,
+    d.sales_order_detail_refund_status,
+    d.express_name,
+    d.express_no,
+    m.contact,
+    m.mobile,
+    m.address,
+    s.member_name,
+    s.mall_created_time
+    FROM
+    oms_sales_order m
+    LEFT JOIN oms_sales_order_sub s ON m.sales_order_id = s.sales_order_id
+    LEFT JOIN oms_sales_order_detail d ON m.sales_order_id = d.sales_order_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="equalWhere"/>
+      AND m.`status` != 100 AND d.is_deleted = 0
+      <if test="dispatchStatus!=null">AND m.dispatch_status = #{dispatchStatus}</if>
+      <if test="deliveryStatus!=null">AND m.delivery_status = #{deliveryStatus}</if>
+      <if test="presellType!=null">AND s.presell_type = #{presellType}</if>
+      <if test="oos!=null">AND d.is_oos = #{oos}</if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND d.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND d.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </trim>
+  </select>
+
+  <resultMap id="querySalesStatisticsMap" type="com.greatonce.oms.bo.report.SalesStatisticsBO">
+    <result column="store_name" property="storeName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="settlement_amount" property="settlementAmountTotal"/>
+    <result column="discount_amount" property="discounAmountTotal"/>
+    <result column="returnQuantity" property="returnQuantity"/>
+    <result column="actual_amount" property="returnAmountTotal"/>
+    <result column="rate" property="refundRate"/>
+  </resultMap>
+
+  <select id="exportSalesStatisticsList" resultMap="querySalesStatisticsMap">
+    SELECT
+    t.store_name,
+    case when t.quantity is null then 0 else t.quantity end as quantity,
+    case when t.settlement_amount is null then 0 else t.settlement_amount end as settlement_amount,
+    case when t.discount_amount is null then 0 else t.discount_amount end as discount_amount,
+    case when s.quantity is null then 0 else s.quantity end as returnQuantity,
+    case when s.actual_amount is null then 0 else s.actual_amount end as actual_amount,
+    case when s.quantity/t.quantity*100 is null then 0 else s.quantity/t.quantity*100 end as rate
+    FROM
+    (
+    SELECT
+    m.store_name,
+    m.sales_order_id,
+    m.store_id,
+    sum(m.quantity) AS quantity,
+    sum(m.settlement_amount) AS settlement_amount,
+    sum(m.discount_amount) AS discount_amount
+    FROM
+    oms_sales_order m
+    INNER JOIN oms_sales_order_sub s ON m.sales_order_id = s.sales_order_id
+    AND m.`status` != 100
+    AND s.sales_order_type != 5
+    AND s.sales_order_type != 6
+    <include refid="equalWhere"/>
+    group by m.store_id
+    ) AS t
+    LEFT JOIN (
+    SELECT
+    o.store_id,
+    o.sales_order_id,
+    sum(o.quantity) AS quantity,
+    sum(o.refundable_amount) AS actual_amount
+    FROM
+    oms_return_order o,
+    oms_sales_order m,
+    oms_sales_order_sub s
+    WHERE
+    o.sales_order_id = m.sales_order_id
+    AND m.sales_order_id = s.sales_order_id
+    AND o.status != 4
+    <include refid="equalWhere"/>
+    GROUP BY
+    o.store_id
+    ) AS s ON s.store_id = t.store_id
+  </select>
+
+
+  <resultMap id="querySalesRerurnMap" type="com.greatonce.oms.bo.report.SalesOrderReturnBO">
+    <result column="store_name" property="storeName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="refund_amount" property="refundAmount"/>
+
+    <result column="return_order_code" property="returnOrderCode"/>
+    <result column="trade_id" property="tradeId"/>
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="express_name" property="expressName"/>
+    <result column="express_no" property="expressNo"/>
+    <result column="member_name" property="memberName"/>
+    <result column="return_type" property="returnType"/>
+    <result column="unpacker" property="unpacker"/>
+    <result column="unpacked_time" property="unpackedTime"/>
+    <result column="is_exchange" property="isExchange"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="refundable_amount" property="refundableAmount"/>
+    <result column="cost_price" property="costPrice"/>
+    <result column="mall_refund_status" property="mallRefundStatus"/>
+    <result column="mall_exchange_status" property="mallExchangeStatus"/>
+    <result column="refund_apply_order_type" property="refundApplyOrderType"/>
+    <result column="applied_time" property="appliedTime"/>
+    <result column="apply_amount" property="applyAmount"/>
+  </resultMap>
+
+  <select id="exportSalesRerurnList" resultMap="querySalesRerurnMap">
+    select store_id,
+    store_name,
+    sum(quantity) as quantity,
+    sum(refundable_amount) as refundAmount
+    from oms_return_order
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="unpackedTimeBegin!=null">
+        <![CDATA[AND unpacked_time>=#{unpackedTimeBegin}]]>
+      </if>
+      <if test="unpackedTimeEnd!=null">
+        <![CDATA[AND unpacked_time<#{unpackedTimeEnd}]]>
+      </if>
+    </where>
+    group by store_id
+  </select>
+
+  <resultMap id="querySalesDeliverMap" type="com.greatonce.oms.bo.report.SalesOrderDeliverBO">
+    <result column="store_name" property="storeName"/>
+    <result column="order_quantity_total" property="orderQuantityTotal"/>
+    <result column="order_amount_total" property="orderAmountTotal"/>
+    <result column="order_not_delivery_total" property="orderNotDeliveryTotal"/>
+    <result column="order_delivery_total" property="orderDeliveryTotal"/>
+    <result column="product_quantity" property="productQuantity"/>
+    <result column="not_delivery_quantity" property="notDeliveryQuantity"/>
+    <result column="delivery_quantity" property="deliveryQuantity"/>
+    <result column="not_delivery_amount_total" property="notDeliveryAmountTotal"/>
+    <result column="delivery_amount_total" property="deliveryAmountTotal"/>
+  </resultMap>
+
+  <select id="salesOrderDeliverStatisticsList" resultMap="querySalesDeliverMap">
+    SELECT
+    a.store_name,
+    case when a.order_quantity_total is null then 0 else a.order_quantity_total end as
+    order_quantity_total,
+    case when h.order_amount_total is null then 0 else h.order_amount_total end as
+    order_amount_total,
+    case when b.order_not_delivery_total is null then 0 else b.order_not_delivery_total end as
+    order_not_delivery_total,
+    case when c.order_delivery_total is null then 0 else c.order_delivery_total end as
+    order_delivery_total,
+    case when d.product_quantity is null then 0 else d.product_quantity end as product_quantity,
+    case when e.not_delivery_quantity is null then 0 else e.not_delivery_quantity end as
+    not_delivery_quantity,
+    case when f.delivery_quantity is null then 0 else f.delivery_quantity end as delivery_quantity,
+    case when p.not_delivery_amount_total is null then 0 else p.not_delivery_amount_total end as
+    not_delivery_amount_total,
+    case when n.delivery_amount_total is null then 0 else n.delivery_amount_total end as
+    delivery_amount_total
+
+    FROM
+    (
+    SELECT
+    count(1) AS order_quantity_total,
+    m.store_name,
+    m.store_id
+    FROM
+    oms_sales_order m,oms_sales_order_sub s
+    WHERE
+    m.sales_order_id = s.sales_order_id
+    AND m.`status` != 100
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS a
+    LEFT JOIN (
+    SELECT
+    sum(m.settlement_amount) AS order_amount_total,
+    m.store_name,
+    m.store_id
+    FROM
+    oms_sales_order m,oms_sales_order_sub s
+    WHERE
+    m.sales_order_id = s.sales_order_id
+    AND m.`status` != 100
+    AND s.sales_order_type != 5
+    AND s.sales_order_type != 6
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) h on a.store_id = h.store_id
+    LEFT JOIN (
+    SELECT
+    count(1) AS order_not_delivery_total,
+    m.store_id
+    FROM
+    oms_sales_order m,
+    oms_sales_order_sub s
+    WHERE
+    m.sales_order_id = s.sales_order_id
+    AND m.`status` != 31
+    AND m.`status` != 100
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS b ON a.store_id = b.store_id
+    LEFT JOIN (
+    SELECT
+    count(1) AS order_delivery_total,
+    m.store_id
+    FROM
+    oms_sales_order m,
+    oms_sales_order_sub s
+    WHERE
+    m.sales_order_id = s.sales_order_id
+    AND m.`status` = 31
+    AND m.`status` != 100
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS c ON a.store_id = c.store_id
+    LEFT JOIN (
+    SELECT
+    sum(d.quantity) AS product_quantity,
+    m.store_id
+    FROM
+    oms_sales_order m,
+    oms_sales_order_detail d,
+    oms_sales_order_sub s
+    WHERE m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = s.sales_order_id
+    AND d.`status` != 5
+    AND d.is_deleted = 0
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS d ON a.store_id = d.store_id
+    LEFT JOIN (
+    SELECT
+    sum(d.quantity) AS not_delivery_quantity,
+    m.store_id
+    FROM
+    oms_sales_order m,
+    oms_sales_order_detail d,
+    oms_sales_order_sub s
+    WHERE m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = s.sales_order_id
+    AND d.`status` != 4
+    AND d.`status` != 5
+    AND d.is_deleted = 0
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS e ON a.store_id = e.store_id
+    LEFT JOIN (
+    SELECT
+    sum(d.settlement_amount) AS not_delivery_amount_total,
+    m.store_id
+    FROM
+    oms_sales_order m,
+    oms_sales_order_detail d,
+    oms_sales_order_sub s
+    WHERE m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = s.sales_order_id
+    AND d.`status` != 4
+    AND d.`status` != 5
+    AND d.is_deleted = 0
+    AND s.sales_order_type != 5
+    AND s.sales_order_type != 6
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS p ON a.store_id = p.store_id
+    LEFT JOIN (
+    SELECT
+    sum(d.quantity) AS delivery_quantity,
+    m.store_id
+    FROM
+    oms_sales_order m,
+    oms_sales_order_detail d,
+    oms_sales_order_sub s
+    WHERE
+    m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = s.sales_order_id
+    AND d.`status` = 4
+    AND d.is_deleted = 0
+    AND m.`status` = 31
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS f ON a.store_id = f.store_id
+    LEFT JOIN (
+    SELECT
+    sum(d.settlement_amount) AS delivery_amount_total,
+    m.store_id
+    FROM
+    oms_sales_order m,
+    oms_sales_order_detail d,
+    oms_sales_order_sub s
+    WHERE
+    m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = s.sales_order_id
+    AND d.`status` = 4
+    AND d.is_deleted = 0
+    AND m.`status` = 31
+    AND s.sales_order_type != 5
+    AND s.sales_order_type != 6
+    <include refid="equalWhere"/>
+    GROUP BY
+    m.store_id
+    ) AS n ON a.store_id = n.store_id
+  </select>
+
+
+  <resultMap id="querySalesOutMap" type="com.greatonce.oms.bo.report.SalesOrderOutBO">
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="oosQuantity" property="oosQuantity"/>
+    <result column="preSellOosQuantity" property="preSellOosQuantity"/>
+  </resultMap>
+  <select id="exportSalesOutList" resultMap="querySalesOutMap">
+    SELECT
+    m.product_code,
+    m.product_name,
+    m.sku_code,
+    m.sku_name,
+    m.total as oosQuantity,
+    n.quantity as preSellOosQuantity
+    FROM
+    (
+    SELECT
+    d.product_code,
+    d.product_name,
+    d.sku_code,
+    d.sku_name,
+    sum(d.quantity) AS total
+    FROM
+    oms_sales_order_detail d
+    WHERE
+    d.is_oos = 1 AND d.is_deleted = 0
+    <if test="productCode!=null">AND d.product_code = #{productCode}</if>
+    <if test="skuCode!=null">AND d.sku_code = #{skuCode}</if>
+    GROUP BY
+    d.product_code,
+    d.sku_code
+    ) m
+    INNER JOIN (
+    SELECT
+    o.product_code,
+    o.sku_code,
+    sum(o.quantity) AS quantity
+    FROM
+    oms_sales_order_detail o
+    INNER JOIN oms_presell s ON o.presell_id = s.presell_id
+    WHERE
+    o.is_oos = 1 AND o.is_deleted = 0
+    <if test="productCode!=null">AND o.product_code = #{productCode}</if>
+    <if test="skuCode!=null">AND o.sku_code = #{skuCode}</if>
+    GROUP BY
+    o.product_code,
+    o.sku_code
+    ) n ON m.product_code = n.product_code
+    AND m.sku_code = n.sku_code
+  </select>
+
+
+  <resultMap id="querySalesOrderOosMap" type="com.greatonce.oms.bo.report.SalesOrderOosBO">
+    <result column="store_name" property="storeName"/>
+    <result column="product_quantity" property="productQuantity"/>
+    <result column="order_quantity" property="orderQuantity"/>
+    <result column="product_code" property="productCode"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="product_name" property="productName"/>
+  </resultMap>
+  <select id="salesOrderOosStatisticsList" resultMap="querySalesOrderOosMap">
+    SELECT sum(d.quantity) as product_quantity,
+    count(1) as order_quantity,
+    d.product_code ,
+    d.sku_code ,
+    d.sku_name,
+    d.product_name,
+    m.store_name
+    FROM oms_sales_order m,
+    oms_sales_order_detail d,
+    oms_sales_order_sub s
+    WHERE m.sales_order_id = d.sales_order_id
+    AND m.sales_order_id = s.sales_order_id
+    AND d.is_oos = 1
+    AND d.sales_order_detail_type = 2
+    AND d.is_deleted = 0
+    <if test="storeIds!=null and storeIds.size>0">
+      AND m.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="mallPaidTimeBegin!=null">
+      <![CDATA[AND s.mall_paid_time>=#{mallPaidTimeBegin}]]>
+    </if>
+    <if test="mallPaidTimeEnd!=null">
+      <![CDATA[AND s.mall_paid_time<#{mallPaidTimeEnd}]]>
+    </if>
+    <if test="skuCode!=null and skuCode!=''">
+      AND d.sku_code=#{skuCode}
+    </if>
+    GROUP BY d.sku_code,m.store_id
+  </select>
+
+
+  <resultMap id="SellStatisticsForSalesOrderDetailMap"
+    type="com.greatonce.oms.bo.report.SalesOrderDetailSellStatistics">
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="sales_quantity" property="salesQuantity"/>
+    <result column="sales_amount" property="salesAmount"/>
+    <result column="return_quantity" property="returnQuantity"/>
+    <result column="return_amount" property="returnAmount"/>
+    <result column="actual_quantity" property="actualQuantity"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="return_quantity_ratio" property="returnQuantityRatio"/>
+    <result column="return_amount_ratio" property="returnAmountRatio"/>
+  </resultMap>
+  <select id="SellStatisticsForSalesOrderDetail" resultMap="SellStatisticsForSalesOrderDetailMap">
+    SELECT
+    sales_order.store_id,
+    sales_order.store_name,
+    sales_order.sales_quantity,
+    sales_order.sales_amount,
+    return_order.return_quantity,
+    return_order.return_amount,
+    ( sales_order.sales_quantity - IFNULL( return_order.return_quantity, 0 ) ) AS actual_quantity,
+    ( sales_order.sales_amount - IFNULL( return_order.return_amount, 0 ) ) AS actual_amount,
+    convert(IFNULL(( return_order.return_quantity / sales_order.sales_quantity)*100,0),decimal(12,2)) AS return_quantity_ratio,
+    convert(IFNULL(( return_order.return_amount / sales_order.sales_amount)*100,0),decimal(12,2)) AS return_amount_ratio
+    FROM
+    (
+    SELECT
+    sales.store_id,
+    sales.store_name,
+    SUM( details.quantity ) AS sales_quantity,
+    SUM( details.settlement_amount ) AS sales_amount
+    FROM
+    oms_sales_order sales
+    JOIN oms_sales_order_detail details ON sales.sales_order_id = details.sales_order_id AND details.is_deleted = 0
+    JOIN oms_dispatch_order_delivery delivery ON details.sales_order_detail_id=delivery.sales_order_detail_id
+    AND details.`status` = 4
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND sales.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND delivery.delivery_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND delivery.delivery_time<#{createTimeEnd}]]>
+      </if>
+    </where>
+    GROUP BY store_id
+    ) sales_order
+    LEFT JOIN (
+    SELECT
+    rReturn.store_id,
+    rReturn.store_name,
+    SUM( rDetail.quantity ) AS return_quantity,
+    SUM( rDetail.refundable_amount ) AS return_amount
+    FROM
+    oms_return_order rReturn
+    JOIN oms_return_order_detail rDetail ON rReturn.return_order_id = rDetail.return_order_id
+    JOIN oms_return_notice_order_detail rnod ON rnod.return_order_id=rReturn.return_order_id AND rnod.return_order_detail_id=rDetail.return_order_detail_id
+    JOIN oms_return_notice_order rno ON rno.return_notice_order_id=rnod.return_notice_order_id
+    AND rReturn.status!=4
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND rReturn.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND rno.last_in_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND rno.last_in_time<#{createTimeEnd}]]>
+      </if>
+    </where>
+    GROUP BY store_id
+    ) return_order ON sales_order.store_id = return_order.store_id
+  </select>
+
+
+  <select id="SellStatisticsForMonth" resultType="java.util.HashMap">
+    SELECT
+    sales_order.store_name AS storeName,
+    sales_order.data_month AS salesDate,
+    ( sales_order.sales_count - IFNULL( return_order.return_count, 0 ) ) AS amount
+  FROM
+    (
+    SELECT
+      s_order.store_id,
+      s_order.store_name,
+      DATE_FORMAT( delivery.delivery_time, '%Y-%c' ) data_month,
+      SUM( s_detail.actual_amount ) sales_count,
+      s_order.created_time
+    FROM
+      oms_sales_order s_order
+    JOIN oms_sales_order_detail s_detail ON s_order.sales_order_id = s_detail.sales_order_id AND s_detail.`status` = 4 AND s_detail.is_deleted = 0
+    JOIN oms_dispatch_order_delivery delivery ON s_detail.sales_order_detail_id=delivery.sales_order_detail_id
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND s_order.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+      <![CDATA[AND delivery.delivery_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+      <![CDATA[AND delivery.delivery_time<#{createTimeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+      data_month,
+      s_order.store_id
+    ) sales_order
+    LEFT JOIN (
+    SELECT
+      r_order.store_id,
+      r_order.store_name,
+      DATE_FORMAT( r_order.unpacked_time, '%Y-%c' ) data_month,
+      SUM( r_detail.refundable_amount ) return_count
+    FROM
+      oms_return_order r_order
+      JOIN oms_return_order_detail r_detail ON r_order.return_order_id = r_detail.return_order_id
+      AND r_order.status!=4
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND r_order.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND r_order.unpacked_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND r_order.unpacked_time<#{createTimeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+      data_month,
+      r_order.store_id
+    ) return_order ON sales_order.store_id = return_order.store_id
+    AND sales_order.data_month = return_order.data_month
+  </select>
+
+  <select id="SellStatisticsForYear" resultType="java.util.HashMap">
+    SELECT
+    sales_order.store_name AS storeName,
+    sales_order.data_month AS salesDate,
+    ( sales_order.sales_count - IFNULL( return_order.return_count, 0 ) ) AS amount
+    FROM
+    (
+    SELECT
+    s_order.store_id,
+    s_order.store_name,
+    DATE_FORMAT( delivery.delivery_time, '%Y' ) data_month,
+    SUM( s_detail.actual_amount ) sales_count,
+    s_order.created_time
+    FROM
+    oms_sales_order s_order
+    JOIN oms_sales_order_detail s_detail ON s_order.sales_order_id = s_detail.sales_order_id AND s_detail.`status` = 4 AND s_detail.is_deleted = 0
+    JOIN oms_dispatch_order_delivery delivery ON s_detail.sales_order_detail_id=delivery.sales_order_detail_id
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND s_order.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND delivery.delivery_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND delivery.delivery_time<#{createTimeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+    data_month,
+    s_order.store_id
+    ) sales_order
+    LEFT JOIN (
+    SELECT
+    r_order.store_id,
+    r_order.store_name,
+    DATE_FORMAT( r_order.unpacked_time, '%Y' ) data_month,
+    SUM( r_detail.refundable_amount ) return_count
+    FROM
+    oms_return_order r_order
+    JOIN oms_return_order_detail r_detail ON r_order.return_order_id = r_detail.return_order_id
+    AND r_order.status!=4
+    <where>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND r_order.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND r_order.unpacked_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND r_order.unpacked_time<#{createTimeEnd}]]>
+      </if>
+    </where>
+    GROUP BY
+    data_month,
+    r_order.store_id
+    ) return_order ON sales_order.store_id = return_order.store_id
+    AND sales_order.data_month = return_order.data_month
+  </select>
+
+  <select id="exportSalesDeliveryForDay" resultMap="querySalesMap">
+    SELECT
+    odo.store_name,
+    odo.member_name,
+    odo.warehouse_name,
+    odod.trade_id,
+    odod.sales_order_code,
+    odod.product_code,
+    odod.product_name,
+    odod.out_quantity AS quantity,
+    odod.selling_price,
+    odod.selling_amount,
+    odody.delivery_time,
+    odody.express_name,
+    odody.express_no,
+    osod.settlement_amount,
+    osod.cost_price,
+    osod.is_drop_shipping,
+    osos.sales_order_type
+    FROM
+    oms_sales_order_detail osod
+    LEFT JOIN oms_sales_order_sub osos ON osos.sales_order_id = osod.sales_order_id
+    LEFT JOIN oms_dispatch_order_detail odod ON odod.sales_order_detail_id = osod.sales_order_detail_id
+    LEFT JOIN oms_dispatch_order odo ON odo.dispatch_order_id = odod.dispatch_order_id
+    LEFT JOIN oms_dispatch_order_delivery odody ON odody.dispatch_order_detail_id = odod.dispatch_order_detail_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      osod.`status` = 4 AND osod.is_deleted = 0
+      <if test="deliveryTimeBegin!=null">
+        <![CDATA[AND odody.delivery_time>=#{deliveryTimeBegin}]]>
+      </if>
+      <if test="deliveryTimeEnd!=null">
+        <![CDATA[AND odody.delivery_time<#{deliveryTimeEnd}]]>
+      </if>
+    </trim>
+  </select>
+
+  <select id="exportSalesDropShippingForDay" resultMap="querySalesMap">
+    SELECT
+    osos.member_name,
+    osos.sales_order_type,
+    oso.store_name,
+    oso.trade_id,
+    oso.sales_order_code,
+    osod.product_code,
+    osod.product_name,
+    osod.quantity,
+    osod.selling_price,
+    osod.selling_amount,
+    osod.settlement_amount,
+    osod.cost_price,
+    osod.is_drop_shipping,
+    osod.created_time
+    FROM
+    oms_sales_order_detail osod
+    LEFT JOIN oms_sales_order oso ON oso.sales_order_id = osod.sales_order_id
+    LEFT JOIN oms_sales_order_sub osos ON osos.sales_order_id = osod.sales_order_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      osod.`status` = 4 AND osod.is_drop_shipping = 1 AND osod.is_deleted = 0
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND osod.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND osod.created_time<#{createdTimeEnd}]]>
+      </if>
+    </trim>
+  </select>
+
+  <select id="exportSalesReturnForDay" resultMap="querySalesRerurnMap">
+    SELECT
+    oro.store_name,
+    oro.return_order_code,
+    oro.trade_id,
+    oro.sales_order_code,
+    oro.express_name,
+    oro.express_no,
+    oro.member_name,
+    oro.return_type,
+    oro.unpacker,
+    oro.unpacked_time,
+    orod.product_code,
+    orod.product_name,
+    orod.quantity,
+    orod.refundable_amount,
+    ops.cost_price,
+    orao.mall_refund_status,
+    oeao.mall_exchange_status
+    FROM
+    oms_return_order_detail orod
+    LEFT JOIN oms_return_order oro ON oro.return_order_id = orod.return_order_id
+    LEFT JOIN oms_product_sku ops ON ops.sku_id = orod.sku_id
+    LEFT JOIN oms_refund_apply_order orao ON orao.refund_apply_order_id = orod.apply_id
+    LEFT JOIN oms_exchange_apply_order oeao ON oeao.exchange_apply_order_id = orod.apply_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="unpackedTimeBegin!=null">
+        <![CDATA[AND oro.unpacked_time>=#{unpackedTimeBegin}]]>
+      </if>
+      <if test="unpackedTimeEnd!=null">
+        <![CDATA[AND oro.unpacked_time<#{unpackedTimeEnd}]]>
+      </if>
+    </trim>
+  </select>
+
+  <select id="exportSalesRefundForDay" resultMap="querySalesRerurnMap">
+    SELECT
+    orao.store_name,
+    orao.trade_id,
+    oso.sales_order_code,
+    orao.express_name,
+    orao.express_no,
+    orao.member_name,
+    orao.refund_apply_order_type,
+    orao.in_product_code AS product_code,
+    orao.in_product_name AS product_name,
+    orao.apply_quantity AS quantity,
+    orao.apply_amount,
+    ops.cost_price,
+    orao.mall_refund_status,
+    orao.applied_time
+    FROM
+    oms_refund_apply_order orao
+    LEFT JOIN oms_sales_order oso ON oso.trade_id = orao.trade_id
+    LEFT JOIN oms_product_sku ops ON ops.sku_id = orao.in_sku_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND orao.refund_apply_order_type = 1
+      <if test="appliedTimeBegin!=null">
+        <![CDATA[AND orao.applied_time>=#{appliedTimeBegin}]]>
+      </if>
+      <if test="appliedTimeEnd!=null">
+        <![CDATA[AND orao.applied_time<#{appliedTimeEnd}]]>
+      </if>
+    </trim>
+  </select>
+
+
+  <resultMap id="salesDeliveryDetailQueryListPageMap"
+    type="com.greatonce.oms.bo.report.SalesBO">
+    <result column="store_name" property="storeName"/>
+    <result column="dispatch_order_code" property="dispatchOrderCode"/>
+    <result column="settlement_amount" property="settlementAmount"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="out_quantity" property="outQuantity"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="express_name" property="expressName"/>
+    <result column="express_no" property="expressNo"/>
+    <result column="delivery_time" property="deliveryTime"/>
+  </resultMap>
+  <select id="salesDeliveryDetailQueryListPage" resultMap="salesDeliveryDetailQueryListPageMap">
+    select
+    m.dispatch_order_code,
+    m.store_name,
+    d.settlement_amount,
+    d.notice_quantity,
+    d.out_quantity,
+    d.sku_code,
+    e.express_name,
+    e.express_no,
+    e.delivery_time
+    from oms_dispatch_order m, oms_dispatch_order_detail d,oms_dispatch_order_delivery e
+    where m.dispatch_order_id = d.dispatch_order_id and d.dispatch_order_detail_id = e.dispatch_order_detail_id and
+    d.`status` = 2
+    <if test="storeIds!=null and storeIds.size>0">
+      AND m.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="deliveryTimeBegin!=null">
+      <![CDATA[AND e.delivery_time>=#{deliveryTimeBegin}]]>
+    </if>
+    <if test="deliveryTimeEnd!=null">
+      <![CDATA[AND e.delivery_time<#{deliveryTimeEnd}]]>
+    </if>
+  </select>
+
+
+
+  <resultMap id="returnDetailQueryListPageMap"
+    type="com.greatonce.oms.bo.report.ReturnDetailBO">
+    <result column="store_name" property="storeName"/>
+    <result column="return_order_code" property="returnOrderCode"/>
+    <result column="refundable_amount" property="refundableAmount"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="in_quantity" property="inQuantity"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="express_name" property="expressName"/>
+    <result column="express_no" property="expressNo"/>
+    <result column="last_in_time" property="lastInTime"/>
+  </resultMap>
+  <select id="returnDetailQueryListPage" resultMap="returnDetailQueryListPageMap">
+    select
+    m.return_order_code,
+    m.store_name,
+    d.refundable_amount,
+    b.notice_quantity,
+    b.in_quantity,
+    d.sku_code,
+    m.express_name,
+    m.express_no,
+    b.last_in_time
+    from oms_return_order_detail d,oms_return_order m,
+    (
+    select d.return_order_detail_id,d.notice_quantity,d.in_quantity,m.last_in_time
+    from oms_return_notice_order m,oms_return_notice_order_detail d
+    where m.return_notice_order_id = d.return_notice_order_id
+    and d.in_quantity>0
+    <if test="lastInTimeBegin!=null">
+      <![CDATA[AND m.last_in_time>=#{lastInTimeBegin}]]>
+    </if>
+    <if test="lastInTimeEnd!=null">
+      <![CDATA[AND m.last_in_time<#{lastInTimeEnd}]]>
+    </if>
+     ) as b
+    where d.return_order_id = m.return_order_id
+    and d.return_order_detail_id=b.return_order_detail_id
+    <if test="storeIds!=null and storeIds.size>0">
+      AND m.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+
+
+
+  <select id="B2CSellStatisticsQuery" resultMap="SellStatisticsForSalesOrderDetailMap">
+    SELECT
+    sales_order.store_id,
+    sales_order.store_name,
+    sales_order.sales_quantity,
+    sales_order.sales_amount,
+    IFNULL( return_order.return_quantity, 0 ) as return_quantity,
+    IFNULL( return_order.return_amount, 0 ) as return_amount,
+    ( sales_order.sales_quantity - IFNULL( return_order.return_quantity, 0 ) ) AS actual_quantity,
+    ( sales_order.sales_amount - IFNULL( return_order.return_amount, 0 ) ) AS actual_amount,
+    convert(IFNULL(( return_order.return_quantity / sales_order.sales_quantity)*100,0),decimal(12,2)) AS return_quantity_ratio,
+    convert(IFNULL(( return_order.return_amount / sales_order.sales_amount)*100,0),decimal(12,2)) AS return_amount_ratio
+    FROM
+    (
+    SELECT
+    m.store_id,
+    m.store_name,
+    SUM( d.out_quantity ) AS sales_quantity,
+    SUM( d.settlement_amount ) AS sales_amount
+    from oms_dispatch_order m, oms_dispatch_order_detail d,oms_dispatch_order_delivery e
+    where m.dispatch_order_id = d.dispatch_order_id
+    and d.dispatch_order_detail_id = e.dispatch_order_detail_id
+    and d.`status` = 2
+      <if test="storeIds!=null and storeIds.size>0">
+        AND m.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND e.delivery_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND e.delivery_time<#{createTimeEnd}]]>
+      </if>
+    GROUP BY m.store_id
+    ) sales_order
+    LEFT JOIN (
+    SELECT
+    m.store_id,
+    m.store_name,
+    SUM( b.in_quantity ) AS return_quantity,
+    SUM( d.refundable_amount ) AS return_amount
+    FROM oms_return_order_detail d,oms_return_order m,
+    (
+    select d.return_order_detail_id,d.notice_quantity,d.in_quantity,m.last_in_time
+    from oms_return_notice_order m,oms_return_notice_order_detail d,oms_return_order t
+    where m.return_notice_order_id = d.return_notice_order_id
+    and d.return_order_id = t.return_order_id
+    and d.in_quantity>0
+      <if test="storeIds!=null and storeIds.size>0">
+        AND t.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND m.last_in_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND m.last_in_time<#{createTimeEnd}]]>
+      </if>
+     ) as b
+    where d.return_order_id = m.return_order_id
+    and d.return_order_detail_id=b.return_order_detail_id
+    GROUP BY m.store_id
+    ) return_order ON sales_order.store_id = return_order.store_id
+  </select>
+
+
+
+  <select id="B2CSellAndReturnStatisticsQuery" resultMap="SellStatisticsForSalesOrderDetailMap">
+    SELECT
+    sales_order.store_id,
+    sales_order.store_name,
+    sales_order.sales_quantity,
+    sales_order.sales_amount,
+    IFNULL( return_order.return_quantity, 0 ) as return_quantity,
+    IFNULL( return_order.return_amount, 0 ) as return_amount,
+    ( sales_order.sales_quantity - IFNULL( return_order.return_quantity, 0 ) ) AS actual_quantity,
+    ( sales_order.sales_amount - IFNULL( return_order.return_amount, 0 ) ) AS actual_amount,
+    convert(IFNULL(( return_order.return_quantity / sales_order.sales_quantity)*100,0),decimal(12,2)) AS return_quantity_ratio,
+    convert(IFNULL(( return_order.return_amount / sales_order.sales_amount)*100,0),decimal(12,2)) AS return_amount_ratio
+    FROM
+    (
+    SELECT
+    m.store_id,
+    m.store_name,
+    SUM( d.out_quantity ) AS sales_quantity,
+    SUM( d.settlement_amount ) AS sales_amount
+    from oms_dispatch_order m, oms_dispatch_order_detail d,oms_dispatch_order_delivery e
+    where m.dispatch_order_id = d.dispatch_order_id
+    and d.dispatch_order_detail_id = e.dispatch_order_detail_id
+    and d.`status` = 2
+      <if test="storeIds!=null and storeIds.size>0">
+        AND m.store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="createTimeBegin!=null">
+        <![CDATA[AND e.delivery_time>=#{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd!=null">
+        <![CDATA[AND e.delivery_time<#{createTimeEnd}]]>
+      </if>
+    GROUP BY m.store_id
+    ) sales_order
+    LEFT JOIN (
+    SELECT
+    a.store_id,
+    a.store_name,
+    SUM( b.quantity ) AS return_quantity,
+    SUM( b.refundable_amount ) AS return_amount
+    FROM oms_return_order a,oms_return_order_detail b ,
+    (
+    select d.sales_order_detail_id
+    from oms_dispatch_order m, oms_dispatch_order_detail d,oms_dispatch_order_delivery e
+    where m.dispatch_order_id = d.dispatch_order_id and d.dispatch_order_detail_id = e.dispatch_order_detail_id and
+    d.`status` = 2
+    <if test="storeIds!=null and storeIds.size>0">
+      AND m.store_id IN
+      <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="createTimeBegin!=null">
+      <![CDATA[AND e.delivery_time>=#{createTimeBegin}]]>
+    </if>
+    <if test="createTimeEnd!=null">
+      <![CDATA[AND e.delivery_time<#{createTimeEnd}]]>
+    </if>
+    ) as c
+    where a.return_order_id = b.return_order_id
+    and b.sales_order_detail_id = c.sales_order_detail_id
+    and a.`status` = 3 GROUP BY a.store_id
+    ) return_order ON sales_order.store_id = return_order.store_id
+  </select>
+
+</mapper>

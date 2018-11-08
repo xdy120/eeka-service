@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipScheduleMapper">
+  <resultMap id="listAndDetailMap" type="com.greatonce.oms.domain.vip.VipSchedule"
+    extends="resultMap">
+    <collection property="details"
+      resultMap="com.greatonce.oms.dao.vip.VipScheduleDetailMapper.resultMap"
+      columnPrefix="detail_"/>
+  </resultMap>
+
+  <sql id="whereCustom">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND schedule.audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND schedule.audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">AND auditor=#{auditor}</if>
+      <if test="beginTimeBegin!=null">
+        <![CDATA[AND schedule.begin_time>=#{beginTimeBegin}]]>
+      </if>
+      <if test="beginTimeEnd!=null">
+        <![CDATA[AND schedule.begin_time<#{beginTimeEnd}]]>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND schedule.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND schedule.created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">AND creator=#{creator}</if>
+      <if test="endTimeBegin!=null">
+        <![CDATA[AND schedule.end_time>=#{endTimeBegin}]]>
+      </if>
+      <if test="endTimeEnd!=null">
+        <![CDATA[AND schedule.end_time<#{endTimeEnd}]]>
+      </if>
+      <if test="goodsValue!=null">AND goods_value=#{goodsValue}</if>
+      <if test="upload!=null">AND is_upload=#{upload}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND schedule.modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND schedule.modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="remark!=null and remark!=''">
+        <bind name="remark_like" value="_parameter.remark+'%'"/>
+        AND schedule.remark like #{remark_like}
+      </if>
+      <if test="storeId!=null">AND schedule.store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">AND schedule.store_name=#{storeName}</if>
+      <if test="version!=null">AND schedule.version=#{version}</if>
+      <if test="vipScheduleCode!=null and vipScheduleCode!=''">AND
+        schedule.vip_schedule_code=#{vipScheduleCode}
+      </if>
+      <if test="vipScheduleCodes!=null and vipScheduleCodes.size>0">
+        AND vip_schedule_code IN
+        <foreach item="item" index="index" collection="vipScheduleCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="vipScheduleId!=null">AND schedule.vip_schedule_id=#{vipScheduleId}</if>
+      <if test="vipScheduleName!=null and vipScheduleName!=''">
+        <bind name="vipScheduleName_like" value="_parameter.vipScheduleName+'%'"/>
+        AND schedule.vip_schedule_name like #{vipScheduleName_like}
+      </if>
+      <if test="virtualWarehouseId!=null">AND schedule.virtual_warehouse_id=#{virtualWarehouseId}
+      </if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">AND
+        schedule.virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="status!=null">AND schedule.status=#{status}</if>
+
+      <if test="productCode!=null and productCode!=''">AND details.product_code=#{productCode}</if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND details.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="skuCode!=null and skuCode!=''">AND details.sku_code=#{skuCode}</if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND details.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </trim>
+  </sql>
+  <select id="listPageCustom" resultMap="resultMap">
+    SELECT DISTINCT schedule.* FROM oms_vip_schedule AS schedule LEFT JOIN oms_vip_schedule_detail
+    AS details
+    on schedule.vip_schedule_id=details.vip_schedule_id
+    <include refid="whereCustom"/>
+    ORDER BY vip_schedule_id DESC
+  </select>
+</mapper>

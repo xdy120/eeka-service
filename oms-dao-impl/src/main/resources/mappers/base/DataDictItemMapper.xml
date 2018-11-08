@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.DataDictItemMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.DataDictItem">
+    <id column="data_dict_item_id" property="dataDictItemId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="data_dict_id" property="dataDictId"/>
+    <result column="data_dict_item_code" property="dataDictItemCode"/>
+    <result column="data_dict_item_name" property="dataDictItemName"/>
+    <result column="is_system" property="system"/>
+    <result column="modified_time" property="modifiedTime"/>
+  </resultMap>
+  <sql id="columns">created_time,data_dict_id,data_dict_item_code,data_dict_item_id,data_dict_item_name,is_system,modified_time</sql>
+  <sql id="pkWhere">
+    WHERE data_dict_item_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="dataDictId!=null">AND data_dict_id=#{dataDictId}</if>
+      <if test="dataDictItemCode!=null and dataDictItemCode!=''">
+        AND data_dict_item_code=#{dataDictItemCode}
+      </if>
+      <if test="dataDictItemId!=null">AND data_dict_item_id=#{dataDictItemId}</if>
+      <if test="dataDictItemName!=null and dataDictItemName!=''">
+        AND data_dict_item_name=#{dataDictItemName}
+      </if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="dataDictId!=null">AND data_dict_id=#{dataDictId}</if>
+      <if test="dataDictItemCode!=null and dataDictItemCode!=''">
+        AND data_dict_item_code=#{dataDictItemCode}
+      </if>
+      <if test="dataDictItemId!=null">AND data_dict_item_id=#{dataDictItemId}</if>
+      <if test="dataDictItemName!=null and dataDictItemName!=''">
+        AND data_dict_item_name=#{dataDictItemName}
+      </if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY data_dict_item_id ASC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.DataDictItem">
+    INSERT INTO oms_data_dict_item(created_time,data_dict_id,data_dict_item_code,data_dict_item_id,data_dict_item_name,is_system,modified_time)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{dataDictId},
+      #{dataDictItemCode},
+      #{dataDictItemId},
+      #{dataDictItemName},
+      #{system},
+      now(),
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.DataDictItem">
+    UPDATE oms_data_dict_item
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="dataDictId!=null">data_dict_id=#{dataDictId},</if>
+      <if test="dataDictItemCode!=null">data_dict_item_code=#{dataDictItemCode},</if>
+      <if test="dataDictItemName!=null">data_dict_item_name=#{dataDictItemName},</if>
+      <if test="system!=null">is_system=#{system},</if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND data_dict_item_id=#{dataDictItemId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.DataDictItem">
+    UPDATE oms_data_dict_item
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.dataDictId!=null">
+        data_dict_id=#{record.dataDictId},
+      </if>
+      <if test="record.dataDictItemCode!=null">
+        data_dict_item_code=#{record.dataDictItemCode},
+      </if>
+      <if test="record.dataDictItemName!=null">
+        data_dict_item_name=#{record.dataDictItemName},
+      </if>
+      <if test="record.system!=null">
+        is_system=#{record.system},
+      </if>
+      modified_time=now(),
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.dataDictId!=null">
+      AND data_dict_id=#{example.dataDictId}
+      </if>
+      <if test="example.dataDictItemCode!=null">
+      AND data_dict_item_code=#{example.dataDictItemCode}
+      </if>
+      <if test="example.dataDictItemId!=null">
+      AND data_dict_item_id=#{example.dataDictItemId}
+      </if>
+      <if test="example.dataDictItemName!=null">
+      AND data_dict_item_name=#{example.dataDictItemName}
+      </if>
+      <if test="example.system!=null">
+      AND is_system=#{example.system}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_data_dict_item
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_data_dict_item
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_data_dict_item
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_data_dict_item
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_data_dict_item
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_data_dict_item
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_data_dict_item
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_data_dict_item
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_data_dict_item
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

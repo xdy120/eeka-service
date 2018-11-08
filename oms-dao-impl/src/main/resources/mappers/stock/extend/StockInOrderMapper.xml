@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockInOrderMapper">
+
+  <sql id="advanceWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND sio.address=#{address}
+      </if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND sio.audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND sio.audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND sio.auditor=#{auditor}
+      </if>
+      <if test="cityId!=null">AND sio.city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND sio.city_name=#{cityName}
+      </if>
+      <if test="contact!=null and contact!=''">
+        AND sio.contact=#{contact}
+      </if>
+      <if test="countryId!=null">AND sio.country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND sio.country_name=#{countryName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND sio.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND sio.created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND sio.creator=#{creator}
+      </if>
+      <if test="districtId!=null">AND sio.district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND sio.district_name=#{districtName}
+      </if>
+      <if test="fromCode!=null and fromCode!=''">
+        AND sio.from_code=#{fromCode}
+      </if>
+      <if test="fromCodes!=null and fromCodes.size>0">
+        AND sio.from_code IN
+        <foreach item="item" index="index" collection="fromCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inStatus!=null">AND sio.in_status=#{inStatus}</if>
+      <if test="inStatuses!=null and inStatuses.size>0">
+        AND sio.in_status IN
+        <foreach item="item" index="index" collection="inStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="lastInTimeBegin!=null">
+        <![CDATA[AND sio.last_in_time>=#{lastInTimeBegin}]]>
+      </if>
+      <if test="lastInTimeEnd!=null">
+        <![CDATA[AND sio.last_in_time<#{lastInTimeEnd}]]>
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND sio.mobile=#{mobile}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND sio.modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND sio.modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND sio.outer_code=#{outerCode}
+      </if>
+      <if test="outerCodes!=null and outerCodes.size>0">
+        AND sio.outer_code IN
+        <foreach item="item" index="index" collection="outerCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="provinceId!=null">AND sio.province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND sio.province_name=#{provinceName}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND sio.remark=#{remark}
+      </if>
+      <if test="status!=null">AND sio.status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND sio.status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockInOrderCode!=null and stockInOrderCode!=''">
+        AND sio.stock_in_order_code=#{stockInOrderCode}
+      </if>
+      <if test="stockInOrderCodes!=null and stockInOrderCodes.size>0">
+        AND sio.stock_in_order_code IN
+        <foreach item="item" index="index" collection="stockInOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockInOrderId!=null">AND sio.stock_in_order_id=#{stockInOrderId}</if>
+      <if test="stockInOrderType!=null and stockInOrderType!=''">
+        AND sio.stock_in_order_type=#{stockInOrderType}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND sio.telephone=#{telephone}
+      </if>
+      <if test="version!=null">AND sio.version=#{version}</if>
+      <if test="virtualWarehouseId!=null">AND sio.virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND sio.virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND sio.warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND sio.warehouse_name=#{warehouseName}
+      </if>
+
+      <if test="skuCode!=null and skuCode!=''">
+        AND EXISTS(SELECT 1 FROM oms_stock_in_order_detail siod WHERE sio.stock_in_order_id=siod.stock_in_order_id AND siod.sku_code=#{skuCode})
+      </if>
+    </trim>
+  </sql>
+
+  <select id="advanceQuery" resultMap="resultMap">
+    SELECT
+    <include refid="columns"></include>
+    FROM oms_stock_in_order sio
+    <include refid="advanceWhere"/>
+    <include refid="orderBy"/>
+  </select>
+
+</mapper>

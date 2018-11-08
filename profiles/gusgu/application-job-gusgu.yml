@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    oms:
+      initialSize: 10
+      maxActive: 100
+      minIdle: 5
+    report:
+      initialSize: 1
+      maxActive: 10
+      minIdle: 0
+    admin:
+      initialSize: 5
+      maxActive: 50
+      minIdle: 1
+    rds:
+      initialSize: 5
+      maxActive: 50
+      minIdle: 5

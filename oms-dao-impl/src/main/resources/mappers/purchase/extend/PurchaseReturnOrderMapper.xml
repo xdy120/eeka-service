@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.purchase.PurchaseReturnOrderMapper">
+    <resultMap id="listAndDetailMap" type="com.greatonce.oms.domain.purchase.PurchaseReturnOrder" extends="resultMap">
+        <collection property="details" resultMap="com.greatonce.oms.dao.purchase.PurchaseReturnOrderDetailMapper.resultMap" columnPrefix="detail_"></collection>
+    </resultMap>
+    <select id="listAvailable" resultMap="listAndDetailMap">
+    SELECT returnOrder.purchase_order_id,returnOrder.purchase_return_order_id,returnOrder.virtual_warehouse_id,returnOrder.virtual_warehouse_name,
+    returnOrder.warehouse_id,returnOrder.warehouse_name
+    ,details.sku_id AS detail_sku_id,details.plan_quantity AS detail_plan_quantity,details.purchase_return_order_detail_id AS  detail_purchase_return_order_detail_id,
+    IFNULL(stock.quantity-IFNULL(occ.locked, 0),0) AS detail_notice_quantity
+    FROM oms_purchase_return_order returnOrder LEFT JOIN  oms_purchase_return_order_detail details
+    ON returnOrder.purchase_return_order_id=details.purchase_return_order_id
+    LEFT JOIN oms_stock  stock ON  details.sku_id=stock.sku_id and stock.virtual_warehouse_id=returnOrder.virtual_warehouse_id
+    LEFT JOIN
+    (SELECT sku_id, virtual_warehouse_id,
+    SUM(CASE WHEN status = 3 THEN quantity ELSE 0 END) AS locked
+    FROM oms_stock_occupancy group  by sku_id, virtual_warehouse_id) occ
+    ON details.sku_id=occ.sku_id AND occ.virtual_warehouse_id= returnOrder.virtual_warehouse_id
+    WHERE returnOrder.purchase_return_order_id=#{purchaseReturnOrderId}
+    </select>
+
+    <select id="listSaleable" resultMap="listAndDetailMap">
+        SELECT returnOrder.purchase_order_id,returnOrder.purchase_return_order_id,returnOrder.virtual_warehouse_id,returnOrder.virtual_warehouse_name,
+        returnOrder.warehouse_id,returnOrder.warehouse_name
+        ,details.sku_id AS detail_sku_id,details.plan_quantity AS detail_plan_quantity,details.purchase_return_order_detail_id AS  detail_purchase_return_order_detail_id,
+        IFNULL(stock.quantity-IFNULL(occ.locked, 0)-IFNULL(occ.not_lock, 0),0) AS detail_notice_quantity
+        FROM oms_purchase_return_order returnOrder LEFT JOIN  oms_purchase_return_order_detail details
+        ON returnOrder.purchase_return_order_id=details.purchase_return_order_id
+        LEFT JOIN oms_stock  stock ON  details.sku_id=stock.sku_id and stock.virtual_warehouse_id=returnOrder.virtual_warehouse_id
+        LEFT JOIN
+        (SELECT sku_id, virtual_warehouse_id,
+        SUM(CASE WHEN status = 2 THEN quantity ELSE 0 END) AS not_lock,
+        SUM(CASE WHEN status = 3 THEN quantity ELSE 0 END) AS locked
+        FROM oms_stock_occupancy group  by sku_id, virtual_warehouse_id) occ
+        ON details.sku_id=occ.sku_id AND occ.virtual_warehouse_id= returnOrder.virtual_warehouse_id
+        WHERE returnOrder.purchase_return_order_id=#{purchaseReturnOrderId}
+    </select>
+</mapper>

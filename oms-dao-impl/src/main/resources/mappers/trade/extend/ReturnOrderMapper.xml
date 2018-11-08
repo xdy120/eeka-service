@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.ReturnOrderMapper">
+
+  <resultMap id="listAndDetailMap" type="com.greatonce.oms.domain.trade.ReturnOrder"
+    extends="resultMap">
+    <collection property="details"
+      resultMap="com.greatonce.oms.dao.trade.ReturnOrderDetailMapper.resultMap"
+      columnPrefix="indetail_"></collection>
+    <collection property="outDetails"
+      resultMap="com.greatonce.oms.dao.trade.ReturnOrderOutDetailMapper.resultMap"
+      columnPrefix="outdetail_"></collection>
+  </resultMap>
+
+  <sql id="advanceWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND rOrder.audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND rOrder.audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">AND rOrder.auditor=#{auditor}</if>
+      <if test="cityId!=null">AND rOrder.city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">AND rOrder.city_name=#{cityName}</if>
+      <if test="contact!=null and contact!=''">AND rOrder.contact=#{contact}</if>
+      <if test="countryId!=null">AND rOrder.country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">AND rOrder.country_name=#{countryName}</if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND rOrder.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND rOrder.created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">AND rOrder.creator=#{creator}</if>
+      <if test="abnormal!=null">AND rOrder.is_abnormal=#{abnormal}</if>
+      <if test="distributionTradeId!=null and distributionTradeId!=''">AND
+        rOrder.distribution_trade_id=#{distributionTradeId}
+      </if>
+      <if test="districtId!=null">AND rOrder.district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">AND rOrder.district_name=#{districtName}</if>
+      <if test="expressName!=null and expressName!=''">AND rOrder.express_name=#{expressName}</if>
+      <if test="expressNo!=null and expressNo!=''">AND rOrder.express_no=#{expressNo}</if>
+      <if test="expressNos!=null and expressNos.size>0">
+        AND rOrder.express_no IN
+        <foreach item="item" index="index" collection="expressNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="inVirtualWarehouseId!=null">AND rOrder.in_virtual_warehouse_id=#{inVirtualWarehouseId}</if>
+      <if test="inVirtualWarehouseIds!=null and inVirtualWarehouseIds.size>0">
+        AND rOrder.in_virtual_warehouse_id IN
+        <foreach item="item" index="index" collection="inVirtualWarehouseIds" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="inVirtualWarehouseName!=null and inVirtualWarehouseName!=''">AND
+        rOrder.in_virtual_warehouse_name=#{inVirtualWarehouseName}
+      </if>
+      <if test="exchange!=null">AND rOrder.is_exchange=#{exchange}</if>
+      <if test="skuAbnormal!=null">AND rOrder.is_sku_abnormal=#{skuAbnormal}</if>
+      <if test="noticeStatus!=null">AND rOrder.notice_status=#{noticeStatus}</if>
+      <if test="lastInTimeBegin!=null">
+        <![CDATA[AND rOrder.last_in_time>=#{lastInTimeBegin}]]>
+      </if>
+      <if test="lastInTimeEnd!=null">
+        <![CDATA[AND rOrder.last_in_time<#{lastInTimeEnd}]]>
+      </if>
+      <if test="memberId!=null">AND rOrder.member_id=#{memberId}</if>
+      <if test="memberName!=null and memberName!=''">
+        <bind name="memberName_like" value="_parameter.memberName+'%'"/>
+        AND rOrder.member_name like #{memberName_like}
+      </if>
+      <if test="mobile!=null and mobile!=''">AND rOrder.mobile=#{mobile}</if>
+      <if test="mobiles!=null and mobiles.size>0">
+        AND rOrder.mobile IN
+        <foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND rOrder.modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND rOrder.modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outVirtualWarehouseId!=null">AND rOrder.out_virtual_warehouse_id=#{outVirtualWarehouseId}
+      </if>
+      <if test="outVirtualWarehouseName!=null and outVirtualWarehouseName!=''">AND
+        rOrder.out_virtual_warehouse_name=#{outVirtualWarehouseName}
+      </if>
+      <if test="outerCode!=null and outerCode!=''">AND rOrder.outer_code=#{outerCode}</if>
+      <if test="provinceId!=null">AND rOrder.province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">AND rOrder.province_name=#{provinceName}</if>
+      <if test="quantity!=null">AND rOrder.quantity=#{quantity}</if>
+
+      <if test="quantityAbnormal!=null and quantityAbnormal == false">
+        AND rOrder.quantity = IFNULL(rOrder.apply_quantity,0)
+      </if>
+      <if test="quantityAbnormal!=null and quantityAbnormal == true">
+        AND rOrder.quantity != IFNULL(rOrder.apply_quantity,0)
+      </if>
+
+      <if test="refundType!=null">AND rOrder.refund_type=#{refundType}</if>
+      <if test="refundableAmount!=null">AND rOrder.refundable_amount=#{refundableAmount}</if>
+      <if test="remark!=null and remark!=''">AND rOrder.remark=#{remark}</if>
+      <if test="returnOrderCode!=null and returnOrderCode!=''">AND
+        rOrder.return_order_code=#{returnOrderCode}
+      </if>
+      <if test="returnOrderCodes!=null and returnOrderCodes.size>0">
+        AND rOrder.return_order_code IN
+        <foreach item="item" index="index" collection="returnOrderCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="returnOrderId!=null">AND rOrder.return_order_id=#{returnOrderId}</if>
+      <if test="returnReasonType!=null and returnReasonType!=''">AND
+        rOrder.return_reason_type=#{returnReasonType}
+      </if>
+      <if test="returnType!=null and returnType!=''">AND rOrder.return_type=#{returnType}</if>
+      <if test="reviewTimeBegin!=null">
+        <![CDATA[AND rOrder.review_time>=#{reviewTimeBegin}]]>
+      </if>
+      <if test="reviewTimeEnd!=null">
+        <![CDATA[AND rOrder.review_time<#{reviewTimeEnd}]]>
+      </if>
+      <if test="reviewer!=null and reviewer!=''">AND rOrder.reviewer=#{reviewer}</if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">AND
+        rOrder.sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderCodes!=null and salesOrderCodes.size>0">
+        AND rOrder.sales_order_code IN
+        <foreach item="item" index="index" collection="salesOrderCodes" open="(" separator=","
+          close=")">#{item}
+        </foreach>
+      </if>
+      <if test="salesOrderId!=null">AND rOrder.sales_order_id=#{salesOrderId}</if>
+      <if test="status!=null">AND rOrder.status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND rOrder.status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND (store_id=#{storeId} OR store_id is NULL)</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND (store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+        OR store_id is NULL)
+      </if>
+      <if test="boxNo!=null and boxNo!=''">
+        AND rOrder.box_no=#{boxNo}
+      </if>
+      <if test="boxNos!=null and boxNos.size>0">
+        AND rOrder.box_no IN
+        <foreach item="item" index="index" collection="boxNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">AND rOrder.store_name=#{storeName}</if>
+      <if test="telephone!=null and telephone!=''">AND rOrder.telephone=#{telephone}</if>
+      <if test="tradeId!=null and tradeId!=''">AND rOrder.trade_id=#{tradeId}</if>
+      <if test="tradeIds!=null and tradeIds.size>0">
+        AND rOrder.trade_id IN
+        <foreach item="item" index="index" collection="tradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="unpackedTimeBegin!=null">
+        <![CDATA[AND rOrder.unpacked_time>=#{unpackedTimeBegin}]]>
+      </if>
+      <if test="unpackedTimeEnd!=null">
+        <![CDATA[AND rOrder.unpacked_time<#{unpackedTimeEnd}]]>
+      </if>
+      <if test="unpacker!=null and unpacker!=''">AND rOrder.unpacker=#{unpacker}</if>
+      <if test="version!=null">AND rOrder.version=#{version}</if>
+
+
+      <if test="brandCodes!=null and brandCodes.size>0">
+        AND EXISTS(SELECT 1 FROM oms_return_order_detail details WHERE
+        rOrder.return_order_id=details.return_order_id AND details.brand_code IN
+        <foreach item="item" index="index" collection="brandCodes" open="(" separator="," close=")">
+          #{item}</foreach>)
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND EXISTS(SELECT 1 FROM oms_return_order_detail details WHERE
+        rOrder.return_order_id=details.return_order_id AND details.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator=","
+          close=")">#{item}</foreach>)
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND EXISTS(SELECT 1 FROM oms_return_order_detail details WHERE
+        rOrder.return_order_id=details.return_order_id AND details.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}</foreach>)
+      </if>
+      <if test="outProductCodes!=null and outProductCodes.size>0">
+        AND EXISTS(SELECT 1 FROM oms_return_order_out_detail details WHERE
+        rOrder.return_order_id=details.return_order_id AND details.product_code IN
+        <foreach item="item" index="index" collection="outProductCodes" open="(" separator=","
+          close=")">#{item}</foreach>)
+      </if>
+      <if test="outSkuCodes!=null and outSkuCodes.size>0">
+        AND EXISTS(SELECT 1 FROM oms_return_order_out_detail details WHERE
+        rOrder.return_order_id=details.return_order_id AND details.sku_code IN
+        <foreach item="item" index="index" collection="outSkuCodes" open="(" separator=","
+          close=")">#{item}</foreach>)
+      </if>
+    </trim>
+  </sql>
+
+
+  <select id="listIdByExample" parameterType="com.greatonce.oms.domain.trade.ReturnOrder"
+    resultType="Long">
+    SELECT return_order_id
+    FROM oms_return_order
+    WHERE in_warehouse_id = #{inWarehouseId}
+      and status = #{status}
+    LIMIT 0,#{quantity}
+  </select>
+
+  <select id="getOrderAndDetailByKey" resultMap="listAndDetailMap">
+    SELECT re.address,
+           re.audited_time,
+           re.auditor,
+           re.city_id,
+           re.contact,
+           re.country_id,
+           re.district_id,
+           re.created_time,
+           re.creator,
+           re.apply_quantity,
+           re.distribution_trade_id,
+           re.express_name,
+           express_no,
+           re.in_virtual_warehouse_id,
+           re.in_virtual_warehouse_name,
+           re.is_exchange,
+           re.is_sku_abnormal,
+           re.notice_status,
+           re.last_in_time,
+           re.member_id,
+           re.member_name,
+           mobile,
+           re.modified_time,
+           re.out_virtual_warehouse_id,
+           re.out_virtual_warehouse_name,
+           re.outer_code,
+           re.province_id,
+           re.quantity,
+           re.refundable_amount,
+           re.country_name,
+           re.province_name,
+           re.city_name,
+           re.district_name,
+           re.remark,
+           re.return_order_code,
+           re.return_order_id,
+           re.return_reason_type,
+           re.return_type,
+           re.review_time,
+           re.reviewer,
+           re.sales_order_code,
+           re.sales_order_id,
+           re.STATUS,
+           re.store_id,
+           re.store_name,
+           re.telephone,
+           re.trade_id,
+           re.unpacked_time,
+           re.unpacker,
+           re.version,
+           indetail.in_quantity                 indetail_in_quantity,
+           indetail.product_code                indetail_product_code,
+           indetail.product_id                  indetail_product_id,
+           indetail.product_name                indetail_product_name,
+           indetail.quantity                    indetail_quantity,
+           indetail.refundable_amount           indetail_refundable_amount,
+           indetail.return_order_detail_id      indetail_return_order_detail_id,
+           indetail.return_reason_type          indetail_return_reason_type,
+           indetail.sku_code                    indetail_sku_code,
+           indetail.apply_quantity              indetail_apply_quantity,
+           indetail.sku_id                      indetail_sku_id,
+           indetail.sku_name                    indetail_sku_name,
+           outdetail.actual_amount              outdetail_actual_amount,
+           outdetail.exchange_id                outdetail_exchange_id,
+           outdetail.product_code               outdetail_product_code,
+           outdetail.product_id                 outdetail_product_id,
+           outdetail.product_name               outdetail_product_name,
+           outdetail.product_type               outdetail_product_type,
+           outdetail.quantity                   outdetail_quantity,
+           outdetail.return_order_out_detail_id outdetail_return_order_out_detail_id,
+           outdetail.sku_code                   outdetail_sku_code,
+           outdetail.sku_id                     outdetail_sku_id,
+           outdetail.sku_name                   outdetail_sku_name
+    FROM oms_return_order re
+           LEFT JOIN oms_return_order_detail indetail
+           ON re.return_order_id = indetail.return_order_id
+           LEFT JOIN oms_return_order_out_detail outdetail
+           ON re.return_order_id = outdetail.return_order_id
+    WHERE re.return_order_id = #{returnOrderId}
+  </select>
+
+  <select id="advanceQuery" resultMap="resultMap">
+    SELECT
+    <include refid="columns"></include>
+    FROM oms_return_order rOrder
+    <include refid="advanceWhere"/>
+    ORDER BY return_order_id DESC
+  </select>
+
+  <select id="getBySalesOrderIdAndSkuCode" resultMap="resultMap">
+    SELECT
+    <include refid="columns"></include>
+    FROM oms_return_order
+    sales_order_id=#{salesOrderId} AND `status` in (0,1)
+    ORDER BY return_order_id DESC
+  </select>
+
+
+  <resultMap id="salesOrderInfoMap" type="com.greatonce.oms.bo.trade.ExchangeOccupancyBO">
+    <id column="order_id" property="orderId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="quantity" property="quantity"/>
+    <result column="code" property="code"/>
+    <result column="return_order_status" property="returnOrderStatus"/>
+    <result column="exchange_status" property="mallExchangeStatus"/>
+  </resultMap>
+  <select id="stockOccupancyDetail" resultMap="salesOrderInfoMap">
+    SELECT o.quantity                     as quantity,
+           case
+             WHEN r.return_order_id is null THEN e.exchange_apply_order_id
+             ELSE r.return_order_id END   as order_id,
+           case
+             WHEN r.return_order_id is null THEN e.exchange_apply_order_code
+             ELSE r.return_order_code END as code,
+           case
+             WHEN r.return_order_id is null THEN e.created_time
+             ELSE r.created_time END      as created_time,
+           r.status                       as return_order_status,
+           e.status                       as exchange_status
+    FROM oms_stock_occupancy o
+           LEFT JOIN oms_return_order r ON r.return_order_id = o.main_id
+           LEFT JOIN oms_exchange_apply_order e ON e.exchange_apply_order_id = o.main_id
+    WHERE stock_occupancy_type = 4
+      AND o.status IN (2, 3)
+      AND sku_code = #{skuCode}
+      AND virtual_warehouse_id = ${virtualWarehouseId}
+  </select>
+
+
+  <resultMap id="returnOrderInfoMap" type="com.greatonce.oms.bo.trade.ReturnOrderExportBO">
+    <result column="trade_id" property="tradeId"/>
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="apply_quantity" property="applyQuantity"/>
+    <result column="quantity" property="quantity"/>
+    <result column="store_name" property="storeName"/>
+    <result column="in_virtual_warehouse_name" property="inVirtualWarehouseName"/>
+    <result column="express_no" property="expressNo"/>
+    <result column="unpacker" property="unpacker"/>
+    <result column="return_order_code" property="returnOrderCode"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_quantity" property="skuQuantity"/>
+    <result column="return_reason_type" property="returnReasonType"/>
+    <result column="return_type" property="returnType"/>
+    <result column="status" property="status"/>
+    <result column="is_exchange" property="exchange"/>
+    <result column="box_no" property="boxNo"/>
+    <result column="remark" property="remark"/>
+    <result column="member_name" property="memberName"/>
+    <result column="express_name" property="expressName"/>
+    <result column="creator" property="creator"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="unpacked_time" property="unpackedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="reviewer" property="reviewer"/>
+    <result column="review_time" property="reviewTime"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="refundable_amount" property="refundableAmount"/>
+    <result column="is_noticed" property="noticed"/>
+    <result column="return_notice_order_code" property="returnNoticeOrderCode"/>
+  </resultMap>
+
+  <select id="listExportReturn" resultMap="returnOrderInfoMap">
+    SELECT
+    rOrder.trade_id,
+    rOrder.sales_order_code,
+    rOrder.apply_quantity,
+    rOrder.quantity,
+    rOrder.store_name,
+    rOrder.in_virtual_warehouse_name,
+    rOrder.express_no,
+    rOrder.unpacker,
+    rOrder.return_order_code,
+    rOrder.return_type,
+    rOrder.status,
+    rOrder.is_exchange,
+    rOrder.box_no,
+    rOrder.remark,
+    rOrder.member_name,
+    rOrder.express_name,
+    rOrder.creator,
+    rOrder.created_time,
+    rOrder.unpacked_time,
+    rOrder.auditor,
+    rOrder.audited_time,
+    rOrder.reviewer,
+    rOrder.review_time,
+    details.sku_code,
+    details.sku_name,
+    details.quantity AS sku_quantity,
+    details.return_reason_type,
+    details.refundable_amount,
+    details.is_noticed,
+    notice_order.return_notice_order_code
+    FROM oms_return_order rOrder
+    JOIN oms_return_order_detail details
+      ON rOrder.return_order_id=details.return_order_id
+    LEFT JOIN oms_return_notice_order_detail notice_detail
+      ON details.return_order_detail_id=notice_detail.return_order_detail_id
+    LEFT JOIN oms_return_notice_order notice_order
+      ON notice_detail.return_notice_order_id=notice_order.return_notice_order_id
+    <include refid="advanceWhere"/>
+  </select>
+</mapper>

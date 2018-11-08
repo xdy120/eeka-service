@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.SalesOrder">
+    <id column="sales_order_id" property="salesOrderId"/>
+    <result column="actual_amount" property="actualAmount"/>
+    <result column="address" property="address"/>
+    <result column="audited_time" property="auditedTime"/>
+    <result column="auditor" property="auditor"/>
+    <result column="city_id" property="cityId"/>
+    <result column="city_name" property="cityName"/>
+    <result column="cod_amount" property="codAmount"/>
+    <result column="contact" property="contact"/>
+    <result column="country_id" property="countryId"/>
+    <result column="country_name" property="countryName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="delivery_status" property="deliveryStatus"/>
+    <result column="discount_amount" property="discountAmount"/>
+    <result column="dispatch_status" property="dispatchStatus"/>
+    <result column="distribution_amount" property="distributionAmount"/>
+    <result column="distribution_trade_id" property="distributionTradeId"/>
+    <result column="district_id" property="districtId"/>
+    <result column="district_name" property="districtName"/>
+    <result column="first_delivery_time" property="firstDeliveryTime"/>
+    <result column="hold_date" property="holdDate"/>
+    <result column="is_force_split" property="forceSplit"/>
+    <result column="is_hold" property="hold"/>
+    <result column="is_manual" property="manual"/>
+    <result column="is_oos" property="oos"/>
+    <result column="is_prerefund" property="prerefund"/>
+    <result column="is_product_abnormal" property="productAbnormal"/>
+    <result column="is_urgent" property="urgent"/>
+    <result column="last_delivery_time" property="lastDeliveryTime"/>
+    <result column="last_express_name" property="lastExpressName"/>
+    <result column="last_express_no" property="lastExpressNo"/>
+    <result column="mall_sales_order_status" property="mallSalesOrderStatus"/>
+    <result column="manual_user" property="manualUser"/>
+    <result column="merge_flag" property="mergeFlag"/>
+    <result column="mobile" property="mobile"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="pay_status" property="payStatus"/>
+    <result column="province_id" property="provinceId"/>
+    <result column="province_name" property="provinceName"/>
+    <result column="quantity" property="quantity"/>
+    <result column="refund_status" property="refundStatus"/>
+    <result column="reissue_reason" property="reissueReason"/>
+    <result column="remark" property="remark"/>
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="selling_amount" property="sellingAmount"/>
+    <result column="settlement_amount" property="settlementAmount"/>
+    <result column="status" property="status"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="suggest_express_id" property="suggestExpressId"/>
+    <result column="suggest_express_name" property="suggestExpressName"/>
+    <result column="suggest_express_no" property="suggestExpressNo"/>
+    <result column="suggest_virtual_warehouse_id" property="suggestVirtualWarehouseId"/>
+    <result column="suggest_virtual_warehouse_name" property="suggestVirtualWarehouseName"/>
+    <result column="suggest_warehouse_id" property="suggestWarehouseId"/>
+    <result column="suggest_warehouse_name" property="suggestWarehouseName"/>
+    <result column="telephone" property="telephone"/>
+    <result column="trade_id" property="tradeId"/>
+    <result column="version" property="version"/>
+  </resultMap>
+  <sql id="columns">actual_amount,address,audited_time,auditor,city_id,city_name,cod_amount,contact,country_id,country_name,created_time,creator,delivery_status,discount_amount,dispatch_status,distribution_amount,distribution_trade_id,district_id,district_name,first_delivery_time,hold_date,is_force_split,is_hold,is_manual,is_oos,is_prerefund,is_product_abnormal,is_urgent,last_delivery_time,last_express_name,last_express_no,mall_sales_order_status,manual_user,merge_flag,mobile,modified_time,pay_status,province_id,province_name,quantity,refund_status,reissue_reason,remark,sales_order_code,sales_order_id,selling_amount,settlement_amount,status,store_id,store_name,suggest_express_id,suggest_express_name,suggest_express_no,suggest_virtual_warehouse_id,suggest_virtual_warehouse_name,suggest_warehouse_id,suggest_warehouse_name,telephone,trade_id,version</sql>
+  <sql id="pkWhere">
+    WHERE sales_order_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="auditedTime!=null">AND audited_time=#{auditedTime}</if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="codAmount!=null">AND cod_amount=#{codAmount}</if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="deliveryStatus!=null">AND delivery_status=#{deliveryStatus}</if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="dispatchStatus!=null">AND dispatch_status=#{dispatchStatus}</if>
+      <if test="distributionAmount!=null">AND distribution_amount=#{distributionAmount}</if>
+      <if test="distributionTradeId!=null and distributionTradeId!=''">
+        AND distribution_trade_id=#{distributionTradeId}
+      </if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="firstDeliveryTime!=null">AND first_delivery_time=#{firstDeliveryTime}</if>
+      <if test="holdDate!=null">AND hold_date=#{holdDate}</if>
+      <if test="forceSplit!=null">AND is_force_split=#{forceSplit}</if>
+      <if test="hold!=null">AND is_hold=#{hold}</if>
+      <if test="manual!=null">AND is_manual=#{manual}</if>
+      <if test="oos!=null">AND is_oos=#{oos}</if>
+      <if test="prerefund!=null">AND is_prerefund=#{prerefund}</if>
+      <if test="productAbnormal!=null">AND is_product_abnormal=#{productAbnormal}</if>
+      <if test="urgent!=null">AND is_urgent=#{urgent}</if>
+      <if test="lastDeliveryTime!=null">AND last_delivery_time=#{lastDeliveryTime}</if>
+      <if test="lastExpressName!=null and lastExpressName!=''">
+        AND last_express_name=#{lastExpressName}
+      </if>
+      <if test="lastExpressNo!=null and lastExpressNo!=''">
+        AND last_express_no=#{lastExpressNo}
+      </if>
+      <if test="mallSalesOrderStatus!=null">AND mall_sales_order_status=#{mallSalesOrderStatus}</if>
+      <if test="manualUser!=null and manualUser!=''">
+        AND manual_user=#{manualUser}
+      </if>
+      <if test="mergeFlag!=null and mergeFlag!=''">
+        AND merge_flag=#{mergeFlag}
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="payStatus!=null">AND pay_status=#{payStatus}</if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="refundStatus!=null">AND refund_status=#{refundStatus}</if>
+      <if test="reissueReason!=null and reissueReason!=''">
+        AND reissue_reason=#{reissueReason}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="sellingAmount!=null">AND selling_amount=#{sellingAmount}</if>
+      <if test="settlementAmount!=null">AND settlement_amount=#{settlementAmount}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="suggestExpressId!=null">AND suggest_express_id=#{suggestExpressId}</if>
+      <if test="suggestExpressName!=null and suggestExpressName!=''">
+        AND suggest_express_name=#{suggestExpressName}
+      </if>
+      <if test="suggestExpressNo!=null and suggestExpressNo!=''">
+        AND suggest_express_no=#{suggestExpressNo}
+      </if>
+      <if test="suggestVirtualWarehouseId!=null">AND suggest_virtual_warehouse_id=#{suggestVirtualWarehouseId}</if>
+      <if test="suggestVirtualWarehouseName!=null and suggestVirtualWarehouseName!=''">
+        AND suggest_virtual_warehouse_name=#{suggestVirtualWarehouseName}
+      </if>
+      <if test="suggestWarehouseId!=null">AND suggest_warehouse_id=#{suggestWarehouseId}</if>
+      <if test="suggestWarehouseName!=null and suggestWarehouseName!=''">
+        AND suggest_warehouse_name=#{suggestWarehouseName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="actualAmount!=null">AND actual_amount=#{actualAmount}</if>
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="codAmount!=null">AND cod_amount=#{codAmount}</if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="contacts!=null and contacts.size>0">
+        AND contact IN
+        <foreach item="item" index="index" collection="contacts" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="deliveryStatus!=null">AND delivery_status=#{deliveryStatus}</if>
+      <if test="deliveryStatuses!=null and deliveryStatuses.size>0">
+        AND delivery_status IN
+        <foreach item="item" index="index" collection="deliveryStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="discountAmount!=null">AND discount_amount=#{discountAmount}</if>
+      <if test="dispatchOrderCodes!=null and dispatchOrderCodes.size>0">
+        AND dispatch_order_code IN
+        <foreach item="item" index="index" collection="dispatchOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="dispatchStatus!=null">AND dispatch_status=#{dispatchStatus}</if>
+      <if test="dispatchStatuses!=null and dispatchStatuses.size>0">
+        AND dispatch_status IN
+        <foreach item="item" index="index" collection="dispatchStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="distributionAmount!=null">AND distribution_amount=#{distributionAmount}</if>
+      <if test="distributionTradeId!=null and distributionTradeId!=''">
+        AND distribution_trade_id=#{distributionTradeId}
+      </if>
+      <if test="distributionTradeIds!=null and distributionTradeIds.size>0">
+        AND distribution_trade_id IN
+        <foreach item="item" index="index" collection="distributionTradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="firstDeliveryTimeBegin!=null">
+        <![CDATA[AND first_delivery_time>=#{firstDeliveryTimeBegin}]]>
+      </if>
+      <if test="firstDeliveryTimeEnd!=null">
+        <![CDATA[AND first_delivery_time<#{firstDeliveryTimeEnd}]]>
+      </if>
+      <if test="holdDateBegin!=null">
+        <![CDATA[AND hold_date>=#{holdDateBegin}]]>
+      </if>
+      <if test="holdDateEnd!=null">
+        <![CDATA[AND hold_date<#{holdDateEnd}]]>
+      </if>
+      <if test="forceSplit!=null">AND is_force_split=#{forceSplit}</if>
+      <if test="hold!=null">AND is_hold=#{hold}</if>
+      <if test="manual!=null">AND is_manual=#{manual}</if>
+      <if test="oos!=null">AND is_oos=#{oos}</if>
+      <if test="prerefund!=null">AND is_prerefund=#{prerefund}</if>
+      <if test="productAbnormal!=null">AND is_product_abnormal=#{productAbnormal}</if>
+      <if test="urgent!=null">AND is_urgent=#{urgent}</if>
+      <if test="lastDeliveryTimeBegin!=null">
+        <![CDATA[AND last_delivery_time>=#{lastDeliveryTimeBegin}]]>
+      </if>
+      <if test="lastDeliveryTimeEnd!=null">
+        <![CDATA[AND last_delivery_time<#{lastDeliveryTimeEnd}]]>
+      </if>
+      <if test="lastExpressName!=null and lastExpressName!=''">
+        AND last_express_name=#{lastExpressName}
+      </if>
+      <if test="lastExpressNo!=null and lastExpressNo!=''">
+        AND last_express_no=#{lastExpressNo}
+      </if>
+      <if test="mallSalesOrderStatus!=null">AND mall_sales_order_status=#{mallSalesOrderStatus}</if>
+      <if test="manualUser!=null and manualUser!=''">
+        AND manual_user=#{manualUser}
+      </if>
+      <if test="mergeFlag!=null and mergeFlag!=''">
+        AND merge_flag=#{mergeFlag}
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="mobiles!=null and mobiles.size>0">
+        AND mobile IN
+        <foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="payStatus!=null">AND pay_status=#{payStatus}</if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="refundStatus!=null">AND refund_status=#{refundStatus}</if>
+      <if test="reissueReason!=null and reissueReason!=''">
+        AND reissue_reason=#{reissueReason}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderCodes!=null and salesOrderCodes.size>0">
+        AND sales_order_code IN
+        <foreach item="item" index="index" collection="salesOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="sellingAmount!=null">AND selling_amount=#{sellingAmount}</if>
+      <if test="settlementAmount!=null">AND settlement_amount=#{settlementAmount}</if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="suggestExpressId!=null">AND suggest_express_id=#{suggestExpressId}</if>
+      <if test="suggestExpressName!=null and suggestExpressName!=''">
+        AND suggest_express_name=#{suggestExpressName}
+      </if>
+      <if test="suggestExpressNo!=null and suggestExpressNo!=''">
+        AND suggest_express_no=#{suggestExpressNo}
+      </if>
+      <if test="suggestVirtualWarehouseId!=null">AND suggest_virtual_warehouse_id=#{suggestVirtualWarehouseId}</if>
+      <if test="suggestVirtualWarehouseName!=null and suggestVirtualWarehouseName!=''">
+        AND suggest_virtual_warehouse_name=#{suggestVirtualWarehouseName}
+      </if>
+      <if test="suggestWarehouseId!=null">AND suggest_warehouse_id=#{suggestWarehouseId}</if>
+      <if test="suggestWarehouseName!=null and suggestWarehouseName!=''">
+        AND suggest_warehouse_name=#{suggestWarehouseName}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="telephones!=null and telephones.size>0">
+        AND telephone IN
+        <foreach item="item" index="index" collection="telephones" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+      <if test="tradeIds!=null and tradeIds.size>0">
+        AND trade_id IN
+        <foreach item="item" index="index" collection="tradeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY sales_order_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.SalesOrder">
+    INSERT INTO oms_sales_order(actual_amount,address,audited_time,auditor,city_id,city_name,cod_amount,contact,country_id,country_name,created_time,creator,delivery_status,discount_amount,dispatch_status,distribution_amount,distribution_trade_id,district_id,district_name,first_delivery_time,hold_date,is_force_split,is_hold,is_manual,is_oos,is_prerefund,is_product_abnormal,is_urgent,last_delivery_time,last_express_name,last_express_no,mall_sales_order_status,manual_user,merge_flag,mobile,modified_time,pay_status,province_id,province_name,quantity,refund_status,reissue_reason,remark,sales_order_code,sales_order_id,selling_amount,settlement_amount,status,store_id,store_name,suggest_express_id,suggest_express_name,suggest_express_no,suggest_virtual_warehouse_id,suggest_virtual_warehouse_name,suggest_warehouse_id,suggest_warehouse_name,telephone,trade_id,version)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{actualAmount},
+      #{address},
+      #{auditedTime},
+      #{auditor},
+      #{cityId},
+      #{cityName},
+      #{codAmount},
+      #{contact},
+      #{countryId},
+      #{countryName},
+      now(),
+      #{creator},
+      #{deliveryStatus},
+      #{discountAmount},
+      #{dispatchStatus},
+      #{distributionAmount},
+      #{distributionTradeId},
+      #{districtId},
+      #{districtName},
+      #{firstDeliveryTime},
+      #{holdDate},
+      #{forceSplit},
+      #{hold},
+      #{manual},
+      #{oos},
+      #{prerefund},
+      #{productAbnormal},
+      #{urgent},
+      #{lastDeliveryTime},
+      #{lastExpressName},
+      #{lastExpressNo},
+      #{mallSalesOrderStatus},
+      #{manualUser},
+      #{mergeFlag},
+      #{mobile},
+      now(),
+      #{payStatus},
+      #{provinceId},
+      #{provinceName},
+      #{quantity},
+      #{refundStatus},
+      #{reissueReason},
+      #{remark},
+      #{salesOrderCode},
+      #{salesOrderId},
+      #{sellingAmount},
+      #{settlementAmount},
+      #{status},
+      #{storeId},
+      #{storeName},
+      #{suggestExpressId},
+      #{suggestExpressName},
+      #{suggestExpressNo},
+      #{suggestVirtualWarehouseId},
+      #{suggestVirtualWarehouseName},
+      #{suggestWarehouseId},
+      #{suggestWarehouseName},
+      #{telephone},
+      #{tradeId},
+      1,
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.SalesOrder">
+    UPDATE oms_sales_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="actualAmount!=null">actual_amount=#{actualAmount},</if>
+      <if test="address!=null">address=#{address},</if>
+      <if test="auditedTime!=null">audited_time=#{auditedTime},</if>
+      <if test="auditor!=null">auditor=#{auditor},</if>
+      <if test="cityId!=null">city_id=#{cityId},</if>
+      <if test="cityName!=null">city_name=#{cityName},</if>
+      <if test="codAmount!=null">cod_amount=#{codAmount},</if>
+      <if test="contact!=null">contact=#{contact},</if>
+      <if test="countryId!=null">country_id=#{countryId},</if>
+      <if test="countryName!=null">country_name=#{countryName},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="deliveryStatus!=null">delivery_status=#{deliveryStatus},</if>
+      <if test="discountAmount!=null">discount_amount=#{discountAmount},</if>
+      <if test="dispatchStatus!=null">dispatch_status=#{dispatchStatus},</if>
+      <if test="distributionAmount!=null">distribution_amount=#{distributionAmount},</if>
+      <if test="distributionTradeId!=null">distribution_trade_id=#{distributionTradeId},</if>
+      <if test="districtId!=null">district_id=#{districtId},</if>
+      <if test="districtName!=null">district_name=#{districtName},</if>
+      <if test="firstDeliveryTime!=null">first_delivery_time=#{firstDeliveryTime},</if>
+      <if test="holdDate!=null">hold_date=#{holdDate},</if>
+      <if test="forceSplit!=null">is_force_split=#{forceSplit},</if>
+      <if test="hold!=null">is_hold=#{hold},</if>
+      <if test="manual!=null">is_manual=#{manual},</if>
+      <if test="oos!=null">is_oos=#{oos},</if>
+      <if test="prerefund!=null">is_prerefund=#{prerefund},</if>
+      <if test="productAbnormal!=null">is_product_abnormal=#{productAbnormal},</if>
+      <if test="urgent!=null">is_urgent=#{urgent},</if>
+      <if test="lastDeliveryTime!=null">last_delivery_time=#{lastDeliveryTime},</if>
+      <if test="lastExpressName!=null">last_express_name=#{lastExpressName},</if>
+      <if test="lastExpressNo!=null">last_express_no=#{lastExpressNo},</if>
+      <if test="mallSalesOrderStatus!=null">mall_sales_order_status=#{mallSalesOrderStatus},</if>
+      <if test="manualUser!=null">manual_user=#{manualUser},</if>
+      <if test="mergeFlag!=null">merge_flag=#{mergeFlag},</if>
+      <if test="mobile!=null">mobile=#{mobile},</if>
+      modified_time=now(),
+      <if test="payStatus!=null">pay_status=#{payStatus},</if>
+      <if test="provinceId!=null">province_id=#{provinceId},</if>
+      <if test="provinceName!=null">province_name=#{provinceName},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="refundStatus!=null">refund_status=#{refundStatus},</if>
+      <if test="reissueReason!=null">reissue_reason=#{reissueReason},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="salesOrderCode!=null">sales_order_code=#{salesOrderCode},</if>
+      <if test="sellingAmount!=null">selling_amount=#{sellingAmount},</if>
+      <if test="settlementAmount!=null">settlement_amount=#{settlementAmount},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="suggestExpressId!=null">suggest_express_id=#{suggestExpressId},</if>
+      <if test="suggestExpressName!=null">suggest_express_name=#{suggestExpressName},</if>
+      <if test="suggestExpressNo!=null">suggest_express_no=#{suggestExpressNo},</if>
+      <if test="suggestVirtualWarehouseId!=null">suggest_virtual_warehouse_id=#{suggestVirtualWarehouseId},</if>
+      <if test="suggestVirtualWarehouseName!=null">suggest_virtual_warehouse_name=#{suggestVirtualWarehouseName},</if>
+      <if test="suggestWarehouseId!=null">suggest_warehouse_id=#{suggestWarehouseId},</if>
+      <if test="suggestWarehouseName!=null">suggest_warehouse_name=#{suggestWarehouseName},</if>
+      <if test="telephone!=null">telephone=#{telephone},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sales_order_id=#{salesOrderId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.SalesOrder">
+    UPDATE oms_sales_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.actualAmount!=null">
+        actual_amount=#{record.actualAmount},
+      </if>
+      <if test="record.address!=null">
+        address=#{record.address},
+      </if>
+      <if test="record.auditedTime!=null">
+        audited_time=#{record.auditedTime},
+      </if>
+      <if test="record.auditor!=null">
+        auditor=#{record.auditor},
+      </if>
+      <if test="record.cityId!=null">
+        city_id=#{record.cityId},
+      </if>
+      <if test="record.cityName!=null">
+        city_name=#{record.cityName},
+      </if>
+      <if test="record.codAmount!=null">
+        cod_amount=#{record.codAmount},
+      </if>
+      <if test="record.contact!=null">
+        contact=#{record.contact},
+      </if>
+      <if test="record.countryId!=null">
+        country_id=#{record.countryId},
+      </if>
+      <if test="record.countryName!=null">
+        country_name=#{record.countryName},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.deliveryStatus!=null">
+        delivery_status=#{record.deliveryStatus},
+      </if>
+      <if test="record.discountAmount!=null">
+        discount_amount=#{record.discountAmount},
+      </if>
+      <if test="record.dispatchStatus!=null">
+        dispatch_status=#{record.dispatchStatus},
+      </if>
+      <if test="record.distributionAmount!=null">
+        distribution_amount=#{record.distributionAmount},
+      </if>
+      <if test="record.distributionTradeId!=null">
+        distribution_trade_id=#{record.distributionTradeId},
+      </if>
+      <if test="record.districtId!=null">
+        district_id=#{record.districtId},
+      </if>
+      <if test="record.districtName!=null">
+        district_name=#{record.districtName},
+      </if>
+      <if test="record.firstDeliveryTime!=null">
+        first_delivery_time=#{record.firstDeliveryTime},
+      </if>
+      <if test="record.holdDate!=null">
+        hold_date=#{record.holdDate},
+      </if>
+      <if test="record.forceSplit!=null">
+        is_force_split=#{record.forceSplit},
+      </if>
+      <if test="record.hold!=null">
+        is_hold=#{record.hold},
+      </if>
+      <if test="record.manual!=null">
+        is_manual=#{record.manual},
+      </if>
+      <if test="record.oos!=null">
+        is_oos=#{record.oos},
+      </if>
+      <if test="record.prerefund!=null">
+        is_prerefund=#{record.prerefund},
+      </if>
+      <if test="record.productAbnormal!=null">
+        is_product_abnormal=#{record.productAbnormal},
+      </if>
+      <if test="record.urgent!=null">
+        is_urgent=#{record.urgent},
+      </if>
+      <if test="record.lastDeliveryTime!=null">
+        last_delivery_time=#{record.lastDeliveryTime},
+      </if>
+      <if test="record.lastExpressName!=null">
+        last_express_name=#{record.lastExpressName},
+      </if>
+      <if test="record.lastExpressNo!=null">
+        last_express_no=#{record.lastExpressNo},
+      </if>
+      <if test="record.mallSalesOrderStatus!=null">
+        mall_sales_order_status=#{record.mallSalesOrderStatus},
+      </if>
+      <if test="record.manualUser!=null">
+        manual_user=#{record.manualUser},
+      </if>
+      <if test="record.mergeFlag!=null">
+        merge_flag=#{record.mergeFlag},
+      </if>
+      <if test="record.mobile!=null">
+        mobile=#{record.mobile},
+      </if>
+      modified_time=now(),
+      <if test="record.payStatus!=null">
+        pay_status=#{record.payStatus},
+      </if>
+      <if test="record.provinceId!=null">
+        province_id=#{record.provinceId},
+      </if>
+      <if test="record.provinceName!=null">
+        province_name=#{record.provinceName},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.refundStatus!=null">
+        refund_status=#{record.refundStatus},
+      </if>
+      <if test="record.reissueReason!=null">
+        reissue_reason=#{record.reissueReason},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.salesOrderCode!=null">
+        sales_order_code=#{record.salesOrderCode},
+      </if>
+      <if test="record.sellingAmount!=null">
+        selling_amount=#{record.sellingAmount},
+      </if>
+      <if test="record.settlementAmount!=null">
+        settlement_amount=#{record.settlementAmount},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.suggestExpressId!=null">
+        suggest_express_id=#{record.suggestExpressId},
+      </if>
+      <if test="record.suggestExpressName!=null">
+        suggest_express_name=#{record.suggestExpressName},
+      </if>
+      <if test="record.suggestExpressNo!=null">
+        suggest_express_no=#{record.suggestExpressNo},
+      </if>
+      <if test="record.suggestVirtualWarehouseId!=null">
+        suggest_virtual_warehouse_id=#{record.suggestVirtualWarehouseId},
+      </if>
+      <if test="record.suggestVirtualWarehouseName!=null">
+        suggest_virtual_warehouse_name=#{record.suggestVirtualWarehouseName},
+      </if>
+      <if test="record.suggestWarehouseId!=null">
+        suggest_warehouse_id=#{record.suggestWarehouseId},
+      </if>
+      <if test="record.suggestWarehouseName!=null">
+        suggest_warehouse_name=#{record.suggestWarehouseName},
+      </if>
+      <if test="record.telephone!=null">
+        telephone=#{record.telephone},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.actualAmount!=null">
+      AND actual_amount=#{example.actualAmount}
+      </if>
+      <if test="example.address!=null">
+      AND address=#{example.address}
+      </if>
+      <if test="example.auditedTime!=null">
+      AND audited_time=#{example.auditedTime}
+      </if>
+      <if test="example.auditor!=null">
+      AND auditor=#{example.auditor}
+      </if>
+      <if test="example.cityId!=null">
+      AND city_id=#{example.cityId}
+      </if>
+      <if test="example.cityName!=null">
+      AND city_name=#{example.cityName}
+      </if>
+      <if test="example.codAmount!=null">
+      AND cod_amount=#{example.codAmount}
+      </if>
+      <if test="example.contact!=null">
+      AND contact=#{example.contact}
+      </if>
+      <if test="example.contacts!=null">
+      AND contact=#{example.contacts}
+      </if>
+      <if test="example.countryId!=null">
+      AND country_id=#{example.countryId}
+      </if>
+      <if test="example.countryName!=null">
+      AND country_name=#{example.countryName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.deliveryStatus!=null">
+      AND delivery_status=#{example.deliveryStatus}
+      </if>
+      <if test="example.deliveryStatuses!=null">
+      AND delivery_status=#{example.deliveryStatuses}
+      </if>
+      <if test="example.discountAmount!=null">
+      AND discount_amount=#{example.discountAmount}
+      </if>
+      <if test="example.dispatchOrderCodes!=null">
+      AND dispatch_order_code=#{example.dispatchOrderCodes}
+      </if>
+      <if test="example.dispatchStatus!=null">
+      AND dispatch_status=#{example.dispatchStatus}
+      </if>
+      <if test="example.dispatchStatuses!=null">
+      AND dispatch_status=#{example.dispatchStatuses}
+      </if>
+      <if test="example.distributionAmount!=null">
+      AND distribution_amount=#{example.distributionAmount}
+      </if>
+      <if test="example.distributionTradeId!=null">
+      AND distribution_trade_id=#{example.distributionTradeId}
+      </if>
+      <if test="example.distributionTradeIds!=null">
+      AND distribution_trade_id=#{example.distributionTradeIds}
+      </if>
+      <if test="example.districtId!=null">
+      AND district_id=#{example.districtId}
+      </if>
+      <if test="example.districtName!=null">
+      AND district_name=#{example.districtName}
+      </if>
+      <if test="example.firstDeliveryTime!=null">
+      AND first_delivery_time=#{example.firstDeliveryTime}
+      </if>
+      <if test="example.holdDate!=null">
+      AND hold_date=#{example.holdDate}
+      </if>
+      <if test="example.forceSplit!=null">
+      AND is_force_split=#{example.forceSplit}
+      </if>
+      <if test="example.hold!=null">
+      AND is_hold=#{example.hold}
+      </if>
+      <if test="example.manual!=null">
+      AND is_manual=#{example.manual}
+      </if>
+      <if test="example.oos!=null">
+      AND is_oos=#{example.oos}
+      </if>
+      <if test="example.prerefund!=null">
+      AND is_prerefund=#{example.prerefund}
+      </if>
+      <if test="example.productAbnormal!=null">
+      AND is_product_abnormal=#{example.productAbnormal}
+      </if>
+      <if test="example.urgent!=null">
+      AND is_urgent=#{example.urgent}
+      </if>
+      <if test="example.lastDeliveryTime!=null">
+      AND last_delivery_time=#{example.lastDeliveryTime}
+      </if>
+      <if test="example.lastExpressName!=null">
+      AND last_express_name=#{example.lastExpressName}
+      </if>
+      <if test="example.lastExpressNo!=null">
+      AND last_express_no=#{example.lastExpressNo}
+      </if>
+      <if test="example.mallSalesOrderStatus!=null">
+      AND mall_sales_order_status=#{example.mallSalesOrderStatus}
+      </if>
+      <if test="example.manualUser!=null">
+      AND manual_user=#{example.manualUser}
+      </if>
+      <if test="example.mergeFlag!=null">
+      AND merge_flag=#{example.mergeFlag}
+      </if>
+      <if test="example.mobile!=null">
+      AND mobile=#{example.mobile}
+      </if>
+      <if test="example.mobiles!=null">
+      AND mobile=#{example.mobiles}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.payStatus!=null">
+      AND pay_status=#{example.payStatus}
+      </if>
+      <if test="example.provinceId!=null">
+      AND province_id=#{example.provinceId}
+      </if>
+      <if test="example.provinceName!=null">
+      AND province_name=#{example.provinceName}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.refundStatus!=null">
+      AND refund_status=#{example.refundStatus}
+      </if>
+      <if test="example.reissueReason!=null">
+      AND reissue_reason=#{example.reissueReason}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.salesOrderCode!=null">
+      AND sales_order_code=#{example.salesOrderCode}
+      </if>
+      <if test="example.salesOrderCodes!=null">
+      AND sales_order_code=#{example.salesOrderCodes}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.sellingAmount!=null">
+      AND selling_amount=#{example.sellingAmount}
+      </if>
+      <if test="example.settlementAmount!=null">
+      AND settlement_amount=#{example.settlementAmount}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.suggestExpressId!=null">
+      AND suggest_express_id=#{example.suggestExpressId}
+      </if>
+      <if test="example.suggestExpressName!=null">
+      AND suggest_express_name=#{example.suggestExpressName}
+      </if>
+      <if test="example.suggestExpressNo!=null">
+      AND suggest_express_no=#{example.suggestExpressNo}
+      </if>
+      <if test="example.suggestVirtualWarehouseId!=null">
+      AND suggest_virtual_warehouse_id=#{example.suggestVirtualWarehouseId}
+      </if>
+      <if test="example.suggestVirtualWarehouseName!=null">
+      AND suggest_virtual_warehouse_name=#{example.suggestVirtualWarehouseName}
+      </if>
+      <if test="example.suggestWarehouseId!=null">
+      AND suggest_warehouse_id=#{example.suggestWarehouseId}
+      </if>
+      <if test="example.suggestWarehouseName!=null">
+      AND suggest_warehouse_name=#{example.suggestWarehouseName}
+      </if>
+      <if test="example.telephone!=null">
+      AND telephone=#{example.telephone}
+      </if>
+      <if test="example.telephones!=null">
+      AND telephone=#{example.telephones}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+      <if test="example.tradeIds!=null">
+      AND trade_id=#{example.tradeIds}
+      </if>
+      AND version=#{example.version}
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_sales_order
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_sales_order
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

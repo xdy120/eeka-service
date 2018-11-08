@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    oms:
+      initialSize: 50
+      maxActive: 1000
+      minIdle: 50
+    report:
+      initialSize: 1
+      maxActive: 10
+      minIdle: 0
+    admin:
+      initialSize: 5
+      maxActive: 50
+      minIdle: 1
+    rds:
+      initialSize: 1
+      maxActive: 50
+      minIdle: 0
+oms:
+  consumer:
+    stock-upload:
+      ignore: true
+    event-report:
+      ignore: true
+    custom:
+      kingdee:
+        url: "http://gushanggu.gnway.cc:8090/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Save.common.kdsvc"
+        login-url: "http://gushanggu.gnway.cc:8090/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc"
+        acct-id: "5acb1e1bdecf96"
+        username: "administrator"
+        password: "888888"
+        lcid: 2052
+      store-mapping:
+        qikemoke: 13867869465838592
+        deerma: 13867864414946304
+        lingchenchepin: 13867867024081920
+      stock-out-customer-id: 100
+      bill-customer-id: 10086

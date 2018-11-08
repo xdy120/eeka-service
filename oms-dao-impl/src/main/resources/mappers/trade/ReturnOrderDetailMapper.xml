@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.ReturnOrderDetailMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.trade.ReturnOrderDetail">
+    <id column="return_order_detail_id" property="returnOrderDetailId"/>
+    <result column="apply_id" property="applyId"/>
+    <result column="apply_quantity" property="applyQuantity"/>
+    <result column="brand_code" property="brandCode"/>
+    <result column="brand_name" property="brandName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="in_quantity" property="inQuantity"/>
+    <result column="is_noticed" property="noticed"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="product_type" property="productType"/>
+    <result column="quantity" property="quantity"/>
+    <result column="refundable_amount" property="refundableAmount"/>
+    <result column="return_order_id" property="returnOrderId"/>
+    <result column="return_reason_type" property="returnReasonType"/>
+    <result column="sales_order_code" property="salesOrderCode"/>
+    <result column="sales_order_detail_id" property="salesOrderDetailId"/>
+    <result column="sales_order_id" property="salesOrderId"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="trade_id" property="tradeId"/>
+  </resultMap>
+  <sql id="columns">apply_id,apply_quantity,brand_code,brand_name,created_time,in_quantity,is_noticed,modified_time,product_code,product_id,product_name,product_type,quantity,refundable_amount,return_order_detail_id,return_order_id,return_reason_type,sales_order_code,sales_order_detail_id,sales_order_id,sku_code,sku_id,sku_name,trade_id</sql>
+  <sql id="pkWhere">
+    WHERE return_order_detail_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="applyId!=null">AND apply_id=#{applyId}</if>
+      <if test="applyQuantity!=null">AND apply_quantity=#{applyQuantity}</if>
+      <if test="brandCode!=null and brandCode!=''">
+        AND brand_code=#{brandCode}
+      </if>
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="inQuantity!=null">AND in_quantity=#{inQuantity}</if>
+      <if test="noticed!=null">AND is_noticed=#{noticed}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="productType!=null">AND product_type=#{productType}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="refundableAmount!=null">AND refundable_amount=#{refundableAmount}</if>
+      <if test="returnOrderDetailId!=null">AND return_order_detail_id=#{returnOrderDetailId}</if>
+      <if test="returnOrderId!=null">AND return_order_id=#{returnOrderId}</if>
+      <if test="returnReasonType!=null and returnReasonType!=''">
+        AND return_reason_type=#{returnReasonType}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderDetailId!=null">AND sales_order_detail_id=#{salesOrderDetailId}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="applyId!=null">AND apply_id=#{applyId}</if>
+      <if test="applyQuantity!=null">AND apply_quantity=#{applyQuantity}</if>
+      <if test="brandCode!=null and brandCode!=''">
+        AND brand_code=#{brandCode}
+      </if>
+      <if test="brandCodes!=null and brandCodes.size>0">
+        AND brand_code IN
+        <foreach item="item" index="index" collection="brandCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="inQuantity!=null">AND in_quantity=#{inQuantity}</if>
+      <if test="noticed!=null">AND is_noticed=#{noticed}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="productType!=null">AND product_type=#{productType}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="refundableAmount!=null">AND refundable_amount=#{refundableAmount}</if>
+      <if test="returnOrderDetailId!=null">AND return_order_detail_id=#{returnOrderDetailId}</if>
+      <if test="returnOrderId!=null">AND return_order_id=#{returnOrderId}</if>
+      <if test="returnOrderIds!=null and returnOrderIds.size>0">
+        AND return_order_id IN
+        <foreach item="item" index="index" collection="returnOrderIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="returnReasonType!=null and returnReasonType!=''">
+        AND return_reason_type=#{returnReasonType}
+      </if>
+      <if test="salesOrderCode!=null and salesOrderCode!=''">
+        AND sales_order_code=#{salesOrderCode}
+      </if>
+      <if test="salesOrderDetailId!=null">AND sales_order_detail_id=#{salesOrderDetailId}</if>
+      <if test="salesOrderId!=null">AND sales_order_id=#{salesOrderId}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY return_order_detail_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.trade.ReturnOrderDetail">
+    INSERT INTO oms_return_order_detail(apply_id,apply_quantity,brand_code,brand_name,created_time,in_quantity,is_noticed,modified_time,product_code,product_id,product_name,product_type,quantity,refundable_amount,return_order_detail_id,return_order_id,return_reason_type,sales_order_code,sales_order_detail_id,sales_order_id,sku_code,sku_id,sku_name,trade_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{applyId},
+      #{applyQuantity},
+      #{brandCode},
+      #{brandName},
+      now(),
+      #{inQuantity},
+      #{noticed},
+      now(),
+      #{productCode},
+      #{productId},
+      #{productName},
+      #{productType},
+      #{quantity},
+      #{refundableAmount},
+      #{returnOrderDetailId},
+      #{returnOrderId},
+      #{returnReasonType},
+      #{salesOrderCode},
+      #{salesOrderDetailId},
+      #{salesOrderId},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+      #{tradeId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.trade.ReturnOrderDetail">
+    UPDATE oms_return_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="applyId!=null">apply_id=#{applyId},</if>
+      <if test="applyQuantity!=null">apply_quantity=#{applyQuantity},</if>
+      <if test="brandCode!=null">brand_code=#{brandCode},</if>
+      <if test="brandName!=null">brand_name=#{brandName},</if>
+      <if test="inQuantity!=null">in_quantity=#{inQuantity},</if>
+      <if test="noticed!=null">is_noticed=#{noticed},</if>
+      modified_time=now(),
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="productType!=null">product_type=#{productType},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="refundableAmount!=null">refundable_amount=#{refundableAmount},</if>
+      <if test="returnOrderId!=null">return_order_id=#{returnOrderId},</if>
+      <if test="returnReasonType!=null">return_reason_type=#{returnReasonType},</if>
+      <if test="salesOrderCode!=null">sales_order_code=#{salesOrderCode},</if>
+      <if test="salesOrderDetailId!=null">sales_order_detail_id=#{salesOrderDetailId},</if>
+      <if test="salesOrderId!=null">sales_order_id=#{salesOrderId},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND return_order_detail_id=#{returnOrderDetailId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.trade.ReturnOrderDetail">
+    UPDATE oms_return_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.applyId!=null">
+        apply_id=#{record.applyId},
+      </if>
+      <if test="record.applyQuantity!=null">
+        apply_quantity=#{record.applyQuantity},
+      </if>
+      <if test="record.brandCode!=null">
+        brand_code=#{record.brandCode},
+      </if>
+      <if test="record.brandName!=null">
+        brand_name=#{record.brandName},
+      </if>
+      <if test="record.inQuantity!=null">
+        in_quantity=#{record.inQuantity},
+      </if>
+      <if test="record.noticed!=null">
+        is_noticed=#{record.noticed},
+      </if>
+      modified_time=now(),
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.productType!=null">
+        product_type=#{record.productType},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.refundableAmount!=null">
+        refundable_amount=#{record.refundableAmount},
+      </if>
+      <if test="record.returnOrderId!=null">
+        return_order_id=#{record.returnOrderId},
+      </if>
+      <if test="record.returnReasonType!=null">
+        return_reason_type=#{record.returnReasonType},
+      </if>
+      <if test="record.salesOrderCode!=null">
+        sales_order_code=#{record.salesOrderCode},
+      </if>
+      <if test="record.salesOrderDetailId!=null">
+        sales_order_detail_id=#{record.salesOrderDetailId},
+      </if>
+      <if test="record.salesOrderId!=null">
+        sales_order_id=#{record.salesOrderId},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.applyId!=null">
+      AND apply_id=#{example.applyId}
+      </if>
+      <if test="example.applyQuantity!=null">
+      AND apply_quantity=#{example.applyQuantity}
+      </if>
+      <if test="example.brandCode!=null">
+      AND brand_code=#{example.brandCode}
+      </if>
+      <if test="example.brandCodes!=null">
+      AND brand_code=#{example.brandCodes}
+      </if>
+      <if test="example.brandName!=null">
+      AND brand_name=#{example.brandName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.inQuantity!=null">
+      AND in_quantity=#{example.inQuantity}
+      </if>
+      <if test="example.noticed!=null">
+      AND is_noticed=#{example.noticed}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.productType!=null">
+      AND product_type=#{example.productType}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.refundableAmount!=null">
+      AND refundable_amount=#{example.refundableAmount}
+      </if>
+      <if test="example.returnOrderDetailId!=null">
+      AND return_order_detail_id=#{example.returnOrderDetailId}
+      </if>
+      <if test="example.returnOrderId!=null">
+      AND return_order_id=#{example.returnOrderId}
+      </if>
+      <if test="example.returnOrderIds!=null">
+      AND return_order_id=#{example.returnOrderIds}
+      </if>
+      <if test="example.returnReasonType!=null">
+      AND return_reason_type=#{example.returnReasonType}
+      </if>
+      <if test="example.salesOrderCode!=null">
+      AND sales_order_code=#{example.salesOrderCode}
+      </if>
+      <if test="example.salesOrderDetailId!=null">
+      AND sales_order_detail_id=#{example.salesOrderDetailId}
+      </if>
+      <if test="example.salesOrderId!=null">
+      AND sales_order_id=#{example.salesOrderId}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuCodes!=null">
+      AND sku_code=#{example.skuCodes}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_return_order_detail
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_return_order_detail
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_return_order_detail
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_return_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_return_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_return_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_return_order_detail
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_return_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_return_order_detail
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

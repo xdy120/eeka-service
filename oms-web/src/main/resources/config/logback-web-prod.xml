@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+  <property name="log_file" value="log/web.log"/>
+  <property name="log_file_pattern" value="log/web.%d{yyyy-MM-dd}.%i.log"/>
+  <property name="es_url" value="http://${es.host}:${es.port}/_bulk"/>
+  <include resource="com/greatonce/oms/util/logging/base.xml"/>
+</configuration>

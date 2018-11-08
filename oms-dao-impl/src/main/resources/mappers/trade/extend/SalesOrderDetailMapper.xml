@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.SalesOrderDetailMapper">
+  <sql id="simpleColumns">
+    actual_amount, distribution_amount, is_combination, is_combination_detail, is_lock_stock, is_gift, is_manual_add, is_oos, sales_order_detail_refund_status, settlement_amount, quantity, sales_order_detail_id,product_id, sku_id, sales_order_detail_type, sales_order_id, status
+  </sql>
+  <sql id="existingWhere">
+    <trim prefixOverrides="AND|OR">
+      <include refid="where"/>
+      AND is_deleted = 0
+    </trim>
+  </sql>
+  <sql id="existingEqualWhere">
+    <trim prefixOverrides="AND|OR">
+      <include refid="equalWhere"/>
+      AND is_deleted = 0
+    </trim>
+  </sql>
+
+  <update id="replace">
+    UPDATE oms_sales_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="actualAmount!=null">actual_amount=#{actualAmount},</if>
+      <if test="costPrice!=null">cost_price=#{costPrice},</if>
+      <if test="discountAmount!=null">discount_amount=#{discountAmount},</if>
+      <if test="distributionAmount!=null">distribution_amount=#{distributionAmount},</if>
+      <if test="distributionPrice!=null">distribution_price=#{distributionPrice},</if>
+      <if test="combination!=null">is_combination=#{combination},</if>
+      <if test="gift!=null">is_gift=#{gift},</if>
+      <if test="lockStock!=null">is_lock_stock=#{lockStock},</if>
+      <if test="manualAdd!=null">is_manual_add=#{manualAdd},</if>
+      <if test="oos!=null">is_oos=#{oos},</if>
+      <if test="modifiedTime!=null">modified_time=#{modifiedTime},</if>
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="productType!=null">product_type=#{productType},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="sellingAmount!=null">selling_amount=#{sellingAmount},</if>
+      <if test="sellingPrice!=null">selling_price=#{sellingPrice},</if>
+      <if test="settlementAmount!=null">settlement_amount=#{settlementAmount},</if>
+      <if test="settlementPrice!=null">settlement_price=#{settlementPrice},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="weight!=null">weight=#{weight},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      sales_order_detail_id=#{salesOrderDetailId} AND is_deleted = 0
+    </trim>
+  </update>
+
+  <update id="replaceBySku" parameterType="Map">
+    UPDATE oms_sales_order_detail
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="target.combination!=null">is_combination=#{target.combination},</if>
+      <if test="target.lockStock!=null">is_lock_stock=#{target.lockStock},</if>
+      <if test="target.manualAdd!=null">is_manual_add=#{target.manualAdd},</if>
+      <if test="target.oos!=null">is_oos=#{target.oos},</if>
+      <if test="target.prepackage!=null">is_prepackage=#{target.prepackage},</if>
+      <if test="target.modifiedTime!=null">modified_time=#{target.modifiedTime},</if>
+      <if test="target.productCode!=null">product_code=#{target.productCode},</if>
+      <if test="target.productId!=null">product_id=#{target.productId},</if>
+      <if test="target.productName!=null">product_name=#{target.productName},</if>
+      <if test="target.productType!=null">product_type=#{target.productType},</if>
+      <if test="target.quantity!=null">quantity=#{target.quantity},</if>
+      <if test="target.skuCode!=null">sku_code=#{target.skuCode},</if>
+      <if test="target.skuId!=null">sku_id=#{target.skuId},</if>
+      <if test="target.skuName!=null">sku_name=#{target.skuName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND sku_id = #{source.skuId} AND sales_order_detail_id = #{source.salesOrderDetailId}
+      AND is_deleted = 0
+    </trim>
+  </update>
+
+  <select id="listSimple" resultMap="resultMap">
+    SELECT
+    <include refid="simpleColumns"/>
+    FROM oms_sales_order_detail
+    <include refid="where"/>
+  </select>
+
+  <select id="listSimpleNormal" resultMap="resultMap">
+    SELECT
+    <include refid="simpleColumns"/>
+    FROM oms_sales_order_detail
+    WHERE sales_order_id=#{salesOrderId}
+    AND sales_order_detail_type=2
+    AND status!=5
+    AND is_deleted=0
+  </select>
+
+  <select id="listToMallDeliveryDetailsInfo" resultMap="resultMap">
+    SELECT sales_order_detail_id,
+           mall_sales_order_detail_status,
+           status,
+           mall_detail_id,
+           product_type,
+           exchange_id
+    FROM oms_sales_order_detail
+    WHERE sales_order_id = #{salesOrderId}
+      AND mall_sales_order_detail_status = 30
+      AND status = 4
+      AND is_drop_shipping = 0
+      AND is_deleted=0
+  </select>
+
+  <select id="clearOos">
+    UPDATE oms_sales_order_detail
+    set is_oos = 0
+    WHERE is_oos = 1 AND is_deleted = 0
+  </select>
+
+  <select id="listDispatchableBySalesOrderId" resultMap="resultMap">
+    select
+    <include refid="columns"/>
+    from oms_sales_order_detail
+    where sales_order_id = #{salesOrderId}
+    AND sales_order_detail_type = 2
+    AND is_drop_shipping = 0
+    AND product_type != 2
+    AND status = 2
+    AND is_product_abnormal = 0
+    AND is_deleted = 0
+  </select>
+
+  <select id="listExisting" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="existingWhere"/>
+    <include refid="orderBy"/>
+  </select>
+
+  <select id="listPageExisting" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="existingWhere"/>
+    <include refid="orderBy"/>
+  </select>
+
+  <select id="listByExampleExisting" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="existingEqualWhere"/>
+    <include refid="orderBy"/>
+  </select>
+
+  <select id="listPageByExampleExisting" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_sales_order_detail
+    <include refid="existingEqualWhere"/>
+    <include refid="orderBy"/>
+  </select>
+
+  <select id="listFieldExisting" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_detail
+    <include refid="existingWhere"/>
+    <include refid="orderBy"/>
+  </select>
+
+  <select id="listPageFieldExisting" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_sales_order_detail
+    <include refid="existingWhere"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

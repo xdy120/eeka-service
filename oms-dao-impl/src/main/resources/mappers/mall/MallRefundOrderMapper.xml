@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.mall.MallRefundOrderMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.mall.MallRefundOrder">
+    <id column="mall_refund_order_id" property="mallRefundOrderId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="mall_refund_id" property="mallRefundId"/>
+    <result column="mall_refund_status" property="mallRefundStatus"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="order_json" property="orderJson"/>
+    <result column="status" property="status"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="trade_id" property="tradeId"/>
+  </resultMap>
+  <sql id="columns">created_time,mall_refund_id,mall_refund_order_id,mall_refund_status,modified_time,order_json,status,store_id,store_name,trade_id</sql>
+  <sql id="pkWhere">
+    WHERE mall_refund_order_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="mallRefundId!=null and mallRefundId!=''">
+        AND mall_refund_id=#{mallRefundId}
+      </if>
+      <if test="mallRefundOrderId!=null">AND mall_refund_order_id=#{mallRefundOrderId}</if>
+      <if test="mallRefundStatus!=null">AND mall_refund_status=#{mallRefundStatus}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="orderJson!=null and orderJson!=''">
+        AND order_json=#{orderJson}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="mallRefundId!=null and mallRefundId!=''">
+        AND mall_refund_id=#{mallRefundId}
+      </if>
+      <if test="mallRefundOrderId!=null">AND mall_refund_order_id=#{mallRefundOrderId}</if>
+      <if test="mallRefundStatus!=null">AND mall_refund_status=#{mallRefundStatus}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="orderJson!=null and orderJson!=''">
+        AND order_json=#{orderJson}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="tradeId!=null and tradeId!=''">
+        AND trade_id=#{tradeId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY mall_refund_order_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.mall.MallRefundOrder">
+    INSERT INTO oms_mall_refund_order(created_time,mall_refund_id,mall_refund_order_id,mall_refund_status,modified_time,order_json,status,store_id,store_name,trade_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{mallRefundId},
+      #{mallRefundOrderId},
+      #{mallRefundStatus},
+      now(),
+      #{orderJson},
+      #{status},
+      #{storeId},
+      #{storeName},
+      #{tradeId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.mall.MallRefundOrder">
+    UPDATE oms_mall_refund_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="mallRefundId!=null">mall_refund_id=#{mallRefundId},</if>
+      <if test="mallRefundStatus!=null">mall_refund_status=#{mallRefundStatus},</if>
+      modified_time=now(),
+      <if test="orderJson!=null">order_json=#{orderJson},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="tradeId!=null">trade_id=#{tradeId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND mall_refund_order_id=#{mallRefundOrderId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.mall.MallRefundOrder">
+    UPDATE oms_mall_refund_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.mallRefundId!=null">
+        mall_refund_id=#{record.mallRefundId},
+      </if>
+      <if test="record.mallRefundStatus!=null">
+        mall_refund_status=#{record.mallRefundStatus},
+      </if>
+      modified_time=now(),
+      <if test="record.orderJson!=null">
+        order_json=#{record.orderJson},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.tradeId!=null">
+        trade_id=#{record.tradeId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.mallRefundId!=null">
+      AND mall_refund_id=#{example.mallRefundId}
+      </if>
+      <if test="example.mallRefundOrderId!=null">
+      AND mall_refund_order_id=#{example.mallRefundOrderId}
+      </if>
+      <if test="example.mallRefundStatus!=null">
+      AND mall_refund_status=#{example.mallRefundStatus}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.orderJson!=null">
+      AND order_json=#{example.orderJson}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.tradeId!=null">
+      AND trade_id=#{example.tradeId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_mall_refund_order
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_mall_refund_order
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_mall_refund_order
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_mall_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_mall_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_mall_refund_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_mall_refund_order
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_mall_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_mall_refund_order
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

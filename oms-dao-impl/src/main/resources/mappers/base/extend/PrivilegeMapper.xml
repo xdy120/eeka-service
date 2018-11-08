@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.PrivilegeMapper">
+    <select id="listUserPrivilege" resultMap="resultMap">
+        SELECT p.*
+        FROM oms_privilege p
+            JOIN oms_role_user ru ON p.role_id = ru.role_id
+        WHERE p.privilege_type = #{privilegeType} AND ru.user_id = #{userId}
+    </select>
+</mapper>

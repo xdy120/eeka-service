@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.ReturnOrderDetailMapper">
+
+
+  <select id="detailListPage" resultMap="resultMap">
+    SELECT detail.*
+    FROM
+    oms_return_order r_order
+    JOIN oms_return_order_detail detail
+    ON r_order.return_order_id = detail.return_order_id
+    <include refid="advancedWhere"/>
+  </select>
+
+  <sql id="advancedWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="statuses!=null and statuses.size>0">
+        AND r_order.status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="noticeStatuses!=null and noticeStatuses.size>0">
+        AND r_order.notice_status IN
+        <foreach item="item" index="index" collection="noticeStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="applyId!=null">AND apply_id=#{applyId}</if>
+      <if test="unpacker!=null and unpacker!=''">
+        AND r_order.unpacker=#{unpacker}
+      </if>
+      <if test="unpackedTimeBegin!=null">
+        <![CDATA[AND r_order.unpacked_time>=#{unpackedTimeBegin}]]>
+      </if>
+      <if test="unpackedTimeEnd!=null">
+        <![CDATA[AND r_order.unpacked_time<#{unpackedTimeEnd}]]>
+      </if>
+      <if test="inVirtualWarehouseId!=null">
+        AND r_order.in_virtual_warehouse_id=#{inVirtualWarehouseId}
+      </if>
+      <if test="returnType!=null">
+        AND r_order.return_type=#{returnType}
+      </if>
+      <if test="boxNos!=null and boxNos.size>0">
+        AND r_order.box_no IN
+        <foreach item="item" index="index" collection="boxNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND detail.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="brandCodes!=null and brandCodes.size>0">
+        AND detail.brand_code IN
+        <foreach item="item" index="index" collection="brandCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="detailNotice!=null">
+        AND detail.is_noticed=#{detailNotice}
+      </if>
+    </trim>
+  </sql>
+
+</mapper>

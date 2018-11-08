@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.RoleMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.base.Role">
+    <id column="role_id" property="roleId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="is_system" property="system"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="remark" property="remark"/>
+    <result column="role_name" property="roleName"/>
+  </resultMap>
+  <sql id="columns">created_time,is_system,modified_time,remark,role_id,role_name</sql>
+  <sql id="pkWhere">
+    WHERE role_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="roleId!=null">AND role_id=#{roleId}</if>
+      <if test="roleName!=null and roleName!=''">
+        AND role_name=#{roleName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="system!=null">AND is_system=#{system}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="roleId!=null">AND role_id=#{roleId}</if>
+      <if test="roleName!=null and roleName!=''">
+        AND role_name=#{roleName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY role_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.base.Role">
+    INSERT INTO oms_role(created_time,is_system,modified_time,remark,role_id,role_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{system},
+      now(),
+      #{remark},
+      #{roleId},
+      #{roleName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.base.Role">
+    UPDATE oms_role
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="system!=null">is_system=#{system},</if>
+      modified_time=now(),
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="roleName!=null">role_name=#{roleName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND role_id=#{roleId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.base.Role">
+    UPDATE oms_role
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.system!=null">
+        is_system=#{record.system},
+      </if>
+      modified_time=now(),
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.roleName!=null">
+        role_name=#{record.roleName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.system!=null">
+      AND is_system=#{example.system}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.roleId!=null">
+      AND role_id=#{example.roleId}
+      </if>
+      <if test="example.roleName!=null">
+      AND role_name=#{example.roleName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_role
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_role
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_role
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_role
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_role
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_role
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_role
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_role
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_role
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

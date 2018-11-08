@@ -1,0 +1,77 @@
+spring:
+  datasource:
+    oms:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://${database.host}:${database.port}/${database.oms}?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: ${database.user}
+      password: ${database.password}
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    report:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://${database.host}:${database.port}/${database.report}?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: ${database.user}
+      password: ${database.password}
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    admin:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://${database.host}:${database.port}/${database.admin}?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: ${database.user}
+      password: ${database.password}
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+    rds:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://${database.host}:${database.port}/${database.rds}?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false
+      username: ${database.user}
+      password: ${database.password}
+      initialSize: 10
+      maxActive: 20
+      minIdle: 1
+      maxWait: 60000
+  rabbitmq:
+    host: ${rabbitmq.host}
+    port: ${rabbitmq.port}
+    username: ${rabbitmq.consumer.user}
+    password: ${rabbitmq.password}
+    virtual-host: ${rabbitmq.vhost}
+  redis:
+    host: ${redis.host}
+    port: ${redis.port}
+logging:
+  config: classpath:config/logback-consumer-prod.xml
+server:
+  port: ${consumer.port}
+oms:
+  service:
+    name: consumer
+    custom: ${custom.code}
+  consumer:
+    translate:
+      order:
+        enabled: ${consumer.translate.order}
+      refund:
+        enabled: ${consumer.translate.refund}
+      exchange:
+        enabled: ${consumer.translate.exchange}
+    stock-upload:
+      enabled: ${consumer.upload.stock}
+      ignore: ${consumer.upload.stock.ignore}
+    dispatch:
+      enabled: ${consumer.dispatch}
+    notice:
+      enabled: ${consumer.notice}
+    event-report:
+      enabled: ${consumer.event.report}
+      ignore: ${consumer.event.report.ignore}
+    prerefund:
+      enabled: ${consumer.prerefund.enable}
+      mallAppId: ${consumer.prerefund.app.id}
+      messagegroup: ${consumer.prerefund.message.group}

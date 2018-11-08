@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipDispatchScheduleMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.vip.VipDispatchSchedule">
+    <id column="vip_dispatch_schedule_id" property="vipDispatchScheduleId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="out_quantity" property="outQuantity"/>
+    <result column="quantity" property="quantity"/>
+    <result column="vip_dispatch_detail_id" property="vipDispatchDetailId"/>
+    <result column="vip_schedule_detail_id" property="vipScheduleDetailId"/>
+    <result column="virtual_warehouse_id" property="virtualWarehouseId"/>
+  </resultMap>
+  <sql id="columns">created_time,modified_time,out_quantity,quantity,vip_dispatch_detail_id,vip_dispatch_schedule_id,vip_schedule_detail_id,virtual_warehouse_id</sql>
+  <sql id="pkWhere">
+    WHERE vip_dispatch_schedule_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="vipDispatchDetailId!=null">AND vip_dispatch_detail_id=#{vipDispatchDetailId}</if>
+      <if test="vipDispatchScheduleId!=null">AND vip_dispatch_schedule_id=#{vipDispatchScheduleId}</if>
+      <if test="vipScheduleDetailId!=null">AND vip_schedule_detail_id=#{vipScheduleDetailId}</if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outQuantity!=null">AND out_quantity=#{outQuantity}</if>
+      <if test="quantity!=null">AND quantity=#{quantity}</if>
+      <if test="vipDispatchDetailId!=null">AND vip_dispatch_detail_id=#{vipDispatchDetailId}</if>
+      <if test="vipDispatchScheduleId!=null">AND vip_dispatch_schedule_id=#{vipDispatchScheduleId}</if>
+      <if test="vipScheduleDetailId!=null">AND vip_schedule_detail_id=#{vipScheduleDetailId}</if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY vip_dispatch_schedule_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.vip.VipDispatchSchedule">
+    INSERT INTO oms_vip_dispatch_schedule(created_time,modified_time,out_quantity,quantity,vip_dispatch_detail_id,vip_dispatch_schedule_id,vip_schedule_detail_id,virtual_warehouse_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      now(),
+      #{outQuantity},
+      #{quantity},
+      #{vipDispatchDetailId},
+      #{vipDispatchScheduleId},
+      #{vipScheduleDetailId},
+      #{virtualWarehouseId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.vip.VipDispatchSchedule">
+    UPDATE oms_vip_dispatch_schedule
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="outQuantity!=null">out_quantity=#{outQuantity},</if>
+      <if test="quantity!=null">quantity=#{quantity},</if>
+      <if test="vipDispatchDetailId!=null">vip_dispatch_detail_id=#{vipDispatchDetailId},</if>
+      <if test="vipScheduleDetailId!=null">vip_schedule_detail_id=#{vipScheduleDetailId},</if>
+      <if test="virtualWarehouseId!=null">virtual_warehouse_id=#{virtualWarehouseId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND vip_dispatch_schedule_id=#{vipDispatchScheduleId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.vip.VipDispatchSchedule">
+    UPDATE oms_vip_dispatch_schedule
+    <trim prefix="SET" suffixOverrides=",">
+      modified_time=now(),
+      <if test="record.outQuantity!=null">
+        out_quantity=#{record.outQuantity},
+      </if>
+      <if test="record.quantity!=null">
+        quantity=#{record.quantity},
+      </if>
+      <if test="record.vipDispatchDetailId!=null">
+        vip_dispatch_detail_id=#{record.vipDispatchDetailId},
+      </if>
+      <if test="record.vipScheduleDetailId!=null">
+        vip_schedule_detail_id=#{record.vipScheduleDetailId},
+      </if>
+      <if test="record.virtualWarehouseId!=null">
+        virtual_warehouse_id=#{record.virtualWarehouseId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outQuantity!=null">
+      AND out_quantity=#{example.outQuantity}
+      </if>
+      <if test="example.quantity!=null">
+      AND quantity=#{example.quantity}
+      </if>
+      <if test="example.vipDispatchDetailId!=null">
+      AND vip_dispatch_detail_id=#{example.vipDispatchDetailId}
+      </if>
+      <if test="example.vipDispatchScheduleId!=null">
+      AND vip_dispatch_schedule_id=#{example.vipDispatchScheduleId}
+      </if>
+      <if test="example.vipScheduleDetailId!=null">
+      AND vip_schedule_detail_id=#{example.vipScheduleDetailId}
+      </if>
+      <if test="example.virtualWarehouseId!=null">
+      AND virtual_warehouse_id=#{example.virtualWarehouseId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_vip_dispatch_schedule
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_vip_dispatch_schedule
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_dispatch_schedule
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_dispatch_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_dispatch_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_dispatch_schedule
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_dispatch_schedule
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_dispatch_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_dispatch_schedule
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

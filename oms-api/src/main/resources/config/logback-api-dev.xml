@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+  <property name="log_file" value="log/api.log"/>
+  <property name="log_file_pattern" value="log/api.%d{yyyy-MM-dd}.%i.log"/>
+  <property name="es_url" value="http://114.55.15.205:30001/_bulk"/>
+  <include resource="com/greatonce/oms/util/logging/base.xml"/>
+  <logger name="com.greatonce.oms.dao" level="debug"/>
+</configuration>

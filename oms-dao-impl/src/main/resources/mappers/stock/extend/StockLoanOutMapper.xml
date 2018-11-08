@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockLoanOutMapper">
+
+  <resultMap id="listLoanMap" type="com.greatonce.oms.bo.stock.StockLoanOutBO"
+    extends="com.greatonce.oms.dao.stock.StockLoanOutMapper.resultMap">
+    <result column="loan_user" property="loanUser"/>
+    <result column="expect_return_date" property="expectReturnDate"/>
+    <result column="is_need_return" property="needReturn"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="return_quantity" property="returnQuantity"/>
+    <result column="plan_quantity" property="planQuantity"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="surplus_quantity" property="surplusQuantity"/>
+  </resultMap>
+
+
+  <sql id="customWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="needReturn!=null">AND is_need_return=#{needReturn}</if>
+      <if test="loanType!=null and loanType!=''">
+        AND loan_type=#{loanType}
+      </if>
+      <if test="loanUser!=null and loanUser!=''">
+        AND loan_user=#{loanUser}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outStatus!=null">AND out_status=#{outStatus}</if>
+      <if test="outStatuses!=null and outStatuses.size>0">
+        AND out_status IN
+        <foreach item="item" index="index" collection="outStatuses" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND EXISTS(SELECT 1 FROM oms_stock_loan_out_detail WHERE
+        oms_stock_loan_out.stock_loan_out_id=oms_stock_loan_out_detail.stock_loan_out_id AND
+        product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+        )
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND EXISTS(SELECT 1 FROM oms_stock_loan_out_detail WHERE
+        oms_stock_loan_out.stock_loan_out_id=oms_stock_loan_out_detail.stock_loan_out_id AND
+        sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+        )
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockLoanOutCode!=null and stockLoanOutCode!=''">
+        AND stock_loan_out_code=#{stockLoanOutCode}
+      </if>
+      <if test="stockLoanOutCodes!=null and stockLoanOutCodes.size>0">
+        AND stock_loan_out_code IN
+        <foreach item="item" index="index" collection="stockLoanOutCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockLoanOutId!=null">AND stock_loan_out_id=#{stockLoanOutId}</if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND warehouse_name=#{warehouseName}
+      </if>
+      <if test="overdue !=null and overdue==true">
+        <![CDATA[AND expect_return_date<curdate()]]>
+      </if>
+    </trim>
+  </sql>
+
+  <select id="listCustomPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_stock_loan_out
+    <include refid="customWhere"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

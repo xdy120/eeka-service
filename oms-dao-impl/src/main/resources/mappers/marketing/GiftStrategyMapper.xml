@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.marketing.GiftStrategyMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.marketing.GiftStrategy">
+    <id column="gift_strategy_id" property="giftStrategyId"/>
+    <result column="begin_time" property="beginTime"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="end_time" property="endTime"/>
+    <result column="gift_strategy_code" property="giftStrategyCode"/>
+    <result column="gift_strategy_name" property="giftStrategyName"/>
+    <result column="gift_strategy_type" property="giftStrategyType"/>
+    <result column="is_enable" property="enable"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="priority_no" property="priorityNo"/>
+    <result column="time_type" property="timeType"/>
+  </resultMap>
+  <sql id="columns">begin_time,created_time,end_time,gift_strategy_code,gift_strategy_id,gift_strategy_name,gift_strategy_type,is_enable,modified_time,priority_no,time_type</sql>
+  <sql id="pkWhere">
+    WHERE gift_strategy_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="beginTime!=null">AND begin_time=#{beginTime}</if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="endTime!=null">AND end_time=#{endTime}</if>
+      <if test="giftStrategyCode!=null and giftStrategyCode!=''">
+        AND gift_strategy_code=#{giftStrategyCode}
+      </if>
+      <if test="giftStrategyId!=null">AND gift_strategy_id=#{giftStrategyId}</if>
+      <if test="giftStrategyName!=null and giftStrategyName!=''">
+        AND gift_strategy_name=#{giftStrategyName}
+      </if>
+      <if test="giftStrategyType!=null">AND gift_strategy_type=#{giftStrategyType}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="priorityNo!=null">AND priority_no=#{priorityNo}</if>
+      <if test="timeType!=null">AND time_type=#{timeType}</if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="beginTimeBegin!=null">
+        <![CDATA[AND begin_time>=#{beginTimeBegin}]]>
+      </if>
+      <if test="beginTimeEnd!=null">
+        <![CDATA[AND begin_time<#{beginTimeEnd}]]>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="endTimeBegin!=null">
+        <![CDATA[AND end_time>=#{endTimeBegin}]]>
+      </if>
+      <if test="endTimeEnd!=null">
+        <![CDATA[AND end_time<#{endTimeEnd}]]>
+      </if>
+      <if test="giftStrategyCode!=null and giftStrategyCode!=''">
+        AND gift_strategy_code=#{giftStrategyCode}
+      </if>
+      <if test="giftStrategyId!=null">AND gift_strategy_id=#{giftStrategyId}</if>
+      <if test="giftStrategyName!=null and giftStrategyName!=''">
+        AND gift_strategy_name=#{giftStrategyName}
+      </if>
+      <if test="giftStrategyType!=null">AND gift_strategy_type=#{giftStrategyType}</if>
+      <if test="enable!=null">AND is_enable=#{enable}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="priorityNo!=null">AND priority_no=#{priorityNo}</if>
+      <if test="timeType!=null">AND time_type=#{timeType}</if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY gift_strategy_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.marketing.GiftStrategy">
+    INSERT INTO oms_gift_strategy(begin_time,created_time,end_time,gift_strategy_code,gift_strategy_id,gift_strategy_name,gift_strategy_type,is_enable,modified_time,priority_no,time_type)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{beginTime},
+      now(),
+      #{endTime},
+      #{giftStrategyCode},
+      #{giftStrategyId},
+      #{giftStrategyName},
+      #{giftStrategyType},
+      #{enable},
+      now(),
+      #{priorityNo},
+      #{timeType},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.marketing.GiftStrategy">
+    UPDATE oms_gift_strategy
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="beginTime!=null">begin_time=#{beginTime},</if>
+      <if test="endTime!=null">end_time=#{endTime},</if>
+      <if test="giftStrategyCode!=null">gift_strategy_code=#{giftStrategyCode},</if>
+      <if test="giftStrategyName!=null">gift_strategy_name=#{giftStrategyName},</if>
+      <if test="giftStrategyType!=null">gift_strategy_type=#{giftStrategyType},</if>
+      <if test="enable!=null">is_enable=#{enable},</if>
+      modified_time=now(),
+      <if test="priorityNo!=null">priority_no=#{priorityNo},</if>
+      <if test="timeType!=null">time_type=#{timeType},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND gift_strategy_id=#{giftStrategyId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.marketing.GiftStrategy">
+    UPDATE oms_gift_strategy
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.beginTime!=null">
+        begin_time=#{record.beginTime},
+      </if>
+      <if test="record.endTime!=null">
+        end_time=#{record.endTime},
+      </if>
+      <if test="record.giftStrategyCode!=null">
+        gift_strategy_code=#{record.giftStrategyCode},
+      </if>
+      <if test="record.giftStrategyName!=null">
+        gift_strategy_name=#{record.giftStrategyName},
+      </if>
+      <if test="record.giftStrategyType!=null">
+        gift_strategy_type=#{record.giftStrategyType},
+      </if>
+      <if test="record.enable!=null">
+        is_enable=#{record.enable},
+      </if>
+      modified_time=now(),
+      <if test="record.priorityNo!=null">
+        priority_no=#{record.priorityNo},
+      </if>
+      <if test="record.timeType!=null">
+        time_type=#{record.timeType},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.beginTime!=null">
+      AND begin_time=#{example.beginTime}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.endTime!=null">
+      AND end_time=#{example.endTime}
+      </if>
+      <if test="example.giftStrategyCode!=null">
+      AND gift_strategy_code=#{example.giftStrategyCode}
+      </if>
+      <if test="example.giftStrategyId!=null">
+      AND gift_strategy_id=#{example.giftStrategyId}
+      </if>
+      <if test="example.giftStrategyName!=null">
+      AND gift_strategy_name=#{example.giftStrategyName}
+      </if>
+      <if test="example.giftStrategyType!=null">
+      AND gift_strategy_type=#{example.giftStrategyType}
+      </if>
+      <if test="example.enable!=null">
+      AND is_enable=#{example.enable}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.priorityNo!=null">
+      AND priority_no=#{example.priorityNo}
+      </if>
+      <if test="example.timeType!=null">
+      AND time_type=#{example.timeType}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_gift_strategy
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_gift_strategy
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_gift_strategy
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_gift_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_gift_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_gift_strategy
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_gift_strategy
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_gift_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_gift_strategy
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

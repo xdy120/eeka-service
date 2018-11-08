@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.marketing.PresellMapper">
+  <sql id="advancedWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="beginTimeBegin!=null">
+        <![CDATA[AND begin_time>=#{beginTimeBegin}]]>
+      </if>
+      <if test="beginTimeEnd!=null">
+        <![CDATA[AND begin_time<#{beginTimeEnd}]]>
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="deliveryDateBegin!=null">
+        <![CDATA[AND delivery_date>=#{deliveryDateBegin}]]>
+      </if>
+      <if test="deliveryDateEnd!=null">
+        <![CDATA[AND delivery_date<#{deliveryDateEnd}]]>
+      </if>
+      <if test="endTimeBegin!=null">
+        <![CDATA[AND end_time>=#{endTimeBegin}]]>
+      </if>
+      <if test="endTimeEnd!=null">
+        <![CDATA[AND end_time<#{endTimeEnd}]]>
+      </if>
+      <if test="dynamic!=null">AND is_dynamic=#{dynamic}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="presellCode!=null and presellCode!=''">
+        AND presell_code=#{presellCode}
+      </if>
+      <if test="presellCodes!=null and presellCodes.size>0">
+        AND presell_code IN
+        <foreach item="item" index="index" collection="presellCodes" open="(" separator=","
+          close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="presellId!=null">AND presell_id=#{presellId}</if>
+      <if test="presellName!=null and presellName!=''">
+        AND presell_name=#{presellName}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">
+        AND presell_id in
+        (SELECT presell_id FROM oms_presell_store WHERE store_id = #{storeId})
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+    </trim>
+  </sql>
+
+  <select id="listPageByConditions" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_presell
+    <include refid="advancedWhere"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

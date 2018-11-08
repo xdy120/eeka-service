@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.admin.GlobalExpressMallMappingMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.admin.GlobalExpressMallMapping">
+    <id column="global_express_mall_mapping_id" property="globalExpressMallMappingId"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="global_express_id" property="globalExpressId"/>
+    <result column="mall_type" property="mallType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="outer_code" property="outerCode"/>
+    <result column="outer_id" property="outerId"/>
+    <result column="outer_name" property="outerName"/>
+  </resultMap>
+  <sql id="columns">created_time,global_express_id,global_express_mall_mapping_id,mall_type,modified_time,outer_code,outer_id,outer_name</sql>
+  <sql id="pkWhere">
+    WHERE global_express_mall_mapping_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="globalExpressId!=null">AND global_express_id=#{globalExpressId}</if>
+      <if test="globalExpressMallMappingId!=null">AND global_express_mall_mapping_id=#{globalExpressMallMappingId}</if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="outerId!=null and outerId!=''">
+        AND outer_id=#{outerId}
+      </if>
+      <if test="outerName!=null and outerName!=''">
+        AND outer_name=#{outerName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="globalExpressId!=null">AND global_express_id=#{globalExpressId}</if>
+      <if test="globalExpressMallMappingId!=null">AND global_express_mall_mapping_id=#{globalExpressMallMappingId}</if>
+      <if test="mallType!=null">AND mall_type=#{mallType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="outerId!=null and outerId!=''">
+        AND outer_id=#{outerId}
+      </if>
+      <if test="outerName!=null and outerName!=''">
+        AND outer_name=#{outerName}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY global_express_mall_mapping_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.admin.GlobalExpressMallMapping">
+    INSERT INTO admin_global_express_mall_mapping(created_time,global_express_id,global_express_mall_mapping_id,mall_type,modified_time,outer_code,outer_id,outer_name)
+    VALUES(
+    <trim suffixOverrides=",">
+      now(),
+      #{globalExpressId},
+      #{globalExpressMallMappingId},
+      #{mallType},
+      now(),
+      #{outerCode},
+      #{outerId},
+      #{outerName},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.admin.GlobalExpressMallMapping">
+    UPDATE admin_global_express_mall_mapping
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="globalExpressId!=null">global_express_id=#{globalExpressId},</if>
+      <if test="mallType!=null">mall_type=#{mallType},</if>
+      modified_time=now(),
+      <if test="outerCode!=null">outer_code=#{outerCode},</if>
+      <if test="outerId!=null">outer_id=#{outerId},</if>
+      <if test="outerName!=null">outer_name=#{outerName},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND global_express_mall_mapping_id=#{globalExpressMallMappingId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.admin.GlobalExpressMallMapping">
+    UPDATE admin_global_express_mall_mapping
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.globalExpressId!=null">
+        global_express_id=#{record.globalExpressId},
+      </if>
+      <if test="record.mallType!=null">
+        mall_type=#{record.mallType},
+      </if>
+      modified_time=now(),
+      <if test="record.outerCode!=null">
+        outer_code=#{record.outerCode},
+      </if>
+      <if test="record.outerId!=null">
+        outer_id=#{record.outerId},
+      </if>
+      <if test="record.outerName!=null">
+        outer_name=#{record.outerName},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.globalExpressId!=null">
+      AND global_express_id=#{example.globalExpressId}
+      </if>
+      <if test="example.globalExpressMallMappingId!=null">
+      AND global_express_mall_mapping_id=#{example.globalExpressMallMappingId}
+      </if>
+      <if test="example.mallType!=null">
+      AND mall_type=#{example.mallType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.outerCode!=null">
+      AND outer_code=#{example.outerCode}
+      </if>
+      <if test="example.outerId!=null">
+      AND outer_id=#{example.outerId}
+      </if>
+      <if test="example.outerName!=null">
+      AND outer_name=#{example.outerName}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM admin_global_express_mall_mapping
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM admin_global_express_mall_mapping
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_express_mall_mapping
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_express_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_express_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_express_mall_mapping
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM admin_global_express_mall_mapping
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_global_express_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM admin_global_express_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.purchase.PurchaseOrderDetailMapper">
+  <select id="listDetailPrint" resultMap="resultMap">
+    SELECT
+    actual_price,product_code,product_name,quantity,sku_code,sku_name
+    FROM oms_purchase_order_detail
+    WHERE purchase_order_id=#{purchaseOrderId}
+  </select>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.stock.StockOutOrderMapper">
+  <sql id="advanceWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="address!=null and address!=''">
+        AND address=#{address}
+      </if>
+      <if test="auditedTimeBegin!=null">
+        <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+      </if>
+      <if test="auditedTimeEnd!=null">
+        <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+      </if>
+      <if test="auditor!=null and auditor!=''">
+        AND auditor=#{auditor}
+      </if>
+      <if test="cityId!=null">AND city_id=#{cityId}</if>
+      <if test="cityName!=null and cityName!=''">
+        AND city_name=#{cityName}
+      </if>
+      <if test="contact!=null and contact!=''">
+        AND contact=#{contact}
+      </if>
+      <if test="countryId!=null">AND country_id=#{countryId}</if>
+      <if test="countryName!=null and countryName!=''">
+        AND country_name=#{countryName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="districtId!=null">AND district_id=#{districtId}</if>
+      <if test="districtName!=null and districtName!=''">
+        AND district_name=#{districtName}
+      </if>
+      <if test="fromCode!=null and fromCode!=''">
+        AND from_code=#{fromCode}
+      </if>
+      <if test="fromCodes!=null and fromCodes.size>0">
+        AND from_code IN
+        <foreach item="item" index="index" collection="fromCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="lastOutTimeBegin!=null">
+        <![CDATA[AND last_out_time>=#{lastOutTimeBegin}]]>
+      </if>
+      <if test="lastOutTimeEnd!=null">
+        <![CDATA[AND last_out_time<#{lastOutTimeEnd}]]>
+      </if>
+      <if test="mobile!=null and mobile!=''">
+        AND mobile=#{mobile}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="outStatus!=null">AND out_status=#{outStatus}</if>
+      <if test="outStatuses!=null and outStatuses.size>0">
+        AND out_status IN
+        <foreach item="item" index="index" collection="outStatuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="outerCode!=null and outerCode!=''">
+        AND outer_code=#{outerCode}
+      </if>
+      <if test="outerCodes!=null and outerCodes.size>0">
+        AND outer_code IN
+        <foreach item="item" index="index" collection="outerCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="provinceId!=null">AND province_id=#{provinceId}</if>
+      <if test="provinceName!=null and provinceName!=''">
+        AND province_name=#{provinceName}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockOutOrderCode!=null and stockOutOrderCode!=''">
+        AND stock_out_order_code=#{stockOutOrderCode}
+      </if>
+      <if test="stockOutOrderCodes!=null and stockOutOrderCodes.size>0">
+        AND stock_out_order_code IN
+        <foreach item="item" index="index" collection="stockOutOrderCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="stockOutOrderId!=null">AND stock_out_order_id=#{stockOutOrderId}</if>
+      <if test="stockOutOrderType!=null and stockOutOrderType!=''">
+        AND stock_out_order_type=#{stockOutOrderType}
+      </if>
+      <if test="telephone!=null and telephone!=''">
+        AND telephone=#{telephone}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="virtualWarehouseId!=null">AND virtual_warehouse_id=#{virtualWarehouseId}</if>
+      <if test="virtualWarehouseName!=null and virtualWarehouseName!=''">
+        AND virtual_warehouse_name=#{virtualWarehouseName}
+      </if>
+      <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+      <if test="warehouseName!=null and warehouseName!=''">
+        AND warehouse_name=#{warehouseName}
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND main.stock_out_order_id IN (SELECT stock_out_order_id FROM oms_stock_out_order_detail WHERE product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">#{item}</foreach>)
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND main.stock_out_order_id IN (SELECT stock_out_order_id FROM oms_stock_out_order_detail WHERE sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">#{item}</foreach>)
+      </if>
+    </trim>
+  </sql>
+
+  <select id="advanceQuery" resultMap="resultMap">
+    SELECT * FROM oms_stock_out_order main
+    <include refid="advanceWhere"/>
+    <include refid="orderBy"/>
+  </select>
+
+
+  <resultMap id="exportList" type="com.greatonce.oms.bo.stock.StockOutExportBO">
+    <result column="stock_out_order_code" property="stockOutOrderCode"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="stock_out_order_type" property="stockOutOrderType"/>
+    <result column="out_status" property="outStatus"/>
+    <result column="remark" property="remark"/>
+    <result column="creator" property="creator"/>
+    <result column="out_quantity" property="outQuantity"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_name" property="productName"/>
+  </resultMap>
+
+  <select id="exportListStockOut" resultMap="exportList">
+    SELECT
+      main.stock_out_order_code,
+      main.created_time,
+      main.stock_out_order_type,
+      main.out_status,
+      main.remark,
+      main.creator,
+      detail.out_quantity,
+      detail.sku_code,
+      detail.sku_name,
+      detail.product_code,
+      detail.product_name
+    FROM oms_stock_out_order main
+    JOIN oms_stock_out_order_detail detail ON main.stock_out_order_id=detail.stock_out_order_id
+    <include refid="advanceWhere"/>
+  </select>
+
+</mapper>

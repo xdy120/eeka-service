@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.product.ProductMallMappingMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.product.ProductMallMapping">
+    <id column="product_mall_mapping_id" property="productMallMappingId"/>
+    <result column="brand_name" property="brandName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="image_url" property="imageUrl"/>
+    <result column="is_auto_delisting" property="autoDelisting"/>
+    <result column="is_auto_listing" property="autoListing"/>
+    <result column="is_auto_upload" property="autoUpload"/>
+    <result column="is_combination" property="combination"/>
+    <result column="is_drop_shipping" property="dropShipping"/>
+    <result column="is_manual" property="manual"/>
+    <result column="is_matched" property="matched"/>
+    <result column="mall_product_id" property="mallProductId"/>
+    <result column="mall_product_name" property="mallProductName"/>
+    <result column="mall_product_out_code" property="mallProductOutCode"/>
+    <result column="mall_product_status" property="mallProductStatus"/>
+    <result column="mall_sku_id" property="mallSkuId"/>
+    <result column="mall_sku_name" property="mallSkuName"/>
+    <result column="mall_sku_out_code" property="mallSkuOutCode"/>
+    <result column="mall_sku_price" property="mallSkuPrice"/>
+    <result column="mall_sku_quantity" property="mallSkuQuantity"/>
+    <result column="mall_special" property="mallSpecial"/>
+    <result column="marketing_id" property="marketingId"/>
+    <result column="marketing_type" property="marketingType"/>
+    <result column="match_code" property="matchCode"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="product_code" property="productCode"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_id" property="skuId"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="unique_id" property="uniqueId"/>
+  </resultMap>
+  <sql id="columns">brand_name,created_time,image_url,is_auto_delisting,is_auto_listing,is_auto_upload,is_combination,is_drop_shipping,is_manual,is_matched,mall_product_id,mall_product_name,mall_product_out_code,mall_product_status,mall_sku_id,mall_sku_name,mall_sku_out_code,mall_sku_price,mall_sku_quantity,mall_special,marketing_id,marketing_type,match_code,modified_time,product_code,product_id,product_mall_mapping_id,product_name,sku_code,sku_id,sku_name,store_id,store_name,unique_id</sql>
+  <sql id="pkWhere">
+    WHERE product_mall_mapping_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="imageUrl!=null and imageUrl!=''">
+        AND image_url=#{imageUrl}
+      </if>
+      <if test="autoDelisting!=null">AND is_auto_delisting=#{autoDelisting}</if>
+      <if test="autoListing!=null">AND is_auto_listing=#{autoListing}</if>
+      <if test="autoUpload!=null">AND is_auto_upload=#{autoUpload}</if>
+      <if test="combination!=null">AND is_combination=#{combination}</if>
+      <if test="dropShipping!=null">AND is_drop_shipping=#{dropShipping}</if>
+      <if test="manual!=null">AND is_manual=#{manual}</if>
+      <if test="matched!=null">AND is_matched=#{matched}</if>
+      <if test="mallProductId!=null and mallProductId!=''">
+        AND mall_product_id=#{mallProductId}
+      </if>
+      <if test="mallProductName!=null and mallProductName!=''">
+        AND mall_product_name=#{mallProductName}
+      </if>
+      <if test="mallProductOutCode!=null and mallProductOutCode!=''">
+        AND mall_product_out_code=#{mallProductOutCode}
+      </if>
+      <if test="mallProductStatus!=null">AND mall_product_status=#{mallProductStatus}</if>
+      <if test="mallSkuId!=null and mallSkuId!=''">
+        AND mall_sku_id=#{mallSkuId}
+      </if>
+      <if test="mallSkuName!=null and mallSkuName!=''">
+        AND mall_sku_name=#{mallSkuName}
+      </if>
+      <if test="mallSkuOutCode!=null and mallSkuOutCode!=''">
+        AND mall_sku_out_code=#{mallSkuOutCode}
+      </if>
+      <if test="mallSkuPrice!=null">AND mall_sku_price=#{mallSkuPrice}</if>
+      <if test="mallSkuQuantity!=null">AND mall_sku_quantity=#{mallSkuQuantity}</if>
+      <if test="mallSpecial!=null and mallSpecial!=''">
+        AND mall_special=#{mallSpecial}
+      </if>
+      <if test="marketingId!=null">AND marketing_id=#{marketingId}</if>
+      <if test="marketingType!=null">AND marketing_type=#{marketingType}</if>
+      <if test="matchCode!=null and matchCode!=''">
+        AND match_code=#{matchCode}
+      </if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productMallMappingId!=null">AND product_mall_mapping_id=#{productMallMappingId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="uniqueId!=null and uniqueId!=''">
+        AND unique_id=#{uniqueId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="imageUrl!=null and imageUrl!=''">
+        AND image_url=#{imageUrl}
+      </if>
+      <if test="autoDelisting!=null">AND is_auto_delisting=#{autoDelisting}</if>
+      <if test="autoListing!=null">AND is_auto_listing=#{autoListing}</if>
+      <if test="autoUpload!=null">AND is_auto_upload=#{autoUpload}</if>
+      <if test="combination!=null">AND is_combination=#{combination}</if>
+      <if test="dropShipping!=null">AND is_drop_shipping=#{dropShipping}</if>
+      <if test="manual!=null">AND is_manual=#{manual}</if>
+      <if test="matched!=null">AND is_matched=#{matched}</if>
+      <if test="mallProductId!=null and mallProductId!=''">
+        AND mall_product_id=#{mallProductId}
+      </if>
+      <if test="mallProductIds!=null and mallProductIds.size>0">
+        AND mall_product_id IN
+        <foreach item="item" index="index" collection="mallProductIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="mallProductName!=null and mallProductName!=''">
+        AND mall_product_name=#{mallProductName}
+      </if>
+      <if test="mallProductOutCode!=null and mallProductOutCode!=''">
+        AND mall_product_out_code=#{mallProductOutCode}
+      </if>
+      <if test="mallProductOutCodes!=null and mallProductOutCodes.size>0">
+        AND mall_product_out_code IN
+        <foreach item="item" index="index" collection="mallProductOutCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="mallProductStatus!=null">AND mall_product_status=#{mallProductStatus}</if>
+      <if test="mallSkuId!=null and mallSkuId!=''">
+        AND mall_sku_id=#{mallSkuId}
+      </if>
+      <if test="mallSkuIds!=null and mallSkuIds.size>0">
+        AND mall_sku_id IN
+        <foreach item="item" index="index" collection="mallSkuIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="mallSkuName!=null and mallSkuName!=''">
+        AND mall_sku_name=#{mallSkuName}
+      </if>
+      <if test="mallSkuOutCode!=null and mallSkuOutCode!=''">
+        AND mall_sku_out_code=#{mallSkuOutCode}
+      </if>
+      <if test="mallSkuOutCodes!=null and mallSkuOutCodes.size>0">
+        AND mall_sku_out_code IN
+        <foreach item="item" index="index" collection="mallSkuOutCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="mallSkuPrice!=null">AND mall_sku_price=#{mallSkuPrice}</if>
+      <if test="mallSkuQuantity!=null">AND mall_sku_quantity=#{mallSkuQuantity}</if>
+      <if test="mallSpecial!=null and mallSpecial!=''">
+        AND mall_special=#{mallSpecial}
+      </if>
+      <if test="marketingId!=null">AND marketing_id=#{marketingId}</if>
+      <if test="marketingType!=null">AND marketing_type=#{marketingType}</if>
+      <if test="matchCode!=null and matchCode!=''">
+        AND match_code=#{matchCode}
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="productCode!=null and productCode!=''">
+        AND product_code=#{productCode}
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productId!=null">AND product_id=#{productId}</if>
+      <if test="productMallMappingId!=null">AND product_mall_mapping_id=#{productMallMappingId}</if>
+      <if test="productName!=null and productName!=''">
+        AND product_name=#{productName}
+      </if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND sku_code=#{skuCode}
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuId!=null">AND sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND sku_name=#{skuName}
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="uniqueId!=null and uniqueId!=''">
+        AND unique_id=#{uniqueId}
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY product_mall_mapping_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.product.ProductMallMapping">
+    INSERT INTO oms_product_mall_mapping(brand_name,created_time,image_url,is_auto_delisting,is_auto_listing,is_auto_upload,is_combination,is_drop_shipping,is_manual,is_matched,mall_product_id,mall_product_name,mall_product_out_code,mall_product_status,mall_sku_id,mall_sku_name,mall_sku_out_code,mall_sku_price,mall_sku_quantity,mall_special,marketing_id,marketing_type,match_code,modified_time,product_code,product_id,product_mall_mapping_id,product_name,sku_code,sku_id,sku_name,store_id,store_name,unique_id)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{brandName},
+      now(),
+      #{imageUrl},
+      #{autoDelisting},
+      #{autoListing},
+      #{autoUpload},
+      #{combination},
+      #{dropShipping},
+      #{manual},
+      #{matched},
+      #{mallProductId},
+      #{mallProductName},
+      #{mallProductOutCode},
+      #{mallProductStatus},
+      #{mallSkuId},
+      #{mallSkuName},
+      #{mallSkuOutCode},
+      #{mallSkuPrice},
+      #{mallSkuQuantity},
+      #{mallSpecial},
+      #{marketingId},
+      #{marketingType},
+      #{matchCode},
+      now(),
+      #{productCode},
+      #{productId},
+      #{productMallMappingId},
+      #{productName},
+      #{skuCode},
+      #{skuId},
+      #{skuName},
+      #{storeId},
+      #{storeName},
+      #{uniqueId},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.product.ProductMallMapping">
+    UPDATE oms_product_mall_mapping
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="brandName!=null">brand_name=#{brandName},</if>
+      <if test="imageUrl!=null">image_url=#{imageUrl},</if>
+      <if test="autoDelisting!=null">is_auto_delisting=#{autoDelisting},</if>
+      <if test="autoListing!=null">is_auto_listing=#{autoListing},</if>
+      <if test="autoUpload!=null">is_auto_upload=#{autoUpload},</if>
+      <if test="combination!=null">is_combination=#{combination},</if>
+      <if test="dropShipping!=null">is_drop_shipping=#{dropShipping},</if>
+      <if test="manual!=null">is_manual=#{manual},</if>
+      <if test="matched!=null">is_matched=#{matched},</if>
+      <if test="mallProductId!=null">mall_product_id=#{mallProductId},</if>
+      <if test="mallProductName!=null">mall_product_name=#{mallProductName},</if>
+      <if test="mallProductOutCode!=null">mall_product_out_code=#{mallProductOutCode},</if>
+      <if test="mallProductStatus!=null">mall_product_status=#{mallProductStatus},</if>
+      <if test="mallSkuId!=null">mall_sku_id=#{mallSkuId},</if>
+      <if test="mallSkuName!=null">mall_sku_name=#{mallSkuName},</if>
+      <if test="mallSkuOutCode!=null">mall_sku_out_code=#{mallSkuOutCode},</if>
+      <if test="mallSkuPrice!=null">mall_sku_price=#{mallSkuPrice},</if>
+      <if test="mallSkuQuantity!=null">mall_sku_quantity=#{mallSkuQuantity},</if>
+      <if test="mallSpecial!=null">mall_special=#{mallSpecial},</if>
+      <if test="marketingId!=null">marketing_id=#{marketingId},</if>
+      <if test="marketingType!=null">marketing_type=#{marketingType},</if>
+      <if test="matchCode!=null">match_code=#{matchCode},</if>
+      modified_time=now(),
+      <if test="productCode!=null">product_code=#{productCode},</if>
+      <if test="productId!=null">product_id=#{productId},</if>
+      <if test="productName!=null">product_name=#{productName},</if>
+      <if test="skuCode!=null">sku_code=#{skuCode},</if>
+      <if test="skuId!=null">sku_id=#{skuId},</if>
+      <if test="skuName!=null">sku_name=#{skuName},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="uniqueId!=null">unique_id=#{uniqueId},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND product_mall_mapping_id=#{productMallMappingId}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.product.ProductMallMapping">
+    UPDATE oms_product_mall_mapping
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.brandName!=null">
+        brand_name=#{record.brandName},
+      </if>
+      <if test="record.imageUrl!=null">
+        image_url=#{record.imageUrl},
+      </if>
+      <if test="record.autoDelisting!=null">
+        is_auto_delisting=#{record.autoDelisting},
+      </if>
+      <if test="record.autoListing!=null">
+        is_auto_listing=#{record.autoListing},
+      </if>
+      <if test="record.autoUpload!=null">
+        is_auto_upload=#{record.autoUpload},
+      </if>
+      <if test="record.combination!=null">
+        is_combination=#{record.combination},
+      </if>
+      <if test="record.dropShipping!=null">
+        is_drop_shipping=#{record.dropShipping},
+      </if>
+      <if test="record.manual!=null">
+        is_manual=#{record.manual},
+      </if>
+      <if test="record.matched!=null">
+        is_matched=#{record.matched},
+      </if>
+      <if test="record.mallProductId!=null">
+        mall_product_id=#{record.mallProductId},
+      </if>
+      <if test="record.mallProductName!=null">
+        mall_product_name=#{record.mallProductName},
+      </if>
+      <if test="record.mallProductOutCode!=null">
+        mall_product_out_code=#{record.mallProductOutCode},
+      </if>
+      <if test="record.mallProductStatus!=null">
+        mall_product_status=#{record.mallProductStatus},
+      </if>
+      <if test="record.mallSkuId!=null">
+        mall_sku_id=#{record.mallSkuId},
+      </if>
+      <if test="record.mallSkuName!=null">
+        mall_sku_name=#{record.mallSkuName},
+      </if>
+      <if test="record.mallSkuOutCode!=null">
+        mall_sku_out_code=#{record.mallSkuOutCode},
+      </if>
+      <if test="record.mallSkuPrice!=null">
+        mall_sku_price=#{record.mallSkuPrice},
+      </if>
+      <if test="record.mallSkuQuantity!=null">
+        mall_sku_quantity=#{record.mallSkuQuantity},
+      </if>
+      <if test="record.mallSpecial!=null">
+        mall_special=#{record.mallSpecial},
+      </if>
+      <if test="record.marketingId!=null">
+        marketing_id=#{record.marketingId},
+      </if>
+      <if test="record.marketingType!=null">
+        marketing_type=#{record.marketingType},
+      </if>
+      <if test="record.matchCode!=null">
+        match_code=#{record.matchCode},
+      </if>
+      modified_time=now(),
+      <if test="record.productCode!=null">
+        product_code=#{record.productCode},
+      </if>
+      <if test="record.productId!=null">
+        product_id=#{record.productId},
+      </if>
+      <if test="record.productName!=null">
+        product_name=#{record.productName},
+      </if>
+      <if test="record.skuCode!=null">
+        sku_code=#{record.skuCode},
+      </if>
+      <if test="record.skuId!=null">
+        sku_id=#{record.skuId},
+      </if>
+      <if test="record.skuName!=null">
+        sku_name=#{record.skuName},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.uniqueId!=null">
+        unique_id=#{record.uniqueId},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.brandName!=null">
+      AND brand_name=#{example.brandName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.imageUrl!=null">
+      AND image_url=#{example.imageUrl}
+      </if>
+      <if test="example.autoDelisting!=null">
+      AND is_auto_delisting=#{example.autoDelisting}
+      </if>
+      <if test="example.autoListing!=null">
+      AND is_auto_listing=#{example.autoListing}
+      </if>
+      <if test="example.autoUpload!=null">
+      AND is_auto_upload=#{example.autoUpload}
+      </if>
+      <if test="example.combination!=null">
+      AND is_combination=#{example.combination}
+      </if>
+      <if test="example.dropShipping!=null">
+      AND is_drop_shipping=#{example.dropShipping}
+      </if>
+      <if test="example.manual!=null">
+      AND is_manual=#{example.manual}
+      </if>
+      <if test="example.matched!=null">
+      AND is_matched=#{example.matched}
+      </if>
+      <if test="example.mallProductId!=null">
+      AND mall_product_id=#{example.mallProductId}
+      </if>
+      <if test="example.mallProductIds!=null">
+      AND mall_product_id=#{example.mallProductIds}
+      </if>
+      <if test="example.mallProductName!=null">
+      AND mall_product_name=#{example.mallProductName}
+      </if>
+      <if test="example.mallProductOutCode!=null">
+      AND mall_product_out_code=#{example.mallProductOutCode}
+      </if>
+      <if test="example.mallProductOutCodes!=null">
+      AND mall_product_out_code=#{example.mallProductOutCodes}
+      </if>
+      <if test="example.mallProductStatus!=null">
+      AND mall_product_status=#{example.mallProductStatus}
+      </if>
+      <if test="example.mallSkuId!=null">
+      AND mall_sku_id=#{example.mallSkuId}
+      </if>
+      <if test="example.mallSkuIds!=null">
+      AND mall_sku_id=#{example.mallSkuIds}
+      </if>
+      <if test="example.mallSkuName!=null">
+      AND mall_sku_name=#{example.mallSkuName}
+      </if>
+      <if test="example.mallSkuOutCode!=null">
+      AND mall_sku_out_code=#{example.mallSkuOutCode}
+      </if>
+      <if test="example.mallSkuOutCodes!=null">
+      AND mall_sku_out_code=#{example.mallSkuOutCodes}
+      </if>
+      <if test="example.mallSkuPrice!=null">
+      AND mall_sku_price=#{example.mallSkuPrice}
+      </if>
+      <if test="example.mallSkuQuantity!=null">
+      AND mall_sku_quantity=#{example.mallSkuQuantity}
+      </if>
+      <if test="example.mallSpecial!=null">
+      AND mall_special=#{example.mallSpecial}
+      </if>
+      <if test="example.marketingId!=null">
+      AND marketing_id=#{example.marketingId}
+      </if>
+      <if test="example.marketingType!=null">
+      AND marketing_type=#{example.marketingType}
+      </if>
+      <if test="example.matchCode!=null">
+      AND match_code=#{example.matchCode}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.productCode!=null">
+      AND product_code=#{example.productCode}
+      </if>
+      <if test="example.productCodes!=null">
+      AND product_code=#{example.productCodes}
+      </if>
+      <if test="example.productId!=null">
+      AND product_id=#{example.productId}
+      </if>
+      <if test="example.productMallMappingId!=null">
+      AND product_mall_mapping_id=#{example.productMallMappingId}
+      </if>
+      <if test="example.productName!=null">
+      AND product_name=#{example.productName}
+      </if>
+      <if test="example.skuCode!=null">
+      AND sku_code=#{example.skuCode}
+      </if>
+      <if test="example.skuCodes!=null">
+      AND sku_code=#{example.skuCodes}
+      </if>
+      <if test="example.skuId!=null">
+      AND sku_id=#{example.skuId}
+      </if>
+      <if test="example.skuName!=null">
+      AND sku_name=#{example.skuName}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      <if test="example.uniqueId!=null">
+      AND unique_id=#{example.uniqueId}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_product_mall_mapping
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_product_mall_mapping
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_mall_mapping
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_mall_mapping
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_product_mall_mapping
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_product_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_product_mall_mapping
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

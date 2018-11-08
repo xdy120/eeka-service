@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.trade.ReturnNoticeOrderMapper">
+    <sql id="customWhere">
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="auditedTimeBegin!=null">
+                <![CDATA[AND audited_time>=#{auditedTimeBegin}]]>
+            </if>
+            <if test="auditedTimeEnd!=null">
+                <![CDATA[AND audited_time<#{auditedTimeEnd}]]>
+            </if>
+            <if test="auditor!=null and auditor!=''">AND auditor=#{auditor}</if>
+            <if test="createdTimeBegin!=null">
+                <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+            </if>
+            <if test="createdTimeEnd!=null">
+                <![CDATA[AND created_time<#{createdTimeEnd}]]>
+            </if>
+          <if test="creator!=null and creator!=''">
+            <bind name="creator_like" value="_parameter.creator+'%'"/>
+            AND creator like #{creator_like}
+          </if>
+            <if test="inStatus!=null">AND in_status=#{inStatus}</if>
+            <if test="inStatuses!=null and inStatuses.size>0">
+                AND in_status IN
+                <foreach item="item" index="index" collection="inStatuses" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="statuses!=null and statuses.size>0">
+                AND status IN
+                <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="lastInTimeBegin!=null">
+                <![CDATA[AND last_in_time>=#{lastInTimeBegin}]]>
+            </if>
+            <if test="lastInTimeEnd!=null">
+                <![CDATA[AND last_in_time<#{lastInTimeEnd}]]>
+            </if>
+            <if test="modifiedTimeBegin!=null">
+                <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+            </if>
+            <if test="modifiedTimeEnd!=null">
+                <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+            </if>
+            <if test="boxNo!=null and boxNo!=''">AND box_no=#{boxNo}</if>
+            <if test="remark!=null and remark!=''">AND remark=#{remark}</if>
+            <if test="returnNoticeOrderCode!=null and returnNoticeOrderCode!=''">AND return_notice_order_code=#{returnNoticeOrderCode}</if>
+            <if test="returnNoticeOrderCodes!=null and returnNoticeOrderCodes.size>0">
+                AND return_notice_order_code IN
+                <foreach item="item" index="index" collection="returnNoticeOrderCodes" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="returnNoticeOrderId!=null">AND return_notice_order_id=#{returnNoticeOrderId}</if>
+            <if test="status!=null">AND status=#{status}</if>
+            <if test="version!=null">AND version=#{version}</if>
+            <if test="warehouseId!=null">AND warehouse_id=#{warehouseId}</if>
+            <if test="warehouseName!=null and warehouseName!=''">AND warehouse_name=#{warehouseName}</if>
+            <if test="productCodes!=null and productCodes.size>0">
+              AND main.return_notice_order_id IN (SELECT return_notice_order_id FROM oms_return_notice_order_detail WHERE product_code IN
+              <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">#{item}</foreach>)
+            </if>
+            <if test="skuCodes!=null and skuCodes.size>0">
+              AND main.return_notice_order_id IN (SELECT return_notice_order_id FROM oms_return_notice_order_detail WHERE sku_code IN
+              <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">#{item}</foreach>)
+            </if>
+            <if test="returnOrderCodes!=null and returnOrderCodes.size>0">
+              AND main.return_notice_order_id IN (SELECT return_notice_order_id FROM oms_return_notice_order_detail WHERE return_order_code IN
+              <foreach item="item" index="index" collection="returnOrderCodes" open="(" separator="," close=")">#{item}</foreach>)
+            </if>
+        </trim>
+    </sql>
+
+
+    <select id="listPageCustom" resultMap="resultMap">
+        SELECT main.* FROM oms_return_notice_order main
+        <include refid="customWhere"/>
+        order by main.return_notice_order_id DESC
+    </select>
+
+  <resultMap id="exportResult" type="com.greatonce.oms.bo.trade.ReturnNoticeOrderExportBO">
+    <result column="return_notice_order_code" property="returnNoticeOrderCode"/>
+    <result column="status" property="status"/>
+    <result column="in_status" property="inStatus"/>
+    <result column="warehouse_name" property="warehouseName"/>
+    <result column="box_no" property="boxNo"/>
+    <result column="return_order_code" property="returnOrderCode"/>
+    <result column="sku_code" property="skuCode"/>
+    <result column="sku_name" property="skuName"/>
+    <result column="notice_quantity" property="noticeQuantity"/>
+    <result column="in_quantity" property="inQuantity"/>
+    <result column="last_in_time" property="lastInTime"/>
+    <result column="creator" property="creator"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+  </resultMap>
+
+  <select id="listExportReturnNoticeOrder" resultMap="exportResult">
+    SELECT main.return_notice_order_code,
+    main.status,
+    main.in_status,
+    main.warehouse_name,
+    main.box_no,
+    main.last_in_time,
+    main.creator,
+    detail.return_order_code,
+    detail.sku_code,
+    detail.sku_name,
+    detail.notice_quantity,
+    (IFNULL(detail.in_quantity,0)+IFNULL(detail.in_substandard_quantity,0)) AS in_quantity,
+    detail.created_time,
+    detail.modified_time
+    FROM oms_return_notice_order main
+    JOIN oms_return_notice_order_detail detail ON main.return_notice_order_id=detail.return_notice_order_id
+    <include refid="customWhere"/>
+    order by main.return_notice_order_id DESC
+  </select>
+</mapper>

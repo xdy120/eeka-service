@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.vip.VipDeliveryMapper">
+  <resultMap id="resultMap" type="com.greatonce.oms.domain.vip.VipDelivery">
+    <id column="vip_delivery_id" property="vipDeliveryId"/>
+    <result column="arrival_date" property="arrivalDate"/>
+    <result column="arrival_time" property="arrivalTime"/>
+    <result column="brand_code" property="brandCode"/>
+    <result column="brand_name" property="brandName"/>
+    <result column="carrier_code" property="carrierCode"/>
+    <result column="carrier_name" property="carrierName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="creator" property="creator"/>
+    <result column="delivery_date" property="deliveryDate"/>
+    <result column="delivery_method_code" property="deliveryMethodCode"/>
+    <result column="delivery_method_name" property="deliveryMethodName"/>
+    <result column="delivery_time" property="deliveryTime"/>
+    <result column="jit_type" property="jitType"/>
+    <result column="modified_time" property="modifiedTime"/>
+    <result column="po_code" property="poCode"/>
+    <result column="remark" property="remark"/>
+    <result column="status" property="status"/>
+    <result column="storage_no" property="storageNo"/>
+    <result column="store_id" property="storeId"/>
+    <result column="store_name" property="storeName"/>
+    <result column="version" property="version"/>
+    <result column="vip_delivery_code" property="vipDeliveryCode"/>
+    <result column="vip_warehouse_code" property="vipWarehouseCode"/>
+    <result column="vip_warehouse_name" property="vipWarehouseName"/>
+    <result column="waybill_number" property="waybillNumber"/>
+  </resultMap>
+  <sql id="columns">arrival_date,arrival_time,brand_code,brand_name,carrier_code,carrier_name,created_time,creator,delivery_date,delivery_method_code,delivery_method_name,delivery_time,jit_type,modified_time,po_code,remark,status,storage_no,store_id,store_name,version,vip_delivery_code,vip_delivery_id,vip_warehouse_code,vip_warehouse_name,waybill_number</sql>
+  <sql id="pkWhere">
+    WHERE vip_delivery_id=#{_parameter}
+  </sql>
+  <sql id="equalWhere">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="arrivalDate!=null and arrivalDate!=''">
+        AND arrival_date=#{arrivalDate}
+      </if>
+      <if test="arrivalTime!=null and arrivalTime!=''">
+        AND arrival_time=#{arrivalTime}
+      </if>
+      <if test="brandCode!=null and brandCode!=''">
+        AND brand_code=#{brandCode}
+      </if>
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="carrierCode!=null and carrierCode!=''">
+        AND carrier_code=#{carrierCode}
+      </if>
+      <if test="carrierName!=null and carrierName!=''">
+        AND carrier_name=#{carrierName}
+      </if>
+      <if test="createdTime!=null">AND created_time=#{createdTime}</if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="deliveryDate!=null and deliveryDate!=''">
+        AND delivery_date=#{deliveryDate}
+      </if>
+      <if test="deliveryMethodCode!=null and deliveryMethodCode!=''">
+        AND delivery_method_code=#{deliveryMethodCode}
+      </if>
+      <if test="deliveryMethodName!=null and deliveryMethodName!=''">
+        AND delivery_method_name=#{deliveryMethodName}
+      </if>
+      <if test="deliveryTime!=null and deliveryTime!=''">
+        AND delivery_time=#{deliveryTime}
+      </if>
+      <if test="jitType!=null">AND jit_type=#{jitType}</if>
+      <if test="modifiedTime!=null">AND modified_time=#{modifiedTime}</if>
+      <if test="poCode!=null and poCode!=''">
+        AND po_code=#{poCode}
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="storageNo!=null and storageNo!=''">
+        AND storage_no=#{storageNo}
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="vipDeliveryCode!=null and vipDeliveryCode!=''">
+        AND vip_delivery_code=#{vipDeliveryCode}
+      </if>
+      <if test="vipDeliveryId!=null">AND vip_delivery_id=#{vipDeliveryId}</if>
+      <if test="vipWarehouseCode!=null and vipWarehouseCode!=''">
+        AND vip_warehouse_code=#{vipWarehouseCode}
+      </if>
+      <if test="vipWarehouseName!=null and vipWarehouseName!=''">
+        AND vip_warehouse_name=#{vipWarehouseName}
+      </if>
+      <if test="waybillNumber!=null and waybillNumber!=''">
+        AND waybill_number=#{waybillNumber}
+      </if>
+    </trim>
+  </sql>
+  <sql id="where">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="arrivalDate!=null and arrivalDate!=''">
+        AND arrival_date=#{arrivalDate}
+      </if>
+      <if test="arrivalTime!=null and arrivalTime!=''">
+        AND arrival_time=#{arrivalTime}
+      </if>
+      <if test="brandCode!=null and brandCode!=''">
+        AND brand_code=#{brandCode}
+      </if>
+      <if test="brandName!=null and brandName!=''">
+        AND brand_name=#{brandName}
+      </if>
+      <if test="carrierCode!=null and carrierCode!=''">
+        AND carrier_code=#{carrierCode}
+      </if>
+      <if test="carrierName!=null and carrierName!=''">
+        AND carrier_name=#{carrierName}
+      </if>
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="creator!=null and creator!=''">
+        AND creator=#{creator}
+      </if>
+      <if test="deliveryDate!=null and deliveryDate!=''">
+        AND delivery_date=#{deliveryDate}
+      </if>
+      <if test="deliveryMethodCode!=null and deliveryMethodCode!=''">
+        AND delivery_method_code=#{deliveryMethodCode}
+      </if>
+      <if test="deliveryMethodName!=null and deliveryMethodName!=''">
+        AND delivery_method_name=#{deliveryMethodName}
+      </if>
+      <if test="deliveryTime!=null and deliveryTime!=''">
+        AND delivery_time=#{deliveryTime}
+      </if>
+      <if test="jitType!=null">AND jit_type=#{jitType}</if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="poCode!=null and poCode!=''">
+        AND po_code=#{poCode}
+      </if>
+      <if test="poCodes!=null and poCodes.size>0">
+        AND po_code IN
+        <foreach item="item" index="index" collection="poCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="remark!=null and remark!=''">
+        AND remark=#{remark}
+      </if>
+      <if test="status!=null">AND status=#{status}</if>
+      <if test="statuses!=null and statuses.size>0">
+        AND status IN
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storageNo!=null and storageNo!=''">
+        AND storage_no=#{storageNo}
+      </if>
+      <if test="storageNos!=null and storageNos.size>0">
+        AND storage_no IN
+        <foreach item="item" index="index" collection="storageNos" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeId!=null">AND store_id=#{storeId}</if>
+      <if test="storeIds!=null and storeIds.size>0">
+        AND store_id IN
+        <foreach item="item" index="index" collection="storeIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="storeName!=null and storeName!=''">
+        AND store_name=#{storeName}
+      </if>
+      <if test="version!=null">AND version=#{version}</if>
+      <if test="vipDeliveryCode!=null and vipDeliveryCode!=''">
+        AND vip_delivery_code=#{vipDeliveryCode}
+      </if>
+      <if test="vipDeliveryCodes!=null and vipDeliveryCodes.size>0">
+        AND vip_delivery_code IN
+        <foreach item="item" index="index" collection="vipDeliveryCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="vipDeliveryId!=null">AND vip_delivery_id=#{vipDeliveryId}</if>
+      <if test="vipWarehouseCode!=null and vipWarehouseCode!=''">
+        AND vip_warehouse_code=#{vipWarehouseCode}
+      </if>
+      <if test="vipWarehouseName!=null and vipWarehouseName!=''">
+        AND vip_warehouse_name=#{vipWarehouseName}
+      </if>
+      <if test="waybillNumber!=null and waybillNumber!=''">
+        AND waybill_number=#{waybillNumber}
+      </if>
+      <if test="waybillNumbers!=null and waybillNumbers.size>0">
+        AND waybill_number IN
+        <foreach item="item" index="index" collection="waybillNumbers" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </trim>
+  </sql>
+  <sql id="orderBy">
+    ORDER BY vip_delivery_id DESC
+  </sql>
+  <insert id="insert" parameterType="com.greatonce.oms.domain.vip.VipDelivery">
+    INSERT INTO oms_vip_delivery(arrival_date,arrival_time,brand_code,brand_name,carrier_code,carrier_name,created_time,creator,delivery_date,delivery_method_code,delivery_method_name,delivery_time,jit_type,modified_time,po_code,remark,status,storage_no,store_id,store_name,version,vip_delivery_code,vip_delivery_id,vip_warehouse_code,vip_warehouse_name,waybill_number)
+    VALUES(
+    <trim suffixOverrides=",">
+      #{arrivalDate},
+      #{arrivalTime},
+      #{brandCode},
+      #{brandName},
+      #{carrierCode},
+      #{carrierName},
+      now(),
+      #{creator},
+      #{deliveryDate},
+      #{deliveryMethodCode},
+      #{deliveryMethodName},
+      #{deliveryTime},
+      #{jitType},
+      now(),
+      #{poCode},
+      #{remark},
+      #{status},
+      #{storageNo},
+      #{storeId},
+      #{storeName},
+      1,
+      #{vipDeliveryCode},
+      #{vipDeliveryId},
+      #{vipWarehouseCode},
+      #{vipWarehouseName},
+      #{waybillNumber},
+    </trim>
+    )
+  </insert>
+  <update id="update" parameterType="com.greatonce.oms.domain.vip.VipDelivery">
+    UPDATE oms_vip_delivery
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="arrivalDate!=null">arrival_date=#{arrivalDate},</if>
+      <if test="arrivalTime!=null">arrival_time=#{arrivalTime},</if>
+      <if test="brandCode!=null">brand_code=#{brandCode},</if>
+      <if test="brandName!=null">brand_name=#{brandName},</if>
+      <if test="carrierCode!=null">carrier_code=#{carrierCode},</if>
+      <if test="carrierName!=null">carrier_name=#{carrierName},</if>
+      <if test="creator!=null">creator=#{creator},</if>
+      <if test="deliveryDate!=null">delivery_date=#{deliveryDate},</if>
+      <if test="deliveryMethodCode!=null">delivery_method_code=#{deliveryMethodCode},</if>
+      <if test="deliveryMethodName!=null">delivery_method_name=#{deliveryMethodName},</if>
+      <if test="deliveryTime!=null">delivery_time=#{deliveryTime},</if>
+      <if test="jitType!=null">jit_type=#{jitType},</if>
+      modified_time=now(),
+      <if test="poCode!=null">po_code=#{poCode},</if>
+      <if test="remark!=null">remark=#{remark},</if>
+      <if test="status!=null">status=#{status},</if>
+      <if test="storageNo!=null">storage_no=#{storageNo},</if>
+      <if test="storeId!=null">store_id=#{storeId},</if>
+      <if test="storeName!=null">store_name=#{storeName},</if>
+      <if test="version!=null">version=#{version}+1,</if>
+      <if test="vipDeliveryCode!=null">vip_delivery_code=#{vipDeliveryCode},</if>
+      <if test="vipWarehouseCode!=null">vip_warehouse_code=#{vipWarehouseCode},</if>
+      <if test="vipWarehouseName!=null">vip_warehouse_name=#{vipWarehouseName},</if>
+      <if test="waybillNumber!=null">waybill_number=#{waybillNumber},</if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND vip_delivery_id=#{vipDeliveryId}
+      AND version=#{version}
+    </trim>
+  </update>
+  <update id="updateByExample" parameterType="com.greatonce.oms.domain.vip.VipDelivery">
+    UPDATE oms_vip_delivery
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="record.arrivalDate!=null">
+        arrival_date=#{record.arrivalDate},
+      </if>
+      <if test="record.arrivalTime!=null">
+        arrival_time=#{record.arrivalTime},
+      </if>
+      <if test="record.brandCode!=null">
+        brand_code=#{record.brandCode},
+      </if>
+      <if test="record.brandName!=null">
+        brand_name=#{record.brandName},
+      </if>
+      <if test="record.carrierCode!=null">
+        carrier_code=#{record.carrierCode},
+      </if>
+      <if test="record.carrierName!=null">
+        carrier_name=#{record.carrierName},
+      </if>
+      <if test="record.creator!=null">
+        creator=#{record.creator},
+      </if>
+      <if test="record.deliveryDate!=null">
+        delivery_date=#{record.deliveryDate},
+      </if>
+      <if test="record.deliveryMethodCode!=null">
+        delivery_method_code=#{record.deliveryMethodCode},
+      </if>
+      <if test="record.deliveryMethodName!=null">
+        delivery_method_name=#{record.deliveryMethodName},
+      </if>
+      <if test="record.deliveryTime!=null">
+        delivery_time=#{record.deliveryTime},
+      </if>
+      <if test="record.jitType!=null">
+        jit_type=#{record.jitType},
+      </if>
+      modified_time=now(),
+      <if test="record.poCode!=null">
+        po_code=#{record.poCode},
+      </if>
+      <if test="record.remark!=null">
+        remark=#{record.remark},
+      </if>
+      <if test="record.status!=null">
+        status=#{record.status},
+      </if>
+      <if test="record.storageNo!=null">
+        storage_no=#{record.storageNo},
+      </if>
+      <if test="record.storeId!=null">
+        store_id=#{record.storeId},
+      </if>
+      <if test="record.storeName!=null">
+        store_name=#{record.storeName},
+      </if>
+      <if test="record.version!=null">
+        version=#{record.version}+1,
+      </if>
+      <if test="record.vipDeliveryCode!=null">
+        vip_delivery_code=#{record.vipDeliveryCode},
+      </if>
+      <if test="record.vipWarehouseCode!=null">
+        vip_warehouse_code=#{record.vipWarehouseCode},
+      </if>
+      <if test="record.vipWarehouseName!=null">
+        vip_warehouse_name=#{record.vipWarehouseName},
+      </if>
+      <if test="record.waybillNumber!=null">
+        waybill_number=#{record.waybillNumber},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="example.arrivalDate!=null">
+      AND arrival_date=#{example.arrivalDate}
+      </if>
+      <if test="example.arrivalTime!=null">
+      AND arrival_time=#{example.arrivalTime}
+      </if>
+      <if test="example.brandCode!=null">
+      AND brand_code=#{example.brandCode}
+      </if>
+      <if test="example.brandName!=null">
+      AND brand_name=#{example.brandName}
+      </if>
+      <if test="example.carrierCode!=null">
+      AND carrier_code=#{example.carrierCode}
+      </if>
+      <if test="example.carrierName!=null">
+      AND carrier_name=#{example.carrierName}
+      </if>
+      <if test="example.createdTime!=null">
+      AND created_time=#{example.createdTime}
+      </if>
+      <if test="example.creator!=null">
+      AND creator=#{example.creator}
+      </if>
+      <if test="example.deliveryDate!=null">
+      AND delivery_date=#{example.deliveryDate}
+      </if>
+      <if test="example.deliveryMethodCode!=null">
+      AND delivery_method_code=#{example.deliveryMethodCode}
+      </if>
+      <if test="example.deliveryMethodName!=null">
+      AND delivery_method_name=#{example.deliveryMethodName}
+      </if>
+      <if test="example.deliveryTime!=null">
+      AND delivery_time=#{example.deliveryTime}
+      </if>
+      <if test="example.jitType!=null">
+      AND jit_type=#{example.jitType}
+      </if>
+      <if test="example.modifiedTime!=null">
+      AND modified_time=#{example.modifiedTime}
+      </if>
+      <if test="example.poCode!=null">
+      AND po_code=#{example.poCode}
+      </if>
+      <if test="example.poCodes!=null">
+      AND po_code=#{example.poCodes}
+      </if>
+      <if test="example.remark!=null">
+      AND remark=#{example.remark}
+      </if>
+      <if test="example.status!=null">
+      AND status=#{example.status}
+      </if>
+      <if test="example.statuses!=null">
+      AND status=#{example.statuses}
+      </if>
+      <if test="example.storageNo!=null">
+      AND storage_no=#{example.storageNo}
+      </if>
+      <if test="example.storageNos!=null">
+      AND storage_no=#{example.storageNos}
+      </if>
+      <if test="example.storeId!=null">
+      AND store_id=#{example.storeId}
+      </if>
+      <if test="example.storeIds!=null">
+      AND store_id=#{example.storeIds}
+      </if>
+      <if test="example.storeName!=null">
+      AND store_name=#{example.storeName}
+      </if>
+      AND version=#{example.version}
+      <if test="example.vipDeliveryCode!=null">
+      AND vip_delivery_code=#{example.vipDeliveryCode}
+      </if>
+      <if test="example.vipDeliveryCodes!=null">
+      AND vip_delivery_code=#{example.vipDeliveryCodes}
+      </if>
+      <if test="example.vipDeliveryId!=null">
+      AND vip_delivery_id=#{example.vipDeliveryId}
+      </if>
+      <if test="example.vipWarehouseCode!=null">
+      AND vip_warehouse_code=#{example.vipWarehouseCode}
+      </if>
+      <if test="example.vipWarehouseName!=null">
+      AND vip_warehouse_name=#{example.vipWarehouseName}
+      </if>
+      <if test="example.waybillNumber!=null">
+      AND waybill_number=#{example.waybillNumber}
+      </if>
+      <if test="example.waybillNumbers!=null">
+      AND waybill_number=#{example.waybillNumbers}
+      </if>
+    </trim>
+  </update>
+  <delete id="delete">
+    DELETE FROM oms_vip_delivery
+    <include refid="pkWhere"/>
+  </delete>
+  <delete id="deleteByExample">
+    DELETE FROM oms_vip_delivery
+    <include refid="equalWhere"/>
+  </delete>
+  <select id="getByKey" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_delivery
+    <include refid="pkWhere"/>
+  </select>
+  <select id="list" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_delivery
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPage" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_delivery
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_delivery
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageByExample" resultMap="resultMap">
+    SELECT
+    <include refid="columns"/>
+    FROM oms_vip_delivery
+    <include refid="equalWhere"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_delivery
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+  <select id="listPageField" resultMap="resultMap">
+    SELECT ${systemQueryFields}
+    FROM oms_vip_delivery
+    <include refid="where"/>
+    <include refid="orderBy"/>
+  </select>
+</mapper>

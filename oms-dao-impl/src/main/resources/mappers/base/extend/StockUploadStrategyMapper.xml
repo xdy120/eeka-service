@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.greatonce.oms.dao.base.StockUploadStrategyMapper">
+    <!--获取 自动 或 手动 库存上传的配置-->
+    <select id="listByIsUploadIsManualUpload" resultMap="resultMap">
+        select <include refid="columns"/>
+        from oms_stock_upload_strategy
+        where is_manual_upload=1 or is_auto_upload=1
+    </select>
+    <!--根据storeId 获取库存上传配置-->
+    <select id="listSettingStockUpload" resultMap="resultMap">
+        select <include refid="columns"/>
+        from oms_stock_upload_strategy
+        where StoreId = #{_parameter}
+    </select>
+</mapper>

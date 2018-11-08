@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greatonce.oms.dao.marketing.PresellDetailMapper">
+
+  <resultMap id="fullInfo" extends="resultMap" type="com.greatonce.oms.domain.marketing.PresellDetail">
+    <association property="presell" resultMap="com.greatonce.oms.dao.marketing.PresellMapper.resultMap"/>
+  </resultMap>
+
+  <sql id="listFullInfoSql">
+    SELECT
+    details.created_time,
+    details.modified_time,
+    details.presell_detail_id,
+    details.presell_id,
+    details.product_code,
+    details.product_id,
+    details.product_name,
+    details.quantity,
+    details.sku_code,
+    details.sku_id,
+    details.sku_name,
+    presell.audited_time,
+    presell.auditor,
+    presell.begin_time,
+    presell.created_time,
+    presell.creator,
+    presell.delivery_date,
+    presell.end_time,
+    presell.is_dynamic,
+    presell.modified_time,
+    presell.presell_code,
+    presell.presell_id,
+    presell.presell_name,
+    presell.remark,
+    presell.status,
+    presell.version
+    from oms_presell_detail details
+    join oms_presell presell on details.presell_id=presell.presell_id
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="createdTimeBegin!=null">
+        <![CDATA[AND details.created_time>=#{createdTimeBegin}]]>
+      </if>
+      <if test="createdTimeEnd!=null">
+        <![CDATA[AND details.created_time<#{createdTimeEnd}]]>
+      </if>
+      <if test="modifiedTimeBegin!=null">
+        <![CDATA[AND details.modified_time>=#{modifiedTimeBegin}]]>
+      </if>
+      <if test="modifiedTimeEnd!=null">
+        <![CDATA[AND details.modified_time<#{modifiedTimeEnd}]]>
+      </if>
+      <if test="presellDetailId!=null">AND details.presell_detail_id=#{presellDetailId}</if>
+      <if test="presellId!=null">AND details.presell_id=#{presellId}</if>
+      <if test="productCode!=null and productCode!=''">
+        AND details.product_code=#{productCode}
+      </if>
+      <if test="productCodes!=null and productCodes.size>0">
+        AND details.product_code IN
+        <foreach item="item" index="index" collection="productCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="productId!=null">AND details.product_id=#{productId}</if>
+      <if test="productName!=null and productName!=''">
+        AND details.product_name=#{productName}
+      </if>
+      <if test="quantity!=null">AND details.quantity=#{quantity}</if>
+      <if test="skuCode!=null and skuCode!=''">
+        AND details.sku_code=#{skuCode}
+      </if>
+      <if test="skuCodes!=null and skuCodes.size>0">
+        AND details.sku_code IN
+        <foreach item="item" index="index" collection="skuCodes" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="skuId!=null">AND details.sku_id=#{skuId}</if>
+      <if test="skuName!=null and skuName!=''">
+        AND details.sku_name=#{skuName}
+      </if>
+    </trim>
+  </sql>
+
+
+  <select id="listPageFullInfo" resultMap="fullInfo">
+    <include refid="listFullInfoSql"/>
+    ORDER BY sku_id
+  </select>
+
+</mapper>
