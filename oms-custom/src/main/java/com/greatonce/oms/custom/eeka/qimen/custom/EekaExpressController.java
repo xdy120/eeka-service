@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author eeka-oms
  * @author Shenzhen Greatonce Co Ltd
- * @version 2018/11/19
+ * @version 2018/11/19 12
  */
 @RestController
 @EekaApiCondition
