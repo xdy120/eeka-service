@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author ginta
+ * @author eeka
  * @author Shenzhen Greatonce Co Ltd
  * @version 2018/4/21
  */
